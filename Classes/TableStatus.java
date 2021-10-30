@@ -1,4 +1,4 @@
 public enum TableStatus {
-	Reserved,
-	Vacant
+	RESERVED,
+	VACANT
 }
