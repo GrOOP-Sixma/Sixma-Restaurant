@@ -1,41 +1,37 @@
 public class Table {
+    private int tableID; // unique identifier for the table
+    private int numSeats; // number of seats in the table
+    private TableStatus status = TableStatus.VACANT; // status of the table default is vacant
 
-	private int tableSize;
-	private int tableID;
-	private TableStatus tableStatus;
+    // constructor
 
-	public int getTableSize() {
-		return this.tableSize;
-	}
+    public Table(int tableID, int numSeats) {
+        this.tableID = tableID;
+        this.numSeats = numSeats;
+    }
 
-	/**
-	 * 
-	 * @param tableSize
-	 */
-	public void setTableSize(int tableSize) {
-		this.tableSize = tableSize;
-	}
+    // getters
 
-	public int getTableID() {
-		return this.tableID;
-	}
+    public int getTableID() {
+        return tableID;
+    }
 
-	/**
-	 * 
-	 * @param tableID
-	 */
-	public void setTableID(int tableID) {
-		this.tableID = tableID;
-	}
+    public int getNumSeats() {
+        return numSeats;
+    }
 
-	public void assignTableReservation() {
-		// TODO - implement Table.assignTableReservation
-		throw new UnsupportedOperationException();
-	}
+    public TableStatus getStatus() {
+        return status;
+    }
 
-	public void unassignTableReservation() {
-		// TODO - implement Table.unassignTableReservation
-		throw new UnsupportedOperationException();
-	}
+    // methods
+
+    public void reserve() {
+        status = TableStatus.RESERVED;
+    }
+
+    public void cancel() {
+        status = TableStatus.VACANT;
+    }
 
 }

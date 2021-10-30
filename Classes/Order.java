@@ -1,64 +1,61 @@
+import java.util.ArrayList;
+
 public class Order {
 
-	private Staff staffOrder;
-	private int orderID;
-	private Reservation reservationName;
-	private ArrayList<?> orderedItems;
-	private Table tableID;
+	private Staff staffOrder; // staff incarge of making this order
+	private int orderID;    // order ID unique to this order
+	private Reservation reservationName;    // reservation associated with this order
+	protected ArrayList<Food> orderedItems;    // list of items ordered by this order
+	private Table tableID;  // table associated with this order
+    private Boolean isReservatation; // true if this order is a reservation
 
-	public Staff getStaffOrder() {
-		return this.staffOrder;
-	}
+    // constructor
 
-	/**
-	 * 
-	 * @param staffOrder
-	 */
-	public void setStaffOrder(Staff staffOrder) {
-		this.staffOrder = staffOrder;
-	}
+    public Order(Staff staffOrder, int orderID, Reservation reservationName, ArrayList<Food> orderedItems, Table tableID, Boolean isReservatation) {
+        this.staffOrder = staffOrder;
+        this.orderID = orderID;
+        this.reservationName = reservationName;
+        this.orderedItems = orderedItems;
+        this.tableID = tableID;
+        this.isReservatation = isReservatation;
+    }
 
-	public int getOrderID() {
-		return this.orderID;
-	}
+    // getters
+    public Staff getStaffOrder() {
+        return staffOrder;
+    }
 
-	/**
-	 * 
-	 * @param orderID
-	 */
-	public void setOrderID(int orderID) {
-		this.orderID = orderID;
-	}
+    public int getOrderID() {
+        return orderID;
+    } 
 
-	public Reservation getReservationName() {
-		return this.reservationName;
-	}
+    public Reservation getReservationName() {
+        return reservationName;
+    }
 
-	/**
-	 * 
-	 * @param reservationName
-	 */
-	public void setReservationName(Reservation reservationName) {
-		this.reservationName = reservationName;
-	}
+    public ArrayList<Food> getOrderedItems() {
+        return orderedItems;
+    }
 
-	public ArrayList<MenuItems> getOrderedItems() {
-		// TODO - implement Order.getOrderedItems
-		throw new UnsupportedOperationException();
-	}
+    public Table getTableID() {
+        return tableID;
+    }
 
-	/**
-	 * 
-	 * @param orderedItems
-	 */
-	public void setOrderedItems(ArrayList<MenuItems> orderedItems) {
-		// TODO - implement Order.setOrderedItems
-		throw new UnsupportedOperationException();
-	}
+    public Boolean getIsReservatation() {
+        return isReservatation;
+    }
 
-	public double calculateItemTotalPrice() {
-		// TODO - implement Order.calculateItemTotalPrice
-		throw new UnsupportedOperationException();
-	}
+    // update order
+    public void addToOrder(Food food) {
+        orderedItems.add(food);
+    }
 
+    // calculate total price of order
+    public double getTotalPrice() {
+        double totalPrice = 0;
+        for (Food food : orderedItems) {
+            totalPrice += food.getPrice();
+        }
+        return totalPrice;
+    }
 }
