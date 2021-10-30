@@ -1,3 +1,4 @@
+package RestuarantFront;
 public class Table {
     private int tableID; // unique identifier for the table
     private int numSeats; // number of seats in the table
