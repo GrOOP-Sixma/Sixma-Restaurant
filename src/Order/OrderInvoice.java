@@ -2,9 +2,9 @@ package Order;
 import java.util.*;
 
 import Food.MenuItem;
-import RestaurantBack.Reservation;
-import RestaurantBack.Staff;
-import RestuarantFront.Table;
+import Restaurant.RestaurantBack.Reservation;
+import Restaurant.RestaurantBack.Staff;
+import Restaurant.RestaurantFront.Table;
 
 public class OrderInvoice extends Order {
     private Calendar date; // date of order

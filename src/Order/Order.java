@@ -2,18 +2,18 @@ package Order;
 import java.util.ArrayList;
 
 import Food.MenuItem;
-import RestaurantBack.Reservation;
-import RestaurantBack.Staff;
-import RestuarantFront.Table;
+import Restaurant.RestaurantBack.Reservation;
+import Restaurant.RestaurantBack.Staff;
+import Restaurant.RestaurantFront.Table;
 
 public class Order {
 
-	private Staff staffOrder; // staff incarge of making this order
+	private Staff staffOrder; // staff incharge of making this order
 	private int orderID;    // order ID unique to this order
 	private Reservation reservationName;    // reservation associated with this order
 	protected ArrayList<MenuItem> orderedItems;    // list of items ordered by this order
 	private Table tableID;  // table associated with this order
-    private Boolean isReservatation; // true if this order is a reservation
+    private Boolean isReservation; // true if this order is a reservation
 
     // constructor
 
@@ -23,7 +23,7 @@ public class Order {
         this.reservationName = reservationName;
         this.orderedItems = orderedItems;
         this.tableID = tableID;
-        this.isReservatation = isReservatation;
+        this.isReservation = isReservatation;
     }
 
     // getters
@@ -47,8 +47,8 @@ public class Order {
         return tableID;
     }
 
-    public Boolean getIsReservatation() {
-        return isReservatation;
+    public Boolean getIsReservation() {
+        return isReservation;
     }
 
     // update order

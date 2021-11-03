@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 import Food.FoodType;
 import Food.MenuItem;
-import RestaurantBack.Reservation;
-import RestaurantBack.Staff;
-import RestuarantFront.Table;
+import Restaurant.RestaurantBack.Reservation;
+import Restaurant.RestaurantBack.Staff;
+import Restaurant.RestaurantFront.Table;
 
 public class RRPSS implements Runnable {
     private Restaurant restaurant; // The restaurant
