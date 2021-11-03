@@ -10,6 +10,7 @@ public class Table {
     public Table(int numSeats) {
         this.tableID = getNextTableID();
         this.numSeats = numSeats;
+        this.status = TableStatus.VACANT;
     }
 
     // getters
@@ -19,9 +20,20 @@ public class Table {
 
     // setters
     public void setNumSeats(int numSeats) {this.numSeats = numSeats;}
-    public void setStatus(TableStatus status) {this.status = status;}
+    //public void setStatus(TableStatus status) {this.status = status;}
 
     // methods
+
+    // reserve table
+    public void reserveTable(){
+        this.status = TableStatus.RESERVED;
+    }
+
+    // unreserve table
+    public void unreserveTable(){
+        this.status = TableStatus.VACANT;
+    }
+
     public static int getNextTableID() {
         int id = nextTableID++;
         return id;

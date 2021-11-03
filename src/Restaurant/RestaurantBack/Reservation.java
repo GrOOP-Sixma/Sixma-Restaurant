@@ -2,14 +2,14 @@ package Restaurant.RestaurantBack;
 import java.util.Calendar;
 
 import Restaurant.RestaurantFront.Table;
-
 public class Reservation {
 
-	private int reservationID;
+	private int reservationID = 0;
 	private int numOfPax;
 	private int customerContactNo;
 	private String customerName;
 	private Calendar reservationDate;
+	private Calendar reservationTime;
 	private Table tableNo;
 	private Boolean reservationSuccess;
 
@@ -58,7 +58,8 @@ public class Reservation {
     
 	public void setReservationSuccess() {
 		this.reservationSuccess = true;
-		this.tableNo.reserve();
+		this.tableNo.reserveTable();
+		this.reservationID += 1;
 	}
 
 
@@ -68,7 +69,7 @@ public class Reservation {
 
     public void cancelReservation() {
         this.reservationSuccess = false;
-        this.tableNo.cancel();
+        this.tableNo.unreserveTable();
     }
 
 	

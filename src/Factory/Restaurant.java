@@ -64,14 +64,14 @@ public class Restaurant implements Serializable {
     // populate the restaurant
 
     // hire employees
-    private Staff createEmployee(String name, int id, String role) {
+    private Staff createEmployee(String name, Gender gender, int id, String role) {
         // create new staff
-        Staff staff = new Staff(name, id, role);
+        Staff staff = new Staff(name, gender, id, role);
         return staff;
     }
 
-    public void addEmployee(String name, int id, String role) {
-        Staff newEmployee = createEmployee(name, id, role);
+    public void addEmployee(String name,Gender gender, int id, String role) {
+        Staff newEmployee = createEmployee(name, gender, id, role);
         employees.put(id, newEmployee);
     }
 
@@ -86,21 +86,21 @@ public class Restaurant implements Serializable {
     }
 
     // populate the menu
-    private MenuItem createMenuItem(FoodType type, String name, String description, double price) {
+    private MenuItem createMenuItem(String name, FoodType type, String description, double price) {
         // create new menu item
-        MenuItem menuItem = new MenuItem(type, name, description, price);
+        MenuItem menuItem = new MenuItem(name, type, description, price);
         return menuItem;
     }
 
     public void addMenuItem(FoodType type, String name, String description, double price) {
-        MenuItem newMenuItem = createMenuItem(type, name, description, price);
+        MenuItem newMenuItem = createMenuItem(name, type, description, price);
         menu.addItem(newMenuItem);
     }   
 
     // tables
     private Table createTable(int id, int capacity) { 
         // create new table
-        Table table = new Table(id, capacity);
+        Table table = new Table(capacity);
         return table;
     }
 
@@ -124,7 +124,7 @@ public class Restaurant implements Serializable {
         // check if table status is vacant
         if (tables.get(tableNo.getTableID()).getStatus() == TableStatus.VACANT) {
             Reservation reservation = new Reservation(numOfPax, customerContactNo, customerContactNo, customerName, reservationTime, reservationDate, tableNo, null);
-            tables.get(tableNo.getTableID()).reserve();
+            tables.get(tableNo.getTableID()).reserveTable();
             reservations.put(reservation.getCustomerName(), reservation);
             success = true;
         }
@@ -206,16 +206,16 @@ public class Restaurant implements Serializable {
     }
 
     // create set menu
-    public void createSetMenu(String name) {
+    public void createSetMenu(String name, ArrayList<MenuItem> menuItems, double price) {
         // create new set menu
-        SetMenu newSetMenu = new SetMenu(name);
+        SetMenu newSetMenu = new SetMenu(name, menuItems, price);
         availablSetMenus.add(newSetMenu);
     }
 
     public void addItemToSetMenu(String name, MenuItem item) {
         // add item to set menu
         for (SetMenu setMenu : availablSetMenus) {
-            if (setMenu.getName().equals(name)) {
+            if (setMenu.getSetName().equals(name)) {
                 setMenu.addItem(item);
             }
         }
@@ -224,7 +224,7 @@ public class Restaurant implements Serializable {
     public void removeItemFromSetMenu(String name, MenuItem item) {
         // remove item from set menu
         for (SetMenu setMenu : availablSetMenus) {
-            if (setMenu.getName().equals(name)) {
+            if (setMenu.getSetName().equals(name)) {
                 setMenu.removeItem(item);
             }
         }
@@ -233,7 +233,7 @@ public class Restaurant implements Serializable {
     public void removeSetMenu(String name) {
         // remove set menu
         for (SetMenu setMenu : availablSetMenus) {
-            if (setMenu.getName().equals(name)) {
+            if (setMenu.getSetName().equals(name)) {
                 availablSetMenus.remove(setMenu);
             }
         }

@@ -5,7 +5,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import Order.OrderInvoice;
-
+import Food.Menu;
+import Food.MenuItem;
 public class SalesReport {
 
 	private ArrayList<OrderInvoice> invoices; // list of invoices to report
@@ -35,12 +36,12 @@ public class SalesReport {
 	}
 
 	// Calculate how many of each food item in menu was sold
-    public HashMap<Food, Integer> getFoodItemCounts(int month, int year) {
-        HashMap<Food, Integer> foodItemCounts = new HashMap<Food, Integer>();
+    public HashMap<MenuItem, Integer> getFoodItemCounts(int month, int year) {
+        HashMap<MenuItem, Integer> foodItemCounts = new HashMap<MenuItem, Integer>();
         // for every food item in the menu
-        for (Food food : restaurantMenu.getAllItems()) {
+        for (MenuItem item : restaurantMenu.getAllItems()) {
             // set the count to 0
-            foodItemCounts.put(food, 0);
+            foodItemCounts.put(item, 0);
         }
         
         // for every invoice in invoices
@@ -48,9 +49,9 @@ public class SalesReport {
             // if the invoice is for the given month and year
             if (invoice.getDate().get(Calendar.MONTH) == month && invoice.getDate().get(Calendar.YEAR) == year) {
                 // for every food item in the invoice
-                for (Food food : invoice.getOrderedItems()) {
+                for (MenuItem item : invoice.getOrderedItems()) {
                     // add 1 to the count of the food item
-                    foodItemCounts.put(food, foodItemCounts.get(food) + 1);
+                    foodItemCounts.put(item, foodItemCounts.get(item) + 1);
                 }
             }
         }
@@ -61,15 +62,15 @@ public class SalesReport {
 	// Prints out the PeriodRevenue and PeriodItemSale
 	public void printSalesRevenueReport(int month, int year) {
 		double revenue = getPeriodRevenue(month,year);
-		HashMap<Food, Integer> foodItemCounts = getFoodItemCounts(month,year);
+		HashMap<MenuItem, Integer> foodItemCounts = getFoodItemCounts(month,year);
 
         System.out.println("Sales Report for " + DateFormatSymbols.getInstance().getMonths()[month] + " " + year);
         System.out.println("Total Revenue: $" + revenue);
         System.out.println("Food Item Sales:");
         // for every food item in the menu
-        for (Food food : restaurantMenu.getAllItems()) {
+        for (MenuItem item : restaurantMenu.getAllItems()) {
             // print out the food item and the count
-            System.out.println(food.getName() + ": " + foodItemCounts.get(food));
+            System.out.println(item.getName() + ": " + foodItemCounts.get(item));
         }
 	}
 }
