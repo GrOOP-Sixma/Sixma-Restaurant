@@ -89,11 +89,13 @@ public class RRPSS implements Runnable {
                 System.out.println("----------------------------");
                 System.out.println("Employee Name:");
                 String name = scanner.nextLine();
+                System.out.println("Employee Gender: ");
+                Gender gender = scanner.nextLine();
                 System.out.println("Employee ID:");
                 int id = Integer.parseInt(scanner.nextLine());
                 System.out.println("Employee Role:");
                 String role = scanner.nextLine();
-                restaurant.addEmployee(name, id, role);
+                restaurant.addEmployee(name, gender, id, role);
                 break;
             case 2:
                 System.out.println("Fire an employee");
@@ -142,7 +144,7 @@ public class RRPSS implements Runnable {
                 foodDescription = scanner.nextLine();
                 System.out.println("Food Price:");
                 foodPrice = Double.parseDouble(scanner.nextLine());
-                MenuItem menuItem = new MenuItem(type, foodName, foodDescription, foodPrice);
+                MenuItem menuItem = new MenuItem(foodName, type, foodDescription, foodPrice);
                 restaurant.addItemToSetMenu(setMenuName, menuItem);
                 break;
             case 7:
