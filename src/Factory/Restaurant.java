@@ -3,12 +3,11 @@ package Factory;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.jar.Attributes.Name;
 
 import Food.*;
 import Order.*;
-import RestuarantFront.*;
-import RestaurantBack.*;
+import Restaurant.RestaurantFront.*;
+import Restaurant.RestaurantBack.*;
 public class Restaurant implements Serializable {
 
     // attributes

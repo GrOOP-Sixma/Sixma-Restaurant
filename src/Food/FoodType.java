@@ -1,6 +1,7 @@
 package Food;
+
 public enum FoodType {
-	MainCourse,
-	Drinks,
-	Dessert
+	MAIN_COURSE,
+	DRINKS,
+	DESSERT
 }

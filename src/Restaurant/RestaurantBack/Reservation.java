@@ -1,7 +1,7 @@
-package RestaurantBack;
+package Restaurant.RestaurantBack;
 import java.util.Calendar;
 
-import RestuarantFront.Table;
+import Restaurant.RestaurantFront.Table;
 
 public class Reservation {
 
@@ -9,15 +9,12 @@ public class Reservation {
 	private int numOfPax;
 	private int customerContactNo;
 	private String customerName;
-	private Calendar reservationTime;
 	private Calendar reservationDate;
 	private Table tableNo;
 	private Boolean reservationSuccess;
-	
-	
-	
-	// Constructor for Reservation
-	public Reservation(int reservationID, int numOfPax, int customerContactNo, String customerName, Calendar reservationTime, Calendar reservationDate, Table tableNo, Boolean reservationSuccess ) {
+
+	// constructor
+	public Reservation(Calendar reservationDate, Table tableNo, Boolean reservationSuccess ) {
 		this.reservationID = reservationID;
 		this.numOfPax = numOfPax;
 		this.customerContactNo = customerContactNo;
