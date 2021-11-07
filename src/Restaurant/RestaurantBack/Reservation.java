@@ -1,83 +1,54 @@
 package Restaurant.RestaurantBack;
-import java.util.Calendar;
 
-import Restaurant.RestaurantFront.Table;
+import java.util.Calendar;
+import Restaurant.RestaurantFront.*;
 
 public class Reservation {
-
-	private int reservationID;
+	private final int reservationID;
+	private static int nextReservationID = 1;
 	private int numOfPax;
 	private int customerContactNo;
 	private String customerName;
 	private Calendar reservationDate;
-	private Table tableNo;
-	private Boolean reservationSuccess;
+	private Table table;
 
 	// constructor
-	public Reservation(Calendar reservationDate, Table tableNo, Boolean reservationSuccess ) {
-		this.reservationID = reservationID;
+	public Reservation(Customer customer, Table table, int numOfPax, Calendar reservationDate) {
+		reservationID = getNextReservationID();
 		this.numOfPax = numOfPax;
-		this.customerContactNo = customerContactNo;
+		this.customerContactNo = customer.getContactNo();
+		this.customerName = customer.getName();
 		this.reservationDate = reservationDate;
-		this.reservationTime = reservationTime;
-		this.tableNo = tableNo;
-		setReservationSuccess();
-		
-	}
-	
-	public int getReservationID() {
-		return this.reservationID;
-	}
-	
-	public int getNumOfPax() {
-		return this.numOfPax;
-	}
-	
-	public int getCustomerContactNo() {
-		return this.customerContactNo;
+		this.table = table;
 	}
 
-	
-	public String getCustomerName() {
-		return this.customerName;
+	// getters
+	public int getReservationID() {return reservationID;}
+	public int getNumOfPax() {return numOfPax;}
+	public int getCustomerContactNo() {return customerContactNo;}
+	public String getCustomerName() {return customerName;}
+    public Calendar getReservationDate() {return reservationDate;}
+	public Table getTable() {return table;}
+
+	// setters
+	public void setNumOfPax(int numOfPax) {this.numOfPax = numOfPax;}
+	public void setCustomerInfo(Customer customer) {
+		this.customerContactNo = customer.getContactNo();
+		this.customerName = customer.getName();
+	}
+	public void setReservationDate(Calendar reservationDate) {this.reservationDate = reservationDate;}
+	public void setTable(Table table) {this.table = table;}
+
+	// methods
+	private static int getNextReservationID() {
+		return nextReservationID++;
 	}
 
-	public boolean getReservationSuccess() {
-		return this.reservationSuccess;
-	}
-
-    public Calendar getReservationDate() {
-        return this.reservationDate;
-    }
-
-    public Calendar getReservationTime(){
-        return this.reservationTime;
-    }
-
-	// Set reservationSuccess to true and TableStatus to RESERVED
-    
-	public void setReservationSuccess() {
-		this.reservationSuccess = true;
-		this.tableNo.reserve();
-	}
-
-
-    public void changeReservationDate(Calendar reservationDate) {
-        this.reservationDate = reservationDate;
-    }
-
-    public void cancelReservation() {
-        this.reservationSuccess = false;
-        this.tableNo.cancel();
-    }
-
-	
-	// Prints out the information of the reservation
+	// toString
 	public String toString(){
 		return "Customer Name:" + this.customerName + "    Contact: " + this.customerContactNo + 
-				"	 Reserved Date: " + this.reservationDate + "   Reserved time: " + this.reservationTime + 
+				"	 Reserved Date: " + this.reservationDate +
 				"	 Reservation ID: "+ this.reservationID +
-				"	 Table Number: "+ this.tableNo;
+				"	 Table Number: "+ this.table.getTableID();
 	}
-
 }

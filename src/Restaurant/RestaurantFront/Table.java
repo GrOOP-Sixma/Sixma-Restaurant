@@ -8,7 +8,7 @@ public class Table {
 
     // constructor
     public Table(int numSeats) {
-        this.tableID = getNextTableID();
+        tableID = getNextTableID();
         this.numSeats = numSeats;
     }
 
@@ -22,8 +22,7 @@ public class Table {
     public void setStatus(TableStatus status) {this.status = status;}
 
     // methods
-    public static int getNextTableID() {
-        int id = nextTableID++;
-        return id;
+    private static int getNextTableID() {
+        return nextTableID++;
     }
 }
