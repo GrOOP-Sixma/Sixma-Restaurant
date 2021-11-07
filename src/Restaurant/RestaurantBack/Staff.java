@@ -18,12 +18,12 @@ public class Staff extends Person {
 
     // getters
     public Gender getGender() {return gender;}
-    public int getId() {return staffId;}
+    public int getStaffId() {return staffId;}
     public String getRole() {return role;}
 
     // setters
     public void setGender(Gender gender) {this.gender = gender;}
-    public void setId(int staffId) {this.staffId = staffId;}
+    public void setStaffId(int staffId) {this.staffId = staffId;}
     public void setRole(String role) {this.role = role;}
 
     // methods

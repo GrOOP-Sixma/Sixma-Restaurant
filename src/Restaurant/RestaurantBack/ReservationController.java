@@ -28,4 +28,12 @@ public class ReservationController {
             }
         }
     }
+
+    public Reservation getReservation(int reservationId) {
+        for (Reservation reservation : reservationList)
+            if (reservation.getReservationID() == reservationId)
+                return reservation;
+
+        return null;
+    }
 }

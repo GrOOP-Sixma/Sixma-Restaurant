@@ -1,5 +1,7 @@
 package Restaurant.RestaurantFront;
 
+import Restaurant.RestaurantBack.Staff;
+
 import java.util.ArrayList;
 
 public class CustomerController {
@@ -23,5 +25,13 @@ public class CustomerController {
                 break;
             }
         }
+    }
+
+    public Customer getCustomer(int customerId) {
+        for (Customer customer : customerList)
+            if (customer.getCustomerId() == customerId)
+                return customer;
+
+        return null;
     }
 }

@@ -18,10 +18,18 @@ public class StaffController {
 
     public void removeStaff(String name, int staffId) {
         for (int i=0; i<staffList.size(); i++) {
-            if (staffList.get(i).getName().equals(name) && staffList.get(i).getId() == staffId) {
+            if (staffList.get(i).getName().equals(name) && staffList.get(i).getStaffId() == staffId) {
                 staffList.remove(i);
                 break;
             }
         }
+    }
+
+    public Staff getStaff(int staffId) {
+        for (Staff staff : staffList)
+            if (staff.getStaffId() == staffId)
+                return staff;
+
+        return null;
     }
 }
