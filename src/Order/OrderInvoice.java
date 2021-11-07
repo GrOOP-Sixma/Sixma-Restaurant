@@ -1,11 +1,6 @@
 package Order;
 import java.util.*;
 
-import Food.MenuItem;
-import Restaurant.RestaurantBack.Reservation;
-import Restaurant.RestaurantBack.Staff;
-import Restaurant.RestaurantFront.Table;
-
 public class OrderInvoice extends Order {
     private Calendar date; // date of order
     private double subtotal; // subtotal of order
@@ -16,35 +11,15 @@ public class OrderInvoice extends Order {
     public final static double GST = 0.07; // GST rate
     public final static double SERVICE_CHARGE = 0.10; // service charge rate
 
-    public OrderInvoice(Staff staffOrder, int orderID, Reservation reservationName, ArrayList<MenuItem> orderedItems, Table tableID, Boolean isReservatation, Calendar date) {
-        super(staffOrder, orderID, reservationName, orderedItems, tableID, isReservatation);
-        this.date = date;
-        calculateSubtotal();
-        calculateGST();
-        calculateServiceCharge();
-        calculateTotal();
+
+    public OrderInvoice(Order order) {
+        super(order.getStaffOrder(), order.getOrderID(), order.getOrderedItems(), order.getTableID());
+        this.date = Calendar.getInstance();
     }
 
 
     public Calendar getDate() {
         return date;
-    }
-
-    // calculations
-    public void calculateSubtotal() {
-        subtotal = super.getTotalPrice();
-    }
-
-    public void calculateGST() {
-        GSTAmount = subtotal * GST;
-    }
-
-    public void calculateServiceCharge() {
-        ServiceCharge = subtotal * SERVICE_CHARGE;
-    }
-
-    public void calculateTotal() {
-        total = subtotal + GSTAmount + ServiceCharge;
     }
 
     // getters
@@ -64,15 +39,23 @@ public class OrderInvoice extends Order {
         return total;
     }
 
-    // print invoice
-    public void printOrderInvoice() {
-        System.out.println("Order Invoice");
-        super.printOrder();
-        System.out.println("Date: " + date.getTime());
-        System.out.println("Subtotal: " + subtotal);
-        System.out.println("GST: " + GSTAmount);
-        System.out.println("Service Charge: " + ServiceCharge);
-        System.out.println("Total: " + total);
+    // setters
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
     }
 
+    public void setGSTAmount(double GSTAmount) {
+        this.GSTAmount = GSTAmount;
+    }
+
+    public void setServiceCharge(double ServiceCharge) {
+        this.ServiceCharge = ServiceCharge;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    
 }

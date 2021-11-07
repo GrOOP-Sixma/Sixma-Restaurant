@@ -1,4 +1,4 @@
-package Restaurant.RestaurantFront;
+package Table;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +31,7 @@ public class TableController {
         tableMap.put(numSeats, tableList);
     }
 
+
     public void removeTable(int numSeats) {
         if (tableMap.containsKey(numSeats)) {
             if (vacancyMap.get(numSeats) == 1) {
@@ -44,5 +45,16 @@ public class TableController {
                 vacancyMap.put(numSeats, vacancyMap.get(numSeats) - 1);
             }
         }
+    }
+
+    public Table getTable(int tableID) {
+        for (ArrayList<Table> tableList : tableMap.values()) {
+            for (Table table : tableList) {
+                if (table.getTableID() == tableID) {
+                    return table;
+                }
+            }
+        }
+        return null;
     }
 }

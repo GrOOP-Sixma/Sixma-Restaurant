@@ -1,7 +1,9 @@
-package Restaurant.RestaurantBack;
+package Reservation;
 
 import java.util.Calendar;
-import Restaurant.RestaurantFront.*;
+
+import Customer.Customer;
+import Table.Table;
 
 public class Reservation {
 	private final int reservationID;

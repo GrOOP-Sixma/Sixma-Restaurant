@@ -1,6 +1,8 @@
-package Restaurant.RestaurantBack;
+package Staff;
 
 import java.util.ArrayList;
+
+import Restaurant.RestaurantBack.Gender;
 
 public class StaffController {
     private final ArrayList<Staff> staffList;
@@ -13,6 +15,10 @@ public class StaffController {
     // methods
     public void addStaff(String name, Gender gender, String role) {
         Staff staff = new Staff(name, gender, role);
+        staffList.add(staff);
+    }
+
+    public void addStaff(Staff staff) {
         staffList.add(staff);
     }
 
@@ -31,5 +37,11 @@ public class StaffController {
                 return staff;
 
         return null;
+    }
+
+    public void viewStaff() {
+        for (Staff staff : staffList) {
+            System.out.println(staff);
+        }
     }
 }

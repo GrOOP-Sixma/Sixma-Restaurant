@@ -1,6 +1,7 @@
-package Restaurant.RestaurantBack;
+package Staff;
 
 import Restaurant.Person;
+import Restaurant.RestaurantBack.Gender;
 
 public class Staff extends Person {
     private Gender gender;

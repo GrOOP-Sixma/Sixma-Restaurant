@@ -1,4 +1,4 @@
-package Restaurant.RestaurantFront;
+package Table;
 
 public class Table {
     private final int tableID;

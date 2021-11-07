@@ -1,4 +1,4 @@
-package Restaurant.RestaurantFront;
+package Customer;
 
 import Restaurant.Person;
 

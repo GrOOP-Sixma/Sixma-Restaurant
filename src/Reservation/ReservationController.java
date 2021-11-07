@@ -1,10 +1,10 @@
-package Restaurant.RestaurantBack;
-
-import Restaurant.RestaurantFront.Customer;
-import Restaurant.RestaurantFront.Table;
+package Reservation;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import Customer.Customer;
+import Table.Table;
 
 public class ReservationController {
     private final ArrayList<Reservation> reservationList;
@@ -17,6 +17,10 @@ public class ReservationController {
     // methods
     public void addReservation(Customer customer, Table table, int numOfPax, Calendar reservationDate) {
         Reservation reservation = new Reservation(customer, table, numOfPax, reservationDate);
+        reservationList.add(reservation);
+    }
+
+    public void addReservation(Reservation reservation) {
         reservationList.add(reservation);
     }
 
@@ -35,5 +39,10 @@ public class ReservationController {
                 return reservation;
 
         return null;
+    }
+
+    public void viewReservations() {
+        for (Reservation reservation : reservationList)
+            System.out.println(reservation);
     }
 }

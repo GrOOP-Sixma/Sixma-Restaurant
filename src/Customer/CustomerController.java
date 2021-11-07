@@ -1,8 +1,7 @@
-package Restaurant.RestaurantFront;
-
-import Restaurant.RestaurantBack.Staff;
+package Customer;
 
 import java.util.ArrayList;
+
 
 public class CustomerController {
     private final ArrayList<Customer> customerList;
@@ -18,6 +17,10 @@ public class CustomerController {
         customerList.add(customer);
     }
 
+    public void addCustomer(Customer customer) {
+        customerList.add(customer);
+    }
+
     public void removeCustomer(String name, int customerId) {
         for (int i=0; i<customerList.size(); i++) {
             if (customerList.get(i).getName().equals(name) && customerList.get(i).getCustomerId() == customerId) {
@@ -30,6 +33,15 @@ public class CustomerController {
     public Customer getCustomer(int customerId) {
         for (Customer customer : customerList)
             if (customer.getCustomerId() == customerId)
+                return customer;
+
+        return null;
+    }
+
+    // get customer by name
+    public Customer getCustomer(String name) {
+        for (Customer customer : customerList)
+            if (customer.getName().equals(name))
                 return customer;
 
         return null;
