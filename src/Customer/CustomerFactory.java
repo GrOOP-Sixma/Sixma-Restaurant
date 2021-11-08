@@ -54,6 +54,23 @@ public class CustomerFactory {
         sc.close();
     }
 
+    public Customer addCustomer(String name) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter contact number of new customer");
+        int contactNo = sc.nextInt();
+        while (contactNo < 80000000 || contactNo > 99999999) {
+            System.out.println("Invalid number");
+            contactNo = sc.nextInt();
+        }
+        System.out.println("Is the new customer a member");
+        boolean isMember = sc.nextBoolean();
+
+        Customer newCustomer = new Customer(name, contactNo, isMember);
+        customerController.addCustomer(newCustomer);
+        sc.close();
+        return newCustomer;
+    }
+
     public void removeCustomer() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter name of customer to remove");

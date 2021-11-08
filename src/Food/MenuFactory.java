@@ -5,11 +5,11 @@ import java.util.Scanner;
 public class MenuFactory {
     private Menu menu;
 
-    public MenuFactory() {menu = new Menu();}
+    public MenuFactory() {menu = new Menu();} // creates the menu object
 
-    public Menu getMenu() {return menu;}
+    public Menu getMenu() {return menu;} // returns the menu OBJECT
 
-    public void run() {
+    public void run() { 
         int choice = -1;
         Scanner scanner = new Scanner(System.in);
         while (choice != 0) {
@@ -43,19 +43,19 @@ public class MenuFactory {
     }
 
     public void addMenuItem() {
-        System.out.println("Creating a new menu item");
+        System.out.println("Creating a new menu item...");
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the name of the menu item");
+        System.out.println("Enter the name of the menu item:");
         String name = scanner.nextLine();
-        System.out.println("Enter the type of the menu item");
+        System.out.println("Enter the type of the menu item:");
         String type = scanner.nextLine();
         FoodType foodType = FoodType.valueOf(type);
-        System.out.println("Enter the description of the menu item");
+        System.out.println("Enter the description of the menu item:");
         String description = scanner.nextLine();
-        System.out.println("Enter the price of the menu item");
+        System.out.println("Enter the price of the menu item:");
         double price = scanner.nextDouble();
-        MenuItem menuItem = new MenuItem(name, foodType, description, price);
-        menu.addMenuItem(menuItem);
+        MenuItem menuItem = new MenuItem(name, foodType, description, price); // create a menu item
+        menu.addMenuItem(menuItem); // add it to the menu
         scanner.close();
     }
 
@@ -64,6 +64,7 @@ public class MenuFactory {
         Scanner scanner = new Scanner(System.in);
         int id = scanner.nextInt();
         menu.removeMenuItem(id);
+        System.out.println("Menu item removed");
         scanner.close();
     }
 
@@ -71,7 +72,7 @@ public class MenuFactory {
         System.out.println("Enter id of menu item to be modified");
         Scanner scanner = new Scanner(System.in);
         int id = scanner.nextInt();
-        MenuItem menuItem = menu.getMenuItem(id);
+        MenuItem menuItem = (MenuItem) menu.getMenuItem(id);
         int choice = -1;
         while (choice != 0) {
             System.out.println("Enter 0 to exit");

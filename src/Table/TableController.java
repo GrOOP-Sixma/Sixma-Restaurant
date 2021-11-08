@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class TableController {
     private final Map<Integer, ArrayList<Table>> tableMap;
-    private final Map<Integer, Integer> vacancyMap;
+    private final Map<Integer, Integer> vacancyMap; // key: tableId, value: vacancy
 
     // constructor
     public TableController() {
@@ -83,4 +83,19 @@ public class TableController {
             }
         }
     }
+
+    public Table getVacantTableNumPax(Integer numPax) {
+        ArrayList<Table> tableList = tableMap.get(numPax);
+        if (tableList == null) {
+            return null;
+        }
+        else {
+            for (Table table : tableList) {
+                if (vacancyMap.get(table.getTableID()) == 1) {
+                    return table;
+                }
+            }
+        }
+        return null;
+    }    
 }
