@@ -1,32 +1,42 @@
 package Food;
+import java.io.Serializable;
 import java.util.*;
 
-public class Menu {
-    private HashMap<Integer, MenuItem> menu; // menu item id, menu item
+public class Menu implements Serializable {
+    private HashMap<Integer, Products> menu; // menu item id, menu item
 
     public Menu() {
-        menu = new HashMap<Integer, MenuItem>();
+        menu = new HashMap<Integer, Products>();
     }
 
-    public HashMap<Integer, MenuItem> getMenu() {
+    public HashMap<Integer, Products> getMenu() {
         return menu;
     }
 
-    public void addMenuItem(MenuItem item) {
+    public void addMenuItem(Products item) {
         int id = menu.size() + 1;
         menu.put(id, item);
     }
 
-    public void addFood(MenuItem food) {
+    public void addFood(Products food) {
         addMenuItem(food);
     }
 
-    public  MenuItem getMenuItem(int id) {
+    public Products getMenuItem(int id) {
         return menu.get(id);
     }
 
+    public MenuItem getMenuItem(String name) {
+        for (Products item : menu.values()) {
+            if (item.getName().equals(name)) {
+                return (MenuItem) item;
+            }
+        }
+        return null;
+    }
+
     public void printMenu() {
-        for (MenuItem item : menu.values()) {
+        for (Products item : menu.values()) {
             System.out.println(item);
         }
     }
@@ -34,6 +44,5 @@ public class Menu {
     public void removeMenuItem(int id) {
         menu.remove(id);
     }
-
 
 }

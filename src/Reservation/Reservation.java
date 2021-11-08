@@ -1,11 +1,13 @@
 package Reservation;
 
+import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 import java.util.Calendar;
 
 import Customer.Customer;
 import Table.Table;
 
-public class Reservation {
+public class Reservation implements Serializable {
 	private final int reservationID;
 	private static int nextReservationID = 1;
 	private int numOfPax;
@@ -53,4 +55,20 @@ public class Reservation {
 				"	 Reservation ID: "+ this.reservationID +
 				"	 Table Number: "+ this.table.getTableID();
 	}
+
+    // byte array output stream
+    public byte[] toByteArray() {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            baos.write(this.customerName.getBytes());
+            baos.write(this.customerContactNo);
+            baos.write(this.numOfPax);
+            baos.write((int) this.reservationDate.getTimeInMillis());
+            baos.write(this.reservationID);
+            baos.write(this.table.getTableID());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return baos.toByteArray();
+    }
 }

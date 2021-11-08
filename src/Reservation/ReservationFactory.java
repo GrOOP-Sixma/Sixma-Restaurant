@@ -1,23 +1,21 @@
 package Reservation;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Scanner;
 
-import Customer.Customer;
-import Table.Table;
+import Customer.*;
+import Table.*;
 
-import Customer.CustomerController;
-import Table.TableController;
-
-public class ReservationFactory {
+public class ReservationFactory implements Serializable {
     private ReservationController reservationController;
-    private CustomerController customerController;
+    private CustomerFactory customerFactory;
     private TableController tableController;
 
     public ReservationFactory() {reservationController = new ReservationController();}
 
-    public void setCustomerController(CustomerController customerController) {this.customerController = customerController;}
     public void setTableController(TableController tableController) {this.tableController = tableController;}
+    public void setCustomerFactory(CustomerFactory customerFactory) {this.customerFactory = customerFactory;}
 
     public void run() {
         int choice = -1;
@@ -49,22 +47,30 @@ public class ReservationFactory {
 
     public void makeReservation() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Making new reservation...");
-        System.out.println("Enter the name of the customer");
+        System.out.println("Enter the customer's name:");
         String name = scanner.nextLine();
-        Customer customer = customerController.getCustomer(name);
-        System.out.println("Enter the table id");
-        int tableId = scanner.nextInt();
-        Table table = tableController.getTable(tableId);
+        Customer newCustomer = customerFactory.addCustomer(name);
         System.out.println("Enter the number of people");
-        int numOfPeople = scanner.nextInt();
-        System.out.println("Enter the time of the reservation");
-        int time = scanner.nextInt();
-        System.out.println("Enter the date of the reservation");
-        int date = scanner.nextInt();
-        // todo convert time date to calendar
-        Calendar calendar = Calendar.getInstance();
-        reservationController.addReservation(new Reservation(customer, table, numOfPeople, calendar));
+        int numPeople = scanner.nextInt();
+        System.out.println("Enter the date of the reservation (YYYY-MM-DD)");
+        String date = scanner.next(); // todo deal with regex later lmao
+        Calendar calendar = Calendar.getInstance(); 
+        calendar.set(Integer.parseInt(date.substring(0, 4)), Integer.parseInt(date.substring(5, 7)) - 1, Integer.parseInt(date.substring(8, 10)));
+        // todo loop through vacancy map and find the first available table based on date
+        // Table table = tableController.getFirstAvailableTable(calendar, numPeople);
+        // if (table == null) {
+        //     System.out.println("No available tables");
+        //     return;
+        // }
+        Table table = tableController.getVacantTableNumPax(numPeople);
+        if (table == null) {
+            System.out.println("No available tables");
+            scanner.close();
+            return;
+        }
+        reservationController.addReservation(newCustomer, table, numPeople, calendar);
+        System.out.println("Reservation made");
+        scanner.close();
     }
 
     public void cancelReservation() {
@@ -72,7 +78,7 @@ public class ReservationFactory {
         System.out.println("Canceling reservation...");
         System.out.println("Enter the name of the customer");
         String name = scanner.nextLine();
-        Customer customer = customerController.getCustomer(name);
+        Customer customer = customerFactory.getCustomerController().getCustomer(name);
         reservationController.removeReservation(customer);
         scanner.close();
     }

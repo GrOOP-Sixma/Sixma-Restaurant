@@ -10,12 +10,16 @@ import Table.Table;
 import Staff.StaffController;
 import Table.TableController;
 import Food.Menu;
+import Food.SetItem;
+import Food.SetMenu;
+import Food.SetMenuFactory;
 
 public class OrderFactory {
     private OrderController orderController;
     private StaffController staffController;
     private TableController tableController;
     private Menu menu;
+    private SetMenuFactory setMenuFactory;
 
     public OrderFactory() {orderController = new OrderController();}
 
@@ -74,6 +78,7 @@ public class OrderFactory {
         // ordered food
         int choice = -1;
         HashMap<Integer, Integer> foodList = new HashMap<>();
+        System.out.println("Entering ordered items from the main menu:");
         while (choice != 0) {
             System.out.println("Enter 1 to add a new food");
             System.out.println("Enter 2 to remove a food");
@@ -100,7 +105,57 @@ public class OrderFactory {
             scanner.close();
         }
 
+        // ordered food from set menu
+        choice = -1;
+        HashMap<SetItem, Integer> setMenuList = new HashMap<>();
+        System.out.println("Entering ordered items from the set menu:");
+        while (choice != 0) {
+            System.out.println("Enter the name of the set menu");
+            SetMenu setMenu = setMenuFactory.getSetMenu(scanner.next());
+            if (setMenu == null) {
+                System.out.println("Invalid set menu name");
+                choice = 0;
+                break;
+            } else {
+                System.out.println("Enter 1 to add a new set");
+                System.out.println("Enter 2 to remove a set");
+                System.out.println("Enter 0 to finish adding sets");
+                switch (scanner.nextInt()) {
+                    case 1:
+                        System.out.println("Enter the name of the set item");
+                        SetItem setItem = setMenu.getSetItem(scanner.next());
+                        if (setItem == null) {
+                            System.out.println("Invalid set item name");
+                            choice = 0;
+                            break;
+                        } else {
+                            System.out.println("Enter quantity");
+                            int quantity = scanner.nextInt();
+                            setMenuList.put(setItem, quantity);
+                        }
+                        break;
+                    case 2:
+                        System.out.println("Enter the name of the set item");
+                        setItem = setMenu.getSetItem(scanner.next());
+                        if (setItem == null) {
+                            System.out.println("Invalid set item name");
+                            choice = 0;
+                            break;
+                        } else {
+                            setMenuList.remove(setItem);
+                        }
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        System.out.println("Invalid input");
+                        break;
+                }
+            }
+        }
+
         Order order = new Order(staff, orderId, foodList, table);
+        order.setSetItems(setMenuList);
         orderController.addOrder(order);
         System.out.println("Order created");
     }

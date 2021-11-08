@@ -2,18 +2,15 @@ package Food;
 
 import java.io.Serializable;
 
-public class MenuItem implements Serializable {
-    private String name;
+public class MenuItem extends Products implements Serializable {
     private FoodType foodType;
     private String description;
-    private double price;
 
     // constructor
     public MenuItem(String name, FoodType foodType, String description, double price) {
-        this.name = name;
+        super(name, price);
         this.foodType = foodType;
         this.description = description;
-        this.price = price;
     }
 
     // getters

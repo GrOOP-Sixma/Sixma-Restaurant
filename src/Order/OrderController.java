@@ -3,6 +3,7 @@ package Order;
 import java.util.HashMap;
 
 import Food.Menu;
+import Food.SetItem;
 
 public class OrderController {
     private HashMap<Integer, Order> orders;
@@ -47,6 +48,10 @@ public class OrderController {
         for (int id : orderItems.keySet()) {
             totalPrice += menu.getMenuItem(id).getPrice() * orderItems.get(id);
         }
+        HashMap<SetItem, Integer> setItems = order.getOrderedSetItems();
+        for (SetItem setItem : setItems.keySet()) {
+            totalPrice += setItem.getPrice() * setItems.get(setItem);
+        }
         return totalPrice;
     }
 
@@ -58,6 +63,11 @@ public class OrderController {
         HashMap<Integer, Integer> orderItems = order.getOrderedItems();
         for (int id : orderItems.keySet()) {
             System.out.println("\t" + menu.getMenuItem(id).getName() + " x " + orderItems.get(id));
+        }
+        System.out.println("Order Set Items: ");
+        HashMap<SetItem, Integer> setItems = order.getOrderedSetItems();
+        for (SetItem setItem : setItems.keySet()) {
+            System.out.println("\t" + setItem.getName() + " x " + setItems.get(setItem));
         }
     }
 

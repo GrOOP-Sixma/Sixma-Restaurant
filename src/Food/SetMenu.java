@@ -1,81 +1,71 @@
 package Food;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SetMenu implements Serializable {
-    private String setName;
-    private ArrayList<MenuItem> menuItems;
-    private double setPrice;
+    private HashMap<Integer, Products> setMenu;
+    private String name;
 
-    // constructor
-    public SetMenu(String setName, ArrayList<MenuItem> menuItems, double setPrice) {
-        this.setName = setName;
-        this.menuItems = menuItems;
-        this.setPrice = setPrice;
+    public SetMenu() {
+        setMenu = new HashMap<>();
+    }
+
+    // setters
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // create a new set
+    public void addSet(MenuItem[] set, String name, double price) {
+        int setId = setMenu.size() + 1;
+        SetItem newSet = new SetItem();
+        newSet.setName(name);
+        newSet.setSetItems(set);
+        newSet.setSetPrice(price);
+        setMenu.put(setId, newSet);
+    }
+
+    // modify a set
+    public void modifySet(int setId, MenuItem[] set, String name, double price) {
+        SetItem newSet = new SetItem();
+        newSet.setName(name);
+        newSet.setSetItems(set);
+        newSet.setSetPrice(price);
+        setMenu.put(setId, newSet);
+    }
+
+    // delete a set
+    public void deleteSet(int setId) {
+        setMenu.remove(setId);
     }
 
     // getters
-    public String getSetName() {return setName;}
-    public ArrayList<MenuItem> getMenuItems() {return menuItems;}
-    public double getSetPrice() {return setPrice;}
-
-    // setters
-    public void setSetName(String setName) {this.setName = setName;}
-    public void setMenuItems(ArrayList<MenuItem> menuItems) {this.menuItems = menuItems;}
-    public void setSetPrice(double setPrice) {this.setPrice = setPrice;}
-
-    // methods
-    public void addItem(MenuItem menuItem) {
-        menuItems.add(menuItem);
+    public HashMap<Integer, Products> getSetMenu() {
+        return setMenu;
     }
 
-    public void removeItem(MenuItem menuItem) {
-        menuItems.remove(menuItem);
+    public String getName() {
+        return name;
     }
 
-    // toString
-    public void print() {
-        System.out.println("---------------------");
-        System.out.println("Set Name: " + setName);
-        for (int i=0; i<menuItems.size(); i++) {
-            MenuItem menuItem = menuItems.get(i);
-            System.out.println("Item " + i + 1 + ": " + menuItem.getName());
-            System.out.println("Food Type: " + menuItem.getFoodType());
-            System.out.println("Description:" + menuItem.getDescription());
-        }
-        System.out.println("Set Price: " + setPrice);
-    }
-
-    // convert to byte array
-    public byte[] toByteArray() {
-        byte[] bytes = new byte[1024];
-        int index = 0;
-        byte[] setNameBytes = setName.getBytes();
-        byte[] setPriceBytes = Double.toString(setPrice).getBytes();
-        for (int i=0; i<setNameBytes.length; i++) {
-            bytes[index] = setNameBytes[i];
-            index++;
-        }
-        bytes[index] = '\0';
-        index++;
-        for (int i=0; i<setPriceBytes.length; i++) {
-            bytes[index] = setPriceBytes[i];
-            index++;
-        }
-        bytes[index] = '\0';
-        index++;
-        for (int i=0; i<menuItems.size(); i++) {
-            MenuItem menuItem = menuItems.get(i);
-            byte[] menuItemBytes = menuItem.toByteArray();
-            for (int j=0; j<menuItemBytes.length; j++) {
-                bytes[index] = menuItemBytes[j];
-                index++;
+    public SetItem getSetItem(String name) {
+        for (Products set : setMenu.values()) {
+            if (set.getName().equals(name)) {
+                return (SetItem) set;
             }
         }
-        return bytes;
+        return null;
     }
 
-    // convert to file
-    
+    // print
+    public void printSetMenu() {
+        int i = 0;
+        for (Products curr : setMenu.values()) {
+            i++;
+            SetItem currSet = (SetItem) curr;
+            System.out.println("Set ID: " + i + " Name: " + currSet.getName() + " Price: " + currSet.getPrice());
+            currSet.printSet();
+        }
+    }
 }
