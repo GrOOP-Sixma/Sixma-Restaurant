@@ -4,16 +4,24 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
-import Factory.Restaurant;
 import Staff.Staff;
 import Table.Table;
 
-public class OrderFactory {
-    private Restaurant restaurant;
+import Staff.StaffController;
+import Table.TableController;
+import Food.Menu;
 
-    public OrderFactory(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
+public class OrderFactory {
+    private OrderController orderController;
+    private StaffController staffController;
+    private TableController tableController;
+    private Menu menu;
+
+    public OrderFactory() {orderController = new OrderController();}
+
+    public void setStaffController(StaffController staffController) {this.staffController = staffController;}
+    public void setTableController(TableController tableController) {this.tableController = tableController;}
+    public void setMenu(Menu menu) {this.menu = menu;}
 
     public void run() {
         int choice = -1;
@@ -45,9 +53,9 @@ public class OrderFactory {
         System.out.println("Entering a new order...");
 
         // order id
-        Random rand = new Random(restaurant.getOrderController().getOrders().size());
+        Random rand = new Random(orderController.getOrders().size());
         int orderId = rand.nextInt(100);
-        while (restaurant.getOrderController().getOrders().containsKey(orderId)) {
+        while (orderController.getOrders().containsKey(orderId)) {
             orderId = rand.nextInt(100);
         }
 
@@ -56,12 +64,12 @@ public class OrderFactory {
         // staff id
         System.out.println("Enter your staff id");
         int staffId = scanner.nextInt();
-        Staff staff = this.restaurant.getStaff(staffId);
+        Staff staff = staffController.getStaff(staffId);
 
         // table id
         System.out.println("Enter your table id");
         int tableId = scanner.nextInt();
-        Table table = this.restaurant.getTable(tableId);
+        Table table = tableController.getTable(tableId);
 
         // ordered food
         int choice = -1;
@@ -93,7 +101,7 @@ public class OrderFactory {
         }
 
         Order order = new Order(staff, orderId, foodList, table);
-        restaurant.addOrder(order);
+        orderController.addOrder(order);
         System.out.println("Order created");
     }
 
@@ -102,7 +110,7 @@ public class OrderFactory {
         System.out.println("Enter id of order to be modified");
         Scanner scanner = new Scanner(System.in);
         int orderId = scanner.nextInt();
-        Order order = restaurant.getOrder(orderId);
+        Order order = orderController.getOrder(orderId);
         if (order == null) {
             System.out.println("Order not found");
             scanner.close();
@@ -146,13 +154,13 @@ public class OrderFactory {
         System.out.println("Enter id of order to be calculated");
         Scanner scanner = new Scanner(System.in);
         int orderId = scanner.nextInt();
-        Order order = restaurant.getOrder(orderId);
+        Order order = orderController.getOrder(orderId);
         if (order == null) {
             System.out.println("Order not found");
             scanner.close();
             return;
         }
-        double price = restaurant.getOrderController().calculateTotalPrice(orderId, restaurant.getMenu());
+        double price = orderController.calculateTotalPrice(orderId, menu);
         System.out.println("Total price: " + price);
         scanner.close();
     }
@@ -162,14 +170,14 @@ public class OrderFactory {
         System.out.println("Enter id of order to be created");
         Scanner scanner = new Scanner(System.in);
         int orderId = scanner.nextInt();
-        Order order = restaurant.getOrder(orderId);
+        Order order = orderController.getOrder(orderId);
         if (order == null) {
             System.out.println("Order not found");
             scanner.close();
             return;
         }
         OrderInvoice orderInvoice = new OrderInvoice(order);
-        restaurant.addOrderInvoice(orderInvoice);
+        orderController.addOrderInvoice(orderInvoice, menu);
         scanner.close();
     }
 }

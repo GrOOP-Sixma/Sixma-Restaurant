@@ -33,6 +33,15 @@ public class ReservationController {
         }
     }
 
+    public void removeReservation(Customer customer) {
+        for (int i=0; i<reservationList.size(); i++) {
+            if (reservationList.get(i).getCustomerName().equals(customer.getName()) && reservationList.get(i).getCustomerContactNo() == customer.getContactNo()) {
+                reservationList.remove(i);
+                break;
+            }
+        }
+    }
+
     public Reservation getReservation(int reservationId) {
         for (Reservation reservation : reservationList)
             if (reservation.getReservationID() == reservationId)

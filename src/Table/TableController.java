@@ -31,6 +31,22 @@ public class TableController {
         tableMap.put(numSeats, tableList);
     }
 
+    public void addTable(Table table) {
+        int numSeats = table.getNumSeats();
+
+        ArrayList<Table> tableList;
+        if (!tableMap.containsKey(numSeats)) {
+            tableList = new ArrayList<>();
+            vacancyMap.put(numSeats, 1);
+        }
+        else {
+            tableList = tableMap.get(numSeats);
+            vacancyMap.put(numSeats, vacancyMap.get(numSeats) + 1);
+        }
+        tableList.add(table);
+        tableMap.put(numSeats, tableList);
+    }
+
 
     public void removeTable(int numSeats) {
         if (tableMap.containsKey(numSeats)) {
@@ -56,5 +72,15 @@ public class TableController {
             }
         }
         return null;
+    }
+
+    public void viewTable() {
+        for (Integer numSeats : tableMap.keySet()) {
+            String key = numSeats.toString();
+            System.out.println("Capacity " + key + ":");
+            for (Table table : tableMap.get(numSeats)) {
+                System.out.println(table);
+            }
+        }
     }
 }

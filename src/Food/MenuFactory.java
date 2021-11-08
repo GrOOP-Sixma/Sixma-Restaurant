@@ -2,14 +2,12 @@ package Food;
 
 import java.util.Scanner;
 
-import Factory.Restaurant;
-
 public class MenuFactory {
-    private Restaurant restaurant;
+    private Menu menu;
 
-    public MenuFactory(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
+    public MenuFactory() {menu = new Menu();}
+
+    public Menu getMenu() {return menu;}
 
     public void run() {
         int choice = -1;
@@ -47,7 +45,6 @@ public class MenuFactory {
     public void addMenuItem() {
         System.out.println("Creating a new menu item");
         Scanner scanner = new Scanner(System.in);
-        Menu menu = restaurant.getMenu();
         System.out.println("Enter the name of the menu item");
         String name = scanner.nextLine();
         System.out.println("Enter the type of the menu item");
@@ -66,7 +63,7 @@ public class MenuFactory {
         System.out.println("Enter id of menu item to be removed");
         Scanner scanner = new Scanner(System.in);
         int id = scanner.nextInt();
-        restaurant.getMenu().removeMenuItem(id);
+        menu.removeMenuItem(id);
         scanner.close();
     }
 
@@ -74,7 +71,7 @@ public class MenuFactory {
         System.out.println("Enter id of menu item to be modified");
         Scanner scanner = new Scanner(System.in);
         int id = scanner.nextInt();
-        MenuItem menuItem = restaurant.getMenu().getMenuItem(id);
+        MenuItem menuItem = menu.getMenuItem(id);
         int choice = -1;
         while (choice != 0) {
             System.out.println("Enter 0 to exit");
@@ -117,6 +114,6 @@ public class MenuFactory {
 
     public void viewMenuItems() {
         System.out.println("Viewing all menu items");
-        restaurant.getMenu().printMenu();
+        menu.printMenu();
     }
 }

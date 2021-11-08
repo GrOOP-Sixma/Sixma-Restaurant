@@ -46,4 +46,10 @@ public class CustomerController {
 
         return null;
     }
+
+    public void viewCustomer() {
+        for (Customer customer : customerList) {
+            System.out.println(customer);
+        }
+    }
 }

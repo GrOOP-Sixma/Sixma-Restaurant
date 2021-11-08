@@ -13,14 +13,6 @@ public class Restaurant implements Serializable {
     // attributes
     private String name;
 
-    // controllers
-    private ReservationController reservationController;
-    private CustomerController customerController;
-    private OrderController orderController;
-    private StaffController staffController;
-    private TableController tableController;
-    private Menu menu;
-
     // factories
     private ReservationFactory reservationFactory;
     private CustomerFactory customerFactory;
@@ -32,128 +24,25 @@ public class Restaurant implements Serializable {
 
     // constructor
     public Restaurant(String name) {
-        this.reservationController = new ReservationController();
-        this.customerController = new CustomerController();
-        this.orderController = new OrderController();
-        this.staffController = new StaffController();
-        this.tableController = new TableController();
-        this.menu = new Menu();
-        this.name = name;
-
         // create all the factories
-        this.reservationFactory = new ReservationFactory(this);
-        this.customerFactory = new CustomerFactory(this);
-        this.orderFactory = new OrderFactory(this);
-        this.staffFactory = new StaffFactory(this);
-        this.tableFactory = new TableFactory(this);
-        this.menuFactory = new MenuFactory(this);
-        this.setMenuFactory = new SetMenuFactory(this);
-        
-    }
+        this.reservationFactory = new ReservationFactory();
+        this.customerFactory = new CustomerFactory();
+        this.orderFactory = new OrderFactory();
+        this.staffFactory = new StaffFactory();
+        this.tableFactory = new TableFactory();
+        this.menuFactory = new MenuFactory();
+        this.setMenuFactory = new SetMenuFactory();
 
-    
-    // dealing with controllers
-    // * reservation
-    public ReservationController getReservationController() {
-        return this.reservationController;
-    }
+        orderFactory.setStaffController(staffFactory.getStaffController());
+        orderFactory.setTableController(tableFactory.getTableController());
+        orderFactory.setMenu(menuFactory.getMenu());
 
-    public void addReservation(Reservation reservation) {
-        this.reservationController.addReservation(reservation);
-    }
-
-    public Reservation getReservation(int id) {
-        return this.reservationController.getReservation(id);
-    }
-
-    // * customer
-    public CustomerController getCustomerController() {
-        return this.customerController;
-    }
-
-    public void addCustomer(Customer customer) {
-        this.customerController.addCustomer(customer);
-    }
-
-    public Customer getCustomer(String name2) {
-        return this.customerController.getCustomer(name2);
-    }
-
-    // * order
-    public OrderController getOrderController() {
-        return this.orderController;
-    }
-
-    public void addOrder(Order order) {
-        this.orderController.addOrder(order);
-    }
-
-    public Order getOrder(int id) {
-        return this.orderController.getOrder(id);
-    }
-
-    public void addOrderInvoice(OrderInvoice orderInvoice) {
-        this.orderController.addOrderInvoice(orderInvoice, menu);
-    }
-
-    // * staff
-    public StaffController getStaffController() {
-        return this.staffController;
-    }
-
-    public void addStaff(Staff staff) {
-        this.staffController.addStaff(staff);
-    }
-
-    public Staff getStaff(int id) {
-        return this.staffController.getStaff(id);
-    }
-
-    public void removeStaff(String name, int id) {
-        this.staffController.removeStaff(name, id);
-    }
-
-    public void viewStaff() {
-        this.staffController.viewStaff();
-    }
-    
-    // * table
-
-    public TableController getTableController() {
-        return this.tableController;
-    }
-
-
-    public Table getTable(int id) {
-        return this.tableController.getTable(id);
-    }
-
-    //* menu
-
-    public Menu getMenu() {
-        return this.menu;
-    }
-
-    public void addFood(MenuItem food) {
-        this.menu.addFood(food);
-    }
-
-    public MenuItem getFood(int id) {
-        return this.menu.getMenuItem(id);
-    }
-
-
-    public void viewReservations() {
-        this.reservationController.viewReservations();
+        reservationFactory.setCustomerController(customerFactory.getCustomerController());
+        reservationFactory.setTableController(tableFactory.getTableController());
     }
 
 
 
-
-
-
- 
-    
     
     
     // // save restaurant to file

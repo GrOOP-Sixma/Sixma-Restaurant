@@ -2,14 +2,14 @@ package Staff;
 
 import java.util.Scanner;
 
-import Factory.Restaurant;
 import Restaurant.RestaurantBack.Gender;
 
 public class StaffFactory {
-    private Restaurant restaurant;
-    public StaffFactory(Restaurant restaurant){
-        this.restaurant = restaurant;
-    }
+    private StaffController staffController;
+
+    public StaffFactory(){staffController = new StaffController();}
+
+    public StaffController getStaffController() {return staffController;}
 
     public void run(){
         int choice = -1;
@@ -52,7 +52,7 @@ public class StaffFactory {
 
         // create the staff
         Staff newStaff = new Staff(name, staffGender, role);
-        restaurant.addStaff(newStaff);
+        staffController.addStaff(newStaff);
         scanner.close();
     }
 
@@ -62,11 +62,11 @@ public class StaffFactory {
         String name = scanner.nextLine();
         System.out.println("Enter id of staff");
         int id = scanner.nextInt();
-        restaurant.removeStaff(name, id);
+        staffController.removeStaff(name, id);
         scanner.close();
     }
 
     public void viewStaff(){
-        restaurant.viewStaff();
+        staffController.viewStaff();
     }
 }
