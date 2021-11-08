@@ -1,6 +1,8 @@
 package Food;
 
-public class MenuItem {
+import java.io.Serializable;
+
+public class MenuItem implements Serializable {
     private String name;
     private FoodType foodType;
     private String description;
@@ -33,5 +35,40 @@ public class MenuItem {
         System.out.println("Food Type: " + foodType);
         System.out.println("Description: " + description);
         System.out.println("Price: " + price);
+    }
+
+    // convert to byte array
+    public byte[] toByteArray() {
+        byte[] byteArray = new byte[1024];
+        byteArray[0] = (byte) name.length();
+        byteArray[1] = (byte) foodType.ordinal();
+        byteArray[2] = (byte) description.length();
+        byteArray[3] = (byte) price;
+        for (int i = 0; i < name.length(); i++) {
+            byteArray[i + 4] = (byte) name.charAt(i);
+        }
+        for (int i = 0; i < description.length(); i++) {
+            byteArray[i + 4 + name.length()] = (byte) description.charAt(i);
+        }
+        return byteArray;
+    }
+
+    // convert to file
+    public void toFile(String fileName) {
+        byte[] byteArray = toByteArray();
+        System.out.println("bytes: " + byteArray.length);
+        java.io.FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = new java.io.FileOutputStream(fileName);
+            fileOutputStream.write(byteArray);
+        } catch (Exception e) {
+            System.out.println("Error writing to file: " + e);
+        } finally {
+            try {
+                fileOutputStream.close();
+            } catch (Exception e) {
+                System.out.println("Error closing file: " + e);
+            }
+        }
     }
 }

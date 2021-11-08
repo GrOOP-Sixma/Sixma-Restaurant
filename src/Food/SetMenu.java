@@ -1,8 +1,9 @@
 package Food;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SetMenu{
+public class SetMenu implements Serializable {
     private String setName;
     private ArrayList<MenuItem> menuItems;
     private double setPrice;
@@ -45,4 +46,36 @@ public class SetMenu{
         }
         System.out.println("Set Price: " + setPrice);
     }
+
+    // convert to byte array
+    public byte[] toByteArray() {
+        byte[] bytes = new byte[1024];
+        int index = 0;
+        byte[] setNameBytes = setName.getBytes();
+        byte[] setPriceBytes = Double.toString(setPrice).getBytes();
+        for (int i=0; i<setNameBytes.length; i++) {
+            bytes[index] = setNameBytes[i];
+            index++;
+        }
+        bytes[index] = '\0';
+        index++;
+        for (int i=0; i<setPriceBytes.length; i++) {
+            bytes[index] = setPriceBytes[i];
+            index++;
+        }
+        bytes[index] = '\0';
+        index++;
+        for (int i=0; i<menuItems.size(); i++) {
+            MenuItem menuItem = menuItems.get(i);
+            byte[] menuItemBytes = menuItem.toByteArray();
+            for (int j=0; j<menuItemBytes.length; j++) {
+                bytes[index] = menuItemBytes[j];
+                index++;
+            }
+        }
+        return bytes;
+    }
+
+    // convert to file
+    
 }

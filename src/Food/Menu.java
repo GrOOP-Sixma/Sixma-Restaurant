@@ -1,52 +1,39 @@
 package Food;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Menu {
-    private int numberOfItems = 0; // number of items in the menu
-    protected ArrayList<MenuItem> menuItems; // the menu items
+    private HashMap<Integer, MenuItem> menu; // menu item id, menu item
 
-    // constructor
     public Menu() {
-        menuItems = new ArrayList<MenuItem>();
+        menu = new HashMap<Integer, MenuItem>();
     }
 
-    // add a menu item
-    public void addItem(MenuItem item) {
-        menuItems.add(item);
-        numberOfItems++;
+    public HashMap<Integer, MenuItem> getMenu() {
+        return menu;
     }
 
-    // remove a menu item
-    public void removeItem(MenuItem item) {
-        menuItems.remove(item);
-        numberOfItems--;
+    public void addMenuItem(MenuItem item) {
+        int id = menu.size() + 1;
+        menu.put(id, item);
     }
 
-    // get a menu item
-    public MenuItem getItem(int index) {
-        return menuItems.get(index);
+    public void addFood(MenuItem food) {
+        addMenuItem(food);
     }
 
-    // get all menu items
-    public ArrayList<MenuItem> getAllItems() {
-        return menuItems;
+    public  MenuItem getMenuItem(int id) {
+        return menu.get(id);
     }
 
-    // get the number of items in the menu
-    public int getNumberOfItems() {
-        return numberOfItems;
-    }
-
-    // print the menu
-    public void print() {
-        System.out.println("Menu");
-        System.out.println("-----------------------------");
-        for (int i = 0; i < numberOfItems; i++) {
-            MenuItem item = menuItems.get(i);
-            System.out.println(item.getName());
-            System.out.println("\t" + item.getDescription());
-            System.out.println("\t" + item.getPrice());
+    public void printMenu() {
+        for (MenuItem item : menu.values()) {
+            System.out.println(item);
         }
-        System.out.println("-----------------------------");
     }
+
+    public void removeMenuItem(int id) {
+        menu.remove(id);
+    }
+
+
 }
