@@ -15,12 +15,14 @@ public class ReservationFactory {
     private CustomerController customerController;
     private TableController tableController;
     private ReservationController reservationController;
+    private String name;
 
     // constructors
-    public ReservationFactory(CustomerController customerController, TableController tableController) {
+    public ReservationFactory(String name, CustomerController customerController, TableController tableController) {
+        this.name = name;
         this.customerController = customerController;
         this.tableController = tableController;
-        reservationController = new ReservationController(customerController, tableController);
+        reservationController = new ReservationController(name, customerController, tableController);
         updateReservations();
     }
 

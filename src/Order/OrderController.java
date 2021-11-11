@@ -13,9 +13,11 @@ public class OrderController {
     private final SetMenu setMenu;
     private final ArrayList<Order> orders;
     private final ArrayList<OrderInvoice> orderInvoices;
+    private String name;
 
     // constructors
-    public OrderController(Menu menu, SetMenu setMenu) {
+    public OrderController(String name, Menu menu, SetMenu setMenu) {
+        this.name = name;
         this.menu = menu;
         this.setMenu = setMenu;
         orders = new ArrayList<>();
@@ -104,7 +106,9 @@ public class OrderController {
         int setItemsSize;
         String orderedSetItems;
         try {
-            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/Order.txt");
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name  + "OrderInvoice.txt");
+            myObj.createNewFile(); // if file already exists will do nothing
+            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/" + this.name  + "Order.txt");
             for (Order order : orders) {
                 orderId = order.getOrderId();
                 staffName = order.getStaffName();
@@ -137,7 +141,9 @@ public class OrderController {
         double GSTAmount;
         double total;
         try {
-            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/OrderInvoice.txt");
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name  + "OrderInvoice.txt");
+            myObj.createNewFile(); // if file already exists will do nothing
+            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/" + this.name  + "OrderInvoice.txt");
             for (OrderInvoice orderInvoice : orderInvoices) {
                 orderId = orderInvoice.getOrderId();
                 staffName = orderInvoice.getStaffName();
@@ -187,7 +193,8 @@ public class OrderController {
         HashMap<SetItem, Integer> orderedSetItems;
         int maxOrderId = 0;
         try {
-            File myObj = new File(System.getProperty("user.dir") + "/tmp/Order.txt");
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name  + "Order.txt");
+            myObj.createNewFile(); // if file already exists will do nothing
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -220,6 +227,9 @@ public class OrderController {
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
 
         int year;
@@ -233,7 +243,8 @@ public class OrderController {
         double GSTAmount;
         double total;
         try {
-            File myObj = new File(System.getProperty("user.dir") + "/tmp/OrderInvoice.txt");
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name  + "OrderInvoice.txt");
+            myObj.createNewFile(); // if file already exists will do nothing
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -273,6 +284,9 @@ public class OrderController {
             }
             Order.setNextOrderId(maxOrderId + 1);
         } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }

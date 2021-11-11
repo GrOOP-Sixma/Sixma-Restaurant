@@ -4,9 +4,13 @@ import java.util.Scanner;
 
 public class CustomerFactory {
     private CustomerController customerController;
+    private String name;
 
     // constructors
-    public CustomerFactory() {customerController = new CustomerController();}
+    public CustomerFactory(String name) {
+        customerController = new CustomerController(name);
+        this.name = name;
+    }
 
     // getters
     public CustomerController getCustomerController() {return customerController;}

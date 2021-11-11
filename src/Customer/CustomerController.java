@@ -6,10 +6,12 @@ import java.io.*;
 
 public class CustomerController {
     private final ArrayList<Customer> customerList;
+    private String name;
 
     // constructor
-    public CustomerController() {
+    public CustomerController(String name) {
         customerList = new ArrayList<>();
+        this.name = name;
         readInstances();
     }
 
@@ -69,7 +71,7 @@ public class CustomerController {
         int customerId;
         boolean isMember;
         try {
-            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/Customer.txt");
+            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/" + this.name + "Customer.txt");
             for (Customer customer : customerList) {
                 name = customer.getName();
                 contactNo = customer.getContactNo();
@@ -96,7 +98,8 @@ public class CustomerController {
         int isMember;
         int maxCustomerId = 0;
         try {
-            File myObj = new File(System.getProperty("user.dir") + "/tmp/Customer.txt");
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name + "Customer.txt");
+            myObj.createNewFile(); // if file already exists will do nothing
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -117,6 +120,9 @@ public class CustomerController {
             }
             Customer.setNextCustomerId(maxCustomerId + 1);
         } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }

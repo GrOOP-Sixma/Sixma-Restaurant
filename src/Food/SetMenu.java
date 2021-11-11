@@ -7,9 +7,11 @@ import java.io.*;
 public class SetMenu {
     private final Menu menu;
     private final ArrayList<SetItem> setMenu;
+    private String name;
 
     // constructors
-    public SetMenu(Menu menu) {
+    public SetMenu(String name, Menu menu) {
+        this.name = name;
         this.menu = menu;
         setMenu = new ArrayList<>();
         readInstances();
@@ -63,7 +65,9 @@ public class SetMenu {
         int setSize;
         String menuItemsIds;
         try {
-            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/SetItem.txt");
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name  + "SetItem.txt");
+            myObj.createNewFile(); // if file already exists will do nothing
+            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/" + this.name  + "SetItem.txt");
             for (SetItem setItem : setMenu) {
                 name = setItem.getName();
                 price = setItem.getPrice();
@@ -92,7 +96,8 @@ public class SetMenu {
         ArrayList<MenuItem> setItems;
         int maxSetItemId = 0;
         try {
-            File myObj = new File(System.getProperty("user.dir") + "/tmp/SetItem.txt");
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name  + "SetItem.txt");
+            myObj.createNewFile(); // if file already exists will do nothing
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -112,6 +117,9 @@ public class SetMenu {
             }
             SetItem.setNextSetItemId(maxSetItemId + 1);
         } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }

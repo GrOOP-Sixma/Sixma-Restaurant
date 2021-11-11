@@ -6,7 +6,7 @@ public class RRPSS {
     private Restaurant restaurant;
 
     // constructor
-    public RRPSS() {this.restaurant = new Restaurant();}
+    public RRPSS(String name) {this.restaurant = new Restaurant(name);}
 
     // methods
     public int getIntInput() {

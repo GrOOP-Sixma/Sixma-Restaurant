@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 
-import Customer.Customer;
 import Restaurant.RestaurantBack.Gender;
 
 public class StaffController {
     private final ArrayList<Staff> staffList;
+    private String name;
 
     // constructor
-    public StaffController() {
+    public StaffController(String name) {
         staffList = new ArrayList<>();
+        this.name = name;
         readInstances();
     }
 
@@ -72,7 +73,9 @@ public class StaffController {
         int staffId;
         String role;
         try {
-            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/Staff.txt");
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name + "Staff.txt");
+            myObj.createNewFile(); // if file already exists will do nothing
+            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/" + this.name + "Staff.txt");
             for (Staff staff : staffList) {
                 name = staff.getName();
                 gender = staff.getGender();
@@ -99,7 +102,8 @@ public class StaffController {
         String role;
         int maxStaffId = 0;
         try {
-            File myObj = new File(System.getProperty("user.dir") + "/tmp/Staff.txt");
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name + "Staff.txt");
+            myObj.createNewFile(); // if file already exists will do nothing
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -120,6 +124,9 @@ public class StaffController {
             }
             Staff.setNextStaffId(maxStaffId + 1);
         } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }

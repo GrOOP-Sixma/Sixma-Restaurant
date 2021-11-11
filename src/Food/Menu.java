@@ -6,11 +6,20 @@ import java.io.*;
 
 public class Menu {
     private final ArrayList<MenuItem> menu;
+    private String name;
 
     // constructors
-    public Menu() {
+    public Menu(String name) {
         menu = new ArrayList<>();
+        this.name = name;
         readInstances();
+        try {
+            File myObj = new File("../tmp/" + this.name  + "MenuItem.txt");
+            myObj.createNewFile();  // if file already exists will do nothing
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 
     // methods
@@ -61,7 +70,10 @@ public class Menu {
         FoodType foodType;
         String description;
         try {
-            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/MenuItem.txt");
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name  + "MenuItem.txt");
+            myObj.createNewFile();  // if file already exists will do nothing
+            Scanner myReader = new Scanner(myObj);
+            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/" + this.name  + "MenuItem.txt");
             for (MenuItem menuItem : menu) {
                 name = menuItem.getName();
                 price = menuItem.getPrice();
@@ -93,7 +105,8 @@ public class Menu {
         String description;
         int maxMenuItemId = 0;
         try {
-            File myObj = new File(System.getProperty("user.dir") + "/tmp/MenuItem.txt");
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name  + "MenuItem.txt");
+            myObj.createNewFile();  // if file already exists will do nothing
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -118,6 +131,9 @@ public class Menu {
             }
             MenuItem.setNextMenuItemId(maxMenuItemId + 1);
         } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }

@@ -4,9 +4,13 @@ import java.util.Scanner;
 
 public class TableFactory {
     private TableController tableController;
+    String name;
 
     // constructors
-    public TableFactory() {tableController = new TableController();}
+    public TableFactory(String name) {
+        tableController = new TableController(name);
+        this.name = name;
+    }
 
     // getters
     public TableController getTableController() {return tableController;}

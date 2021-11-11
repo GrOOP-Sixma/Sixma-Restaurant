@@ -6,11 +6,13 @@ import java.util.Scanner;
 public class SetMenuFactory {
     private Menu menu;
     private SetMenu setMenu;
+    private String name;
 
     // constructors
-    public SetMenuFactory(Menu menu) {
+    public SetMenuFactory(String name, Menu menu) {
+        this.name = name;
         this.menu = menu;
-        setMenu = new SetMenu(menu);
+        setMenu = new SetMenu(name, menu);
     }
 
     // getters

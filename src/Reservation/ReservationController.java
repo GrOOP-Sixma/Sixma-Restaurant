@@ -13,9 +13,11 @@ public class ReservationController {
     private final CustomerController customerController;
     private final TableController tableController;
     private final ArrayList<Reservation> reservationList;
+    private String name;
 
     // constructors
-    public ReservationController(CustomerController customerController, TableController tableController) {
+    public ReservationController(String name, CustomerController customerController, TableController tableController) {
+        this.name = name;
         this.customerController = customerController;
         this.tableController = tableController;
         reservationList = new ArrayList<>();
@@ -102,7 +104,9 @@ public class ReservationController {
         int numPax;
         Table table;
         try {
-            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/Reservation.txt");
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name  + "Reservation.txt");
+            myObj.createNewFile(); // if file already exists will do nothing
+            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/" + this.name  + "Reservation.txt");
             for (Reservation reservation : reservationList) {
                 reservationId = reservation.getReservationId();
                 reservationDate = reservation.getReservationDate();
@@ -137,7 +141,8 @@ public class ReservationController {
         int tableId;
         int maxReservationId = 0;
         try {
-            File myObj = new File(System.getProperty("user.dir") + "/tmp/Reservation.txt");
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name  + "Reservation.txt");
+            myObj.createNewFile(); // if file already exists will do nothing
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -162,6 +167,9 @@ public class ReservationController {
             }
             Reservation.setNextReservationId(maxReservationId + 1);
         } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }

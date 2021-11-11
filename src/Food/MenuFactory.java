@@ -4,9 +4,13 @@ import java.util.Scanner;
 
 public class MenuFactory {
     private final Menu menu;
+    private String name;
 
     // constructors
-    public MenuFactory() {menu = new Menu();}
+    public MenuFactory(String name) {
+        menu = new Menu(name);
+        this.name = name;
+    }
 
     // getters
     public Menu getMenu() {return menu;}

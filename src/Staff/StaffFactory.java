@@ -6,9 +6,13 @@ import Restaurant.RestaurantBack.Gender;
 
 public class StaffFactory {
     private StaffController staffController;
+    private String name;
 
     // constructors
-    public StaffFactory() {staffController = new StaffController();}
+    public StaffFactory(String name) {
+        staffController = new StaffController(name);
+        this.name = name;
+    }
 
     // getters
     public StaffController getStaffController() {return staffController;}

@@ -8,10 +8,12 @@ import java.io.*;
 
 public class TableController {
     private final Map<Integer, ArrayList<Table>> tableMap;
+    private String name;
 
     // constructors
-    public TableController() {
+    public TableController(String name) {
         tableMap = new HashMap<>();
+        this.name = name;
         readInstances();
     }
 
@@ -130,8 +132,11 @@ public class TableController {
         int tableId;
         int numSeats;
         TableStatus status;
+        
         try {
-            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/Table.txt");
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name  + "Table.txt");
+            myObj.createNewFile(); // if file already exists will do nothing
+            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/" + this.name  + "Table.txt");
             for (ArrayList<Table> tableList : tableMap.values()) {
                 for (Table table : tableList) {
                     tableId = table.getTableId();
@@ -158,7 +163,8 @@ public class TableController {
         int status;
         int maxTableId = 0;
         try {
-            File myObj = new File(System.getProperty("user.dir") + "/tmp/Table.txt");
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name  + "Table.txt");
+            myObj.createNewFile(); // if file already exists will do nothing
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -178,6 +184,9 @@ public class TableController {
             }
             Table.setNextTableId(maxTableId + 1);
         } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }

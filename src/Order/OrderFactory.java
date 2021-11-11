@@ -22,14 +22,16 @@ public class OrderFactory {
     private Menu menu;
     private SetMenu setMenu;
     private OrderController orderController;
+    private String name;
 
-    public OrderFactory(StaffController staffController, TableController tableController, ReservationController reservationController, Menu menu, SetMenu setMenu) {
+    public OrderFactory(String name, StaffController staffController, TableController tableController, ReservationController reservationController, Menu menu, SetMenu setMenu) {
+        this.name = name;
         this.staffController = staffController;
         this.tableController = tableController;
         this.reservationController = reservationController;
         this.menu = menu;
         this.setMenu = setMenu;
-        orderController = new OrderController(menu, setMenu);
+        orderController = new OrderController(name, menu, setMenu);
     }
 
     // getters

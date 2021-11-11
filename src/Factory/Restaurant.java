@@ -15,16 +15,22 @@ public class Restaurant {
     private TableFactory tableFactory;
     private MenuFactory menuFactory;
     private SetMenuFactory setMenuFactory;
+    private String name;
 
     // constructor
-    public Restaurant() {
-        this.customerFactory = new CustomerFactory();
-        this.staffFactory = new StaffFactory();
-        this.tableFactory = new TableFactory();
-        this.reservationFactory = new ReservationFactory(customerFactory.getCustomerController(), tableFactory.getTableController());
-        this.menuFactory = new MenuFactory();
-        this.setMenuFactory = new SetMenuFactory(menuFactory.getMenu());
-        this.orderFactory = new OrderFactory(staffFactory.getStaffController(), tableFactory.getTableController(), reservationFactory.getReservationController(), menuFactory.getMenu(), setMenuFactory.getSetMenu());
+    public Restaurant(String name) {
+        this.name = name;
+        this.customerFactory = new CustomerFactory(name);
+        this.staffFactory = new StaffFactory(name);
+        this.tableFactory = new TableFactory(name);
+        this.reservationFactory = new ReservationFactory(name, customerFactory.getCustomerController(), tableFactory.getTableController());
+        this.menuFactory = new MenuFactory(name);
+        this.setMenuFactory = new SetMenuFactory(name, menuFactory.getMenu());
+        this.orderFactory = new OrderFactory(name, staffFactory.getStaffController(), tableFactory.getTableController(), reservationFactory.getReservationController(), menuFactory.getMenu(), setMenuFactory.getSetMenu());
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void customerRun() {
