@@ -1,50 +1,32 @@
 package Factory;
-import java.nio.file.Path;
-import java.util.ArrayList;
+
 import java.util.Scanner;
 
-import Food.FoodType;
-import Food.MenuItem;
-import Reservation.Reservation;
-import Staff.Staff;
-import Table.Table;
+public class RRPSS {
+    private Restaurant restaurant;
 
-public class RRPSS implements Runnable {
-    private Restaurant restaurant; // The restaurant
+    // constructor
+    public RRPSS() {this.restaurant = new Restaurant();}
 
-    // starts the program
-    // public RRPSS(String Filename) {
-    //     // check if restaurant file exists
-    //     try {
-    //         Path path = Path.of("./Factory/" + Filename);
-    //         // if file exists, load file
-    //         if (path.toFile().exists()) {
-    //             restaurant = Restaurant.loadRestaurant(Filename);
-    //         } else {
-    //             // if file does not exist, create new file
-    //             restaurant = new Restaurant(Filename);
-    //             System.out.println("Create number of tables:");
-    //             Scanner scanner = new Scanner(System.in);
-    //             int numberOfTables = scanner.nextInt();
-    //             restaurant.addTables(numberOfTables);
-    //             scanner.close();
-    //         }
-    //     } catch (Exception e) {
-    //         System.out.println("Error: " + e.getMessage());
-    //     }
-    // }
-
-    public RRPSS() {
-        restaurant = new Restaurant("Sixma");
+    // methods
+    public int getIntInput() {
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            if (sc.hasNextInt()) {
+                return sc.nextInt();
+            }
+            else {
+                System.out.println("Invalid input.");
+                sc.next();
+            }
+        }
     }
 
-    @Override
     public void run() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to the Sixma Restaurant Reservation and Point of Sale System (RRPSS)");
-        Boolean exit = false;
-        while (!exit) {
-            System.out.println("What would you like to do?");
+        Scanner sc = new Scanner(System.in);
+        int choice = -1;
+        while (choice != 7) {
+            System.out.println("\nWhat would you like to do?");
             System.out.println("1. Menu Options");
             System.out.println("2. Set Menu Options");
             System.out.println("3. Staff Options");
@@ -52,34 +34,37 @@ public class RRPSS implements Runnable {
             System.out.println("5. Reservation Options");
             System.out.println("6. Point of Sale Options");
             System.out.println("7. Exit");
-            int choice = scanner.nextInt();
-            switch (choice) {
-                case 1:
-                    restaurant.menuRun();
-                    break;
-                case 2:
-                    restaurant.setMenuRun();
-                    break;
-                case 3:
-                    restaurant.staffRun();
-                    break;
-                case 4:
-                    restaurant.tableRun();
-                    break;
-                case 5:
-                    restaurant.reservationRun();
-                    break;
-                case 6:
-                    restaurant.orderRun();
-                    break;
-                case 7:
-                    exit = true;
-                    break;
-                default:
-                    System.out.println("Invalid choice");
-                    break;
+            loop: while (choice != 7) {
+                choice = getIntInput();
+                switch (choice) {
+                    case 1:
+                        restaurant.menuRun();
+                        break loop;
+                    case 2:
+                        restaurant.setMenuRun();
+                        break loop;
+                    case 3:
+                        restaurant.staffRun();
+                        break loop;
+                    case 4:
+                        restaurant.tableRun();
+                        break loop;
+                    case 5:
+                        restaurant.reservationRun();
+                        break loop;
+                    case 6:
+                        restaurant.orderRun();
+                        break loop;
+                    case 7:
+                        continue;
+                    default:
+                        System.out.println("Invalid choice");
+                }
             }
         }
-        scanner.close();
+
+
+        restaurant.writeInstances();
+        sc.close();
     }
 }

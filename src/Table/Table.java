@@ -1,56 +1,56 @@
 package Table;
 
-import java.io.Serializable;
-
-public class Table implements Serializable {
-    private final int tableID;
-    private static int nextTableID = 1;
+public class Table {
+    private int tableId;
+    private static int nextTableId = 1;
     private int numSeats;
-    private TableStatus status = TableStatus.VACANT;
+    private TableStatus status;
 
-    // constructor
+    // constructors
     public Table(int numSeats) {
-        tableID = getNextTableID();
+        tableId = getNextTableId();
         this.numSeats = numSeats;
+        status = TableStatus.VACANT;
+    }
+
+    public Table(int numSeats, int tableId, TableStatus status) {
+        this.tableId = tableId;
+        this.numSeats = numSeats;
+        this.status = status;
     }
 
     // getters
-    public int getTableID() {return tableID;}
+    public int getTableId() {return tableId;}
     public int getNumSeats() {return numSeats;}
     public TableStatus getStatus() {return status;}
 
     // setters
+    public static void setNextTableId(int nextTableId) {Table.nextTableId = nextTableId;}
     public void setNumSeats(int numSeats) {this.numSeats = numSeats;}
     public void setStatus(TableStatus status) {this.status = status;}
 
     // methods
-    private static int getNextTableID() {
-        return nextTableID++;
+    private static int getNextTableId() {
+        return nextTableId++;
     }
 
-    public byte[] toByteArray() {
-        byte[] byteArray = new byte[1024];
-        byteArray[0] = (byte) tableID;
-        byteArray[1] = (byte) numSeats;
-        byteArray[2] = (byte) status.ordinal();
-        return byteArray;
+    public void reserveTable() {
+        status = TableStatus.RESERVED;
     }
 
-    public void toFile(String fileName) {
-        byte[] byteArray = toByteArray();
-        System.out.println("bytes: " + byteArray.length);
-        java.io.FileOutputStream fileOutputStream = null;
-        try {
-            fileOutputStream = new java.io.FileOutputStream(fileName);
-            fileOutputStream.write(byteArray);
-        } catch (Exception e) {
-            System.out.println("Error writing to file: " + e);
-        } finally {
-            try {
-                fileOutputStream.close();
-            } catch (Exception e) {
-                System.out.println("Error closing file: " + e);
-            }
+    public void unreserveTable() {
+        status = TableStatus.VACANT;
+    }
+
+    public void printTable() {
+        System.out.println("-------------------------------");
+        System.out.println("Table ID: " + tableId);
+        System.out.println("Capacity: " + numSeats);
+        if (status == TableStatus.VACANT) {
+            System.out.println("Status: Vacant");
+        }
+        else {
+            System.out.println("Status: Reserved");
         }
     }
 }

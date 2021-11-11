@@ -1,48 +1,125 @@
 package Food;
-import java.io.Serializable;
-import java.util.*;
 
-public class Menu implements Serializable {
-    private HashMap<Integer, Products> menu; // menu item id, menu item
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.*;
 
+public class Menu {
+    private final ArrayList<MenuItem> menu;
+
+    // constructors
     public Menu() {
-        menu = new HashMap<Integer, Products>();
+        menu = new ArrayList<>();
+        readInstances();
     }
 
-    public HashMap<Integer, Products> getMenu() {
-        return menu;
+    // methods
+    public void addMenuItem(String name, double price, FoodType foodType, String description) {
+        MenuItem menuItem = new MenuItem(name, price, foodType, description);
+        menu.add(menuItem);
     }
 
-    public void addMenuItem(Products item) {
-        int id = menu.size() + 1;
-        menu.put(id, item);
+    public void addMenuItem(String name, double price, int menuItemId, FoodType foodType, String description) {
+        MenuItem menuItem = new MenuItem(name, price, menuItemId, foodType, description);
+        menu.add(menuItem);
     }
 
-    public void addFood(Products food) {
-        addMenuItem(food);
+    public void addMenuItem(MenuItem menuItem) {
+        menu.add(menuItem);
     }
 
-    public Products getMenuItem(int id) {
-        return menu.get(id);
+    public int removeMenuItem(int menuItemId) {
+        for (int i=0; i<menu.size(); i++) {
+            if (menu.get(i).getMenuItemId() == menuItemId) {
+                menu.remove(i);
+                return 1;
+            }
+        }
+        return 0;
     }
 
-    public MenuItem getMenuItem(String name) {
-        for (Products item : menu.values()) {
-            if (item.getName().equals(name)) {
-                return (MenuItem) item;
+    public MenuItem getMenuItem(int menuItemId) {
+        for (MenuItem menuItem : menu) {
+            if (menuItem.getMenuItemId() == menuItemId) {
+                return menuItem;
             }
         }
         return null;
     }
 
-    public void printMenu() {
-        for (Products item : menu.values()) {
-            System.out.println(item);
+    public void viewMenu() {
+        System.out.println("\nAla Carte Menu:");
+        for (MenuItem menuItem : menu) {
+            menuItem.printMenuItem();
         }
     }
 
-    public void removeMenuItem(int id) {
-        menu.remove(id);
+    public void writeInstances() {
+        String name;
+        double price;
+        int menuItemId;
+        FoodType foodType;
+        String description;
+        try {
+            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/MenuItem.txt");
+            for (MenuItem menuItem : menu) {
+                name = menuItem.getName();
+                price = menuItem.getPrice();
+                menuItemId = menuItem.getMenuItemId();
+                foodType = menuItem.getFoodType();
+                description = menuItem.getDescription();
+                if (foodType == FoodType.MAIN_COURSE) {
+                    myWriter.write(name + ";" + price + ";" + menuItemId + ";0;" + description + "\n");
+                }
+                else if (foodType == FoodType.DRINKS) {
+                    myWriter.write(name + ";" + price + ";" + menuItemId + ";1;" + description + "\n");
+                }
+                else {
+                    myWriter.write(name + ";" + price + ";" + menuItemId + ";2;" + description + "\n");
+                }
+            }
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 
+    public void readInstances() {
+        String name;
+        double price;
+        int menuItemId;
+        int foodType;
+        String description;
+        int maxMenuItemId = 0;
+        try {
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/MenuItem.txt");
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] attributes = data.split(";");
+                name = attributes[0];
+                price = Double.parseDouble(attributes[1]);
+                menuItemId = Integer.parseInt(attributes[2]);
+                foodType = Integer.parseInt(attributes[3]);
+                description = attributes[4];
+                if (foodType == 0) {
+                    addMenuItem(name, price, menuItemId, FoodType.MAIN_COURSE, description);
+                }
+                else if (foodType == 1) {
+                    addMenuItem(name, price, menuItemId, FoodType.DRINKS, description);
+                }
+                else {
+                    addMenuItem(name, price, menuItemId, FoodType.DESSERT, description);
+                }
+                if (menuItemId > maxMenuItemId) {
+                    maxMenuItemId = menuItemId;
+                }
+            }
+            MenuItem.setNextMenuItemId(maxMenuItemId + 1);
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
 }

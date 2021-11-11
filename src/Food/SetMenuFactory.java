@@ -1,159 +1,227 @@
 package Food;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SetMenuFactory {
-    private HashMap<String, SetMenu> setMenuList; // name of set menu to set menu object. // ? example: fridayHappyHour = setMenu
     private Menu menu;
+    private SetMenu setMenu;
 
+    // constructors
     public SetMenuFactory(Menu menu) {
-        setMenuList = new HashMap<>();
         this.menu = menu;
+        setMenu = new SetMenu(menu);
+    }
+
+    // getters
+    public Menu getMenu() {return menu;}
+    public SetMenu getSetMenu() {return setMenu;}
+
+    // methods
+    public double getDoubleInput() {
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            if (sc.hasNextDouble()) {
+                return sc.nextDouble();
+            }
+            else {
+                System.out.println("Invalid input.");
+                sc.next();
+            }
+        }
+    }
+
+    public int getIntInput() {
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            if (sc.hasNextInt()) {
+                return sc.nextInt();
+            }
+            else {
+                System.out.println("Invalid input.");
+                sc.next();
+            }
+        }
     }
 
     public void run() {
-        Scanner scanner = new Scanner(System.in);
-        Boolean done = false;
-        System.out.println("Welcome to Set Menu Options");
-        while (!done) {
-            System.out.println("\nPlease select an option:");
-            System.out.println("1. Modify a set menu");
-            System.out.println("2. Add a set menu");
-            System.out.println("3. Print the list of set menus");
-            System.out.println("4. Print the set items in a specific set menu");
+        int choice = -1;
+        Scanner sc = new Scanner(System.in);
+        while (choice != 0) {
+            System.out.println("\nSet Menu Manager:");
+            System.out.println("1. Create set menu item");
+            System.out.println("2. Update set menu item");
+            System.out.println("3. Remove set menu item");
+            System.out.println("4. View set menu items");
             System.out.println("0. Exit");
-            switch (scanner.nextLine()) {
-                case "1":
-                    modifySetMenu();
-                    break;
-                case "2":
-                    createSetMenu();
-                    break;
-                case "3":
-                    printSetMenus();
-                    break;
-                case "4":
-                    System.out.println("Enter name of set menu you wish to print");
-                    printSetItems(scanner.nextLine());
-                    break;
-                case "0":
-                    done = true;
-                    break;
-                default:
-                    System.out.println("Invalid input");
-                    break;
+            loop: while (choice != 0) {
+                choice = getIntInput();
+                switch (choice) {
+                    case 0:
+                        continue;
+                    case 1:
+                        addSetItem();
+                        break loop;
+                    case 2:
+                        modifySetItem();
+                        break loop;
+                    case 3:
+                        removeSetItem();
+                        break loop;
+                    case 4:
+                        viewSetItems();
+                        break loop;
+                    default:
+                        System.out.println("Invalid choice");
+                }
             }
-
         }
-        scanner.close();
     }
 
     // create a new menu
-    public void createSetMenu() {
-        Scanner scanner = new Scanner(System.in);
-        SetMenu newSetMenu = new SetMenu();
-        System.out.println("Enter the name of the set menu: ");
-        newSetMenu.setName(scanner.nextLine());
-        setMenuList.put(newSetMenu.getName(), newSetMenu);
-        System.out.println("Set menu created successfully");
-        scanner.close();
-    }
+    public void addSetItem() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter name of set menu item:");
+        String name = sc.nextLine();
 
-    // modify set menu
-    public void modifySetMenu() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the name of the set menu: ");
-        String name = scanner.nextLine();
-        if (setMenuList.containsKey(name)) {
-            SetMenu setMenu = setMenuList.get(name);
-            int choice = -1;
-            while (choice != 0) {
-                System.out.println("1. Add a set to the set menu");
-                System.out.println("2. Remove a set from the set menu");
-                System.out.println("3. Delete the set menu");
-                System.out.println("0. Back");
-                System.out.println("Enter your choice: ");
-                choice = scanner.nextInt();
-                switch (choice) {
-                    case 1:
-                        createSetItem(setMenu);
-                        break;
-                    case 2:
-                        removeSetItem(setMenu);
-                        break;
-                    case 3:
-                        setMenuList.remove(name);
-                        System.out.println("Set menu deleted successfully");
-                        break;
-                    case 0:
-                        break;
-                    default:
-                        System.out.println("Invalid choice");
-                        break;
+        System.out.println("Enter price of set menu item:");
+        double price = getDoubleInput();
+        while (price <= 0) {
+            System.out.println("Invalid price");
+            price = getDoubleInput();
+        }
+
+        System.out.println("Enter number of menu items in set menu item:");
+        int setSize = getIntInput();
+        while (setSize <= 0) {
+            System.out.println("Invalid size");
+            setSize = getIntInput();
+        }
+
+        menu.viewMenu();
+        ArrayList<MenuItem> setItems = new ArrayList<>();
+        for (int i=0; i<setSize; i++) {
+            MenuItem menuItem = null;
+            while (menuItem == null) {
+                System.out.println("Menu item " + (i + 1));
+                System.out.println("Enter id of menu item to be added to set menu item:");
+                int id = getIntInput();
+                while (id <= 0) {
+                    System.out.println("Invalid id");
+                    id = getIntInput();
+                }
+                menuItem = menu.getMenuItem(id);
+                if (menuItem == null) {
+                    System.out.println("There is no menu item with id " + id);
                 }
             }
-        } else {
-            System.out.println("Set menu not found");
+            setItems.add(menuItem);
         }
-        scanner.close();
+
+        SetItem setItem = new SetItem(name, price, setItems);
+        setMenu.addSetItem(setItem);
     }
 
-    // add item to a set menu
-    public void createSetItem(SetMenu setMenu) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the name of the set");
-        String name = scanner.nextLine();
-        System.out.println("How many items are included in this set?");
-        int numOfItems = scanner.nextInt();
-        MenuItem[] items = new MenuItem[numOfItems];
-        for (int i = 0; i < numOfItems; i++) {
-            System.out.println("Enter name of menu item to be included");
-            String itemName = scanner.nextLine();
-            // ! im assuming the menu item is already in the menu
-            MenuItem menuItem = menu.getMenuItem(itemName);
-            items[i] = menuItem;
+    public void removeSetItem() {
+        System.out.println("Enter id of set menu item to be removed:");
+        int id = getIntInput();
+        while (id <= 0) {
+            System.out.println("Invalid id");
+            id = getIntInput();
         }
-        System.out.println("Enter the price of the set");
-        double price = scanner.nextDouble();
-        setMenu.addSet(items, name, price);
-        scanner.close();
-    }
 
-    // remove an item from a set menu
-    public void removeSetItem(SetMenu setMenu) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the id of the set");
-        int id = scanner.nextInt();
-        setMenu.deleteSet(id);
-        scanner.close();
-    }
-
-    // print all set menus
-    public void printSetMenus() {
-        for (String name : setMenuList.keySet()) {
-            System.out.println(name);
+        if (setMenu.removeSetItem(id) == 0) {
+            System.out.println("There is no menu item with id "+ id);
         }
     }
 
-    // print all set items in a set menu
-    public void printSetItems(String name) {
-        if (setMenuList.containsKey(name)) {
-            SetMenu setMenu = setMenuList.get(name);
-            setMenu.printSetMenu();
-        } else {
-            System.out.println("Set menu not found");
+    public void modifySetItem() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter id of set menu item to be modified:");
+        int setItemId = getIntInput();
+        while (setItemId <= 0) {
+            System.out.println("Invalid id");
+            setItemId = getIntInput();
+        }
+        SetItem setItem = setMenu.getSetItem(setItemId);
+        if (setItem == null) {
+            System.out.println("There is no set menu item with id " + setItemId);
+            return;
+        }
+
+        int choice = -1;
+        while (choice != 0) {
+            System.out.println("1. Modify name");
+            System.out.println("2. Modify price");
+            System.out.println("3. Add menu item");
+            System.out.println("4. Remove menu item");
+            System.out.println("0. Back");
+            loop: while (choice != 0) {
+                choice = getIntInput();
+                switch (choice) {
+                    case 0:
+                        continue;
+                    case 1:
+                        System.out.println("Enter new name of set menu item:");
+                        String name = sc.nextLine();
+                        setItem.setName(name);
+                        break loop;
+                    case 2:
+                        System.out.println("Enter new price of set menu item:");
+                        double price = getDoubleInput();
+                        while (price <= 0) {
+                            System.out.println("Invalid price");
+                            price = getDoubleInput();
+                        }
+                        setItem.setPrice(price);
+                        break loop;
+                    case 3:
+                        menu.viewMenu();
+                        System.out.println("Enter id of menu item to be added to set menu item:");
+                        int menuItemId = getIntInput();
+                        while (menuItemId <= 0) {
+                            System.out.println("Invalid id");
+                            menuItemId = getIntInput();
+                        }
+                        MenuItem menuItem = menu.getMenuItem(menuItemId);
+                        if (menuItem == null) {
+                            System.out.println("There is no menu item with id " + menuItemId);
+                            break loop;
+                        }
+                        setItem.addMenuItem(menuItem);
+                        break loop;
+                    case 4:
+                        setItem.printSetItem();
+                        System.out.println("Enter id of menu item to be removed from set menu item:");
+                        menuItemId = getIntInput();
+                        while (menuItemId <= 0) {
+                            System.out.println("Invalid id");
+                            menuItemId = getIntInput();
+                        }
+                        menuItem = menu.getMenuItem(menuItemId);
+                        if (menuItem == null) {
+                            System.out.println("There is no menu item with id " + menuItemId);
+                            break loop;
+                        }
+                        if (!setItem.getSetItems().contains(menuItem)) {
+                            System.out.println("Set menu item does not contain menu item with id " + menuItemId);
+                            break loop;
+                        }
+                        setItem.removeMenuItem(menuItem);
+                        break loop;
+                    default:
+                        System.out.println("Invalid choice");
+                }
+            }
         }
     }
 
-    public HashMap<String, SetMenu> getSetMenuList() {
-        return setMenuList;
+    public void viewSetItems() {
+        setMenu.viewSetMenu();
     }
 
-    public SetMenu getSetMenu(String name) {
-        return setMenuList.get(name);
+    public void writeInstances() {
+        setMenu.writeInstances();
     }
-
-
 }
 

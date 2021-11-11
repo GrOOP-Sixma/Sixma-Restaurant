@@ -3,19 +3,24 @@ package Staff;
 import Restaurant.Person;
 import Restaurant.RestaurantBack.Gender;
 
-import java.io.Serializable;
-
-public class Staff extends Person implements Serializable {
+public class Staff extends Person {
     private Gender gender;
-	private int staffId;
+    private int staffId;
     private static int nextStaffId = 1;
     private String role;
 
-    // constructor
+    // constructors
     public Staff(String name, Gender gender, String role) {
         super(name);
         this.gender = gender;
         staffId = getNextStaffId();
+        this.role = role;
+    }
+
+    public Staff(String name, Gender gender, int staffId, String role) {
+        super(name);
+        this.gender = gender;
+        this.staffId = staffId;
         this.role = role;
     }
 
@@ -26,7 +31,7 @@ public class Staff extends Person implements Serializable {
 
     // setters
     public void setGender(Gender gender) {this.gender = gender;}
-    public void setStaffId(int staffId) {this.staffId = staffId;}
+    public static void setNextStaffId(int nextStaffId) {Staff.nextStaffId = nextStaffId;}
     public void setRole(String role) {this.role = role;}
 
     // methods
@@ -34,38 +39,16 @@ public class Staff extends Person implements Serializable {
         return nextStaffId++;
     }
 
-    public byte[] toByteArray() {
-        String name = this.getName();
-
-        byte[] byteArray = new byte[1024];
-        byteArray[0] = (byte) name.length();
-        byteArray[1] = (byte) gender.ordinal();
-        byteArray[2] = (byte) staffId;
-        byteArray[3] = (byte) role.length();
-        for (int i = 0; i<name.length(); i++) {
-            byteArray[i + 4] = (byte) name.charAt(i);
+    public void printStaff() {
+        System.out.println("-------------------------------");
+        System.out.println("Staff ID: " + staffId);
+        System.out.println("Name: " + this.getName());
+        if (gender == Gender.MALE) {
+            System.out.println("Gender: Male");
         }
-        for (int i=0; i<role.length(); i++) {
-            byteArray[i + 4] = (byte) role.charAt(i);
+        else {
+            System.out.println("Gender: Female");
         }
-        return byteArray;
-    }
-
-    public void toFile(String fileName) {
-        byte[] byteArray = toByteArray();
-        System.out.println("bytes: " + byteArray.length);
-        java.io.FileOutputStream fileOutputStream = null;
-        try {
-            fileOutputStream = new java.io.FileOutputStream(fileName);
-            fileOutputStream.write(byteArray);
-        } catch (Exception e) {
-            System.out.println("Error writing to file: " + e);
-        } finally {
-            try {
-                fileOutputStream.close();
-            } catch (Exception e) {
-                System.out.println("Error closing file: " + e);
-            }
-        }
+        System.out.println("Role: " + role);
     }
 }

@@ -1,61 +1,98 @@
 package Order;
-import java.util.*;
 
-public class OrderInvoice extends Order {
-    private Calendar date; // date of order
-    private double subtotal; // subtotal of order
-    private double GSTAmount; // GST amount
-    private double ServiceCharge; // service charge amount
-    private double total; // total amount of order
-    
-    public final static double GST = 0.07; // GST rate
-    public final static double SERVICE_CHARGE = 0.10; // service charge rate
+import java.util.Calendar;
+import java.text.DecimalFormat;
 
+import Food.MenuItem;
+import Food.SetItem;
 
+public class OrderInvoice extends Order{
+    private Calendar date;
+    private double subTotal;
+    private double serviceChargeAmount;
+    private double GSTAmount;
+    private double total;
+
+    private final static double GST_RATE = 0.07;
+    private final static double SERVICE_CHARGE_RATE = 0.1;
+
+    // constructors
     public OrderInvoice(Order order) {
-        super(order.getStaffOrder(), order.getOrderID(), order.getOrderedItems(), order.getTableID());
-        this.date = Calendar.getInstance();
+        super(order.getOrderId(), order.getStaffName(), order.getTableId(), order.getOrderedMenuItems(), order.getOrderedSetItems());
+        date = Calendar.getInstance();
+        calculateSubtotal();
+        calculateServiceChargeAmount();
+        calculateGSTAmount();
+        calculateTotal();
     }
 
-
-    public Calendar getDate() {
-        return date;
-    }
-
-    // getters
-    public double getSubtotal() {
-        return subtotal;
-    }
-
-    public double getGSTAmount() {
-        return GSTAmount;
-    }
-
-    public double getServiceCharge() {
-        return ServiceCharge;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    // setters
-
-    public void setSubtotal(double subtotal) {
-        this.subtotal = subtotal;
-    }
-
-    public void setGSTAmount(double GSTAmount) {
+    public OrderInvoice(Order order, Calendar date, double subTotal, double serviceChargeAmount, double GSTAmount, double total) {
+        super(order.getOrderId(), order.getStaffName(), order.getTableId(), order.getOrderedMenuItems(), order.getOrderedSetItems());
+        this.date = date;
+        this.subTotal = subTotal;
+        this.serviceChargeAmount = serviceChargeAmount;
         this.GSTAmount = GSTAmount;
-    }
-
-    public void setServiceCharge(double ServiceCharge) {
-        this.ServiceCharge = ServiceCharge;
-    }
-
-    public void setTotal(double total) {
         this.total = total;
     }
 
-    
+    // getters
+    public Calendar getDate() {return date;}
+    public double getSubTotal() {return subTotal;}
+    public double getServiceChargeAmount() {return serviceChargeAmount;}
+    public double getGSTAmount() {return GSTAmount;}
+    public double getTotal() {return total;}
+
+    // methods
+    private void calculateSubtotal() {
+        subTotal = 0;
+        for (MenuItem menuItem : orderedMenuItems.keySet()) {
+            subTotal += menuItem.getPrice() * orderedMenuItems.get(menuItem);
+        }
+        for (SetItem setItem : orderedSetItems.keySet()) {
+            subTotal += setItem.getPrice() * orderedSetItems.get(setItem);
+        }
+    }
+
+    private void calculateServiceChargeAmount() {
+        serviceChargeAmount = subTotal * SERVICE_CHARGE_RATE;
+    }
+
+    private void calculateGSTAmount() {
+        GSTAmount = (subTotal + serviceChargeAmount) * GST_RATE;
+    }
+
+    private void calculateTotal() {
+        total = subTotal + serviceChargeAmount + GSTAmount;
+    }
+
+    public void printOrderInvoice() {
+        System.out.println("-------------------------------");
+        System.out.println("Order ID: " + orderId);
+        System.out.println("Staff: " + staffName);
+        System.out.println("Table ID: " + tableId);
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.out.println("-------------------");
+        System.out.println("MenuItems:");
+        for (MenuItem menuItem : orderedMenuItems.keySet()) {
+            System.out.println("||" + orderedMenuItems.get(menuItem) + " x " + menuItem.getName());
+            System.out.println("||$" + df.format(menuItem.getPrice() * orderedMenuItems.get(menuItem)));
+        }
+        System.out.println("-------------------");
+        System.out.println("SetItems:");
+        for (SetItem setItem : orderedSetItems.keySet()) {
+            System.out.println("||" + orderedSetItems.get(setItem) + " x " + setItem.getName());
+            System.out.println("||$" + df.format(setItem.getPrice() * orderedSetItems.get(setItem)));
+        }
+        System.out.println("Sub Total: $" + df.format(subTotal));
+        System.out.println("Service Charge: $" + df.format(serviceChargeAmount));
+        System.out.println("GST: $" + df.format(GSTAmount));
+        System.out.println("Total: $" + df.format(total));
+        int year = date.get(Calendar.YEAR);
+        int month = date.get(Calendar.MONTH);
+        int day = date.get(Calendar.DAY_OF_MONTH);
+        int hour = date.get(Calendar.HOUR_OF_DAY);
+        int minute = date.get(Calendar.MINUTE);
+        int second = date.get(Calendar.SECOND);
+        System.out.printf("Paid on %02d/%02d/%4d %02d:%02d:%02d\n", day, month + 1, year, hour, minute, second);
+    }
 }
