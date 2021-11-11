@@ -19,6 +19,7 @@ public class Restaurant {
 
     // constructor
     public Restaurant(String name) {
+        System.out.println("Welcome to Restuarant " + name);
         this.name = name;
         this.customerFactory = new CustomerFactory(name);
         this.staffFactory = new StaffFactory(name);
