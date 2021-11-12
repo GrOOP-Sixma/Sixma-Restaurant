@@ -189,7 +189,6 @@ public class OrderController {
                 totalRevenue += orderInvoice.getSubTotal() + orderInvoice.getServiceChargeAmount();
             }
         }
-
         System.out.println("Sales Report for " + month + "/" + year + ":");
         System.out.println("-------------------");
         System.out.println("||Individual menu items sold:");
