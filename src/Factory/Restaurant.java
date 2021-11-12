@@ -62,6 +62,36 @@ public class Restaurant {
         orderFactory.run();
     }
 
+    // getters
+    public CustomerFactory getCustomerFactory() {
+        return customerFactory;
+    }
+
+    public StaffFactory getStaffFactory() {
+        return staffFactory;
+    }
+
+    public TableFactory getTableFactory() {
+        return tableFactory;
+    }
+
+    public ReservationFactory getReservationFactory() {
+        return reservationFactory;
+    }
+
+    public MenuFactory getMenuFactory() {
+        return menuFactory;
+    }
+
+    public SetMenuFactory getSetMenuFactory() {
+        return setMenuFactory;
+    }
+
+    public OrderFactory getOrderFactory() {
+        return orderFactory;
+    }
+
+    
     public void writeInstances() {
         customerFactory.writeInstances();
         staffFactory.writeInstances();

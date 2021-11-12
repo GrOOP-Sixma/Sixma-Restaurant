@@ -22,6 +22,15 @@ public class Menu {
         }
     }
 
+    // getters
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<MenuItem> getMenu() {
+        return menu;
+    }
+
     // methods
     public void addMenuItem(String name, double price, FoodType foodType, String description) {
         MenuItem menuItem = new MenuItem(name, price, foodType, description);

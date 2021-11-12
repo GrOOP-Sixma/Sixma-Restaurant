@@ -24,6 +24,10 @@ public class ReservationController {
         readInstances();
     }
 
+    public ArrayList<Reservation> getReservationList() {
+        return reservationList;
+    }
+
     // methods
     public void addReservation(Calendar reservationDate, Customer customer, int numPax, Table table) {
         Reservation reservation = new Reservation(reservationDate, customer, numPax, table);

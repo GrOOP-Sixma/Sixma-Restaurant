@@ -17,6 +17,18 @@ public class SetMenu {
         readInstances();
     }
 
+    public ArrayList<SetItem> getSetMenu() {
+        return setMenu;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
     // methods
     public void addSetItem(String name, double price, ArrayList<MenuItem> setItems) {
         SetItem setItem = new SetItem(name, price, setItems);

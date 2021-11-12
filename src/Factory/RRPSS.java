@@ -2,7 +2,7 @@ package Factory;
 
 import java.util.Scanner;
 
-public class RRPSS {
+public class RRPSS implements Runnable{
     private Restaurant restaurant;
 
     // constructor

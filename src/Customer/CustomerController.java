@@ -15,6 +15,10 @@ public class CustomerController {
         readInstances();
     }
 
+    public ArrayList<Customer> getCustomerList() {
+        return customerList;
+    }
+
     // methods
     public void addCustomer(String name, int contactNo, boolean isMember) {
         Customer customer = new Customer(name, contactNo, isMember);
