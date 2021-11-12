@@ -1,5 +1,6 @@
 package Order;
 
+import java.text.DecimalFormat;
 import java.util.*;
 import java.io.*;
 
@@ -103,6 +104,107 @@ public class OrderController {
         for (OrderInvoice orderInvoice : orderInvoices) {
             orderInvoice.printOrderInvoice();
         }
+    }
+
+    public void viewDaySalesReport(int day, int month, int year) {
+        HashMap<MenuItem, Integer> menuItemQuantity = new HashMap<>();
+        HashMap<SetItem, Integer> setItemQuantity = new HashMap<>();
+        double totalRevenue = 0;
+        for (OrderInvoice orderInvoice : orderInvoices) {
+            Calendar date = orderInvoice.getDate();
+            int invoiceDay = date.get(Calendar.DAY_OF_MONTH);
+            int invoiceMonth = date.get(Calendar.MONTH);
+            int invoiceYear = date.get(Calendar.YEAR);
+            if (invoiceDay == day && invoiceMonth == month && invoiceYear == year) {
+                HashMap<MenuItem, Integer> orderedMenuItems = orderInvoice.getOrderedMenuItems();
+                for (MenuItem menuItem : orderedMenuItems.keySet()) {
+                    if (!menuItemQuantity.containsKey(menuItem)) {
+                        menuItemQuantity.put(menuItem, orderedMenuItems.get(menuItem));
+                    }
+                    else {
+                        menuItemQuantity.put(menuItem, menuItemQuantity.get(menuItem) + orderedMenuItems.get(menuItem));
+                    }
+                }
+
+                HashMap<SetItem, Integer> orderedSetItems = orderInvoice.getOrderedSetItems();
+                for (SetItem setItem : orderedSetItems.keySet()) {
+                    if (!setItemQuantity.containsKey(setItem)) {
+                        setItemQuantity.put(setItem, orderedSetItems.get(setItem));
+                    }
+                    else {
+                        setItemQuantity.put(setItem, setItemQuantity.get(setItem) + orderedSetItems.get(setItem));
+                    }
+                }
+
+                totalRevenue += orderInvoice.getSubTotal() + orderInvoice.getServiceChargeAmount();
+            }
+        }
+
+        System.out.println("Sales Report for " + day + "/" + month + "/" + year + ":");
+        System.out.println("-------------------");
+        System.out.println("||Individual menu items sold:");
+        for (MenuItem menuItem : menuItemQuantity.keySet()) {
+            System.out.println("||" + menuItemQuantity.get(menuItem) + " x " + menuItem.getName());
+        }
+        System.out.println("-------------------");
+        System.out.println("||Individual set items sold:");
+        for (SetItem setItem : setItemQuantity.keySet()) {
+            System.out.println("||" + setItemQuantity.get(setItem) + " x " + setItem.getName());
+        }
+        System.out.println("-------------------");
+        System.out.println("||Revenue earned:");
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.out.println("||$" + df.format(totalRevenue));
+    }
+
+    public void viewMonthSalesReport(int month, int year) {
+        HashMap<MenuItem, Integer> menuItemQuantity = new HashMap<>();
+        HashMap<SetItem, Integer> setItemQuantity = new HashMap<>();
+        double totalRevenue = 0;
+        for (OrderInvoice orderInvoice : orderInvoices) {
+            Calendar date = orderInvoice.getDate();
+            int invoiceMonth = date.get(Calendar.MONTH);
+            int invoiceYear = date.get(Calendar.YEAR);
+            if (invoiceMonth == month && invoiceYear == year) {
+                HashMap<MenuItem, Integer> orderedMenuItems = orderInvoice.getOrderedMenuItems();
+                for (MenuItem menuItem : orderedMenuItems.keySet()) {
+                    if (!menuItemQuantity.containsKey(menuItem)) {
+                        menuItemQuantity.put(menuItem, orderedMenuItems.get(menuItem));
+                    }
+                    else {
+                        menuItemQuantity.put(menuItem, menuItemQuantity.get(menuItem) + orderedMenuItems.get(menuItem));
+                    }
+                }
+
+                HashMap<SetItem, Integer> orderedSetItems = orderInvoice.getOrderedSetItems();
+                for (SetItem setItem : orderedSetItems.keySet()) {
+                    if (!setItemQuantity.containsKey(setItem)) {
+                        setItemQuantity.put(setItem, orderedSetItems.get(setItem));
+                    }
+                    else {
+                        setItemQuantity.put(setItem, setItemQuantity.get(setItem) + orderedSetItems.get(setItem));
+                    }
+                }
+
+                totalRevenue += orderInvoice.getSubTotal() + orderInvoice.getServiceChargeAmount();
+            }
+        }
+
+        System.out.println("Sales Report for " + month + "/" + year + ":");
+        System.out.println("-------------------");
+        System.out.println("||Individual menu items sold:");
+        for (MenuItem menuItem : menuItemQuantity.keySet()) {
+            System.out.println("||" + menuItemQuantity.get(menuItem) + " x " + menuItem.getName());
+        }
+        System.out.println("-------------------");
+        System.out.println("||Individual set items sold:");
+        for (SetItem setItem : setItemQuantity.keySet()) {
+            System.out.println("||" + setItemQuantity.get(setItem) + " x " + setItem.getName());
+        }
+        System.out.println("-------------------");
+        System.out.println("||Revenue earned:");
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.out.println("||$" + df.format(totalRevenue));
     }
 
     public void writeInstances() {
