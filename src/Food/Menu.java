@@ -13,13 +13,13 @@ public class Menu {
         menu = new ArrayList<>();
         this.name = name;
         readInstances();
-        try {
-            File myObj = new File("../tmp/" + this.name  + "MenuItem.txt");
-            myObj.createNewFile();  // if file already exists will do nothing
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
+        // try {
+        //     File myObj = new File("../tmp/" + this.name  + "MenuItem.txt");
+        //     myObj.createNewFile();  // if file already exists will do nothing
+        // } catch (IOException e) {
+        //     System.out.println("An error occurred.");
+        //     e.printStackTrace();
+        // }
     }
 
     // getters
