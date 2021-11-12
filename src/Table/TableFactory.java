@@ -1,5 +1,6 @@
 package Table;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class TableFactory {
@@ -37,7 +38,8 @@ public class TableFactory {
             System.out.println("1. Set up a table");
             System.out.println("2. Remove a table");
             System.out.println("3. Check table availability");
-            System.out.println("4. View all tables");
+            System.out.println("4. Create generic tables");
+            System.out.println("5. View all tables");
             System.out.println("0. Exit");
             loop: while (choice != 0) {
                 choice = getIntInput();
@@ -54,6 +56,9 @@ public class TableFactory {
                         checkAvailability();
                         break loop;
                     case 4:
+                        createGenericTables();
+                        break loop;
+                    case 5:
                         viewTable();
                         break loop;
                     default:
@@ -85,6 +90,28 @@ public class TableFactory {
 
         if (tableController.removeTable(id) == 0) {
             System.out.println("There is no table with id " + id);
+        }
+    }
+
+    public void createGenericTables() {
+        // if there are no tables, create tables
+        if (tableController.getTableMap().size() == 0) {
+            for (int i = 2; i < 10; i ++) {
+                if (i % 2 == 0) {
+                    i++;
+                }
+                for (int j = 1; j < 10; j++) {
+                    // get random 1 or 0 
+                    Random rand = new Random(System.currentTimeMillis());
+                    int test = rand.nextInt(5); // 1 in 5 chance of creating a table
+                    if (test == 0) {
+                        Table newTable = new Table(i);
+                        tableController.addTable(newTable);
+                    }
+                }
+            }
+        } else {
+            System.out.println("There are already tables in the system");
         }
     }
 
