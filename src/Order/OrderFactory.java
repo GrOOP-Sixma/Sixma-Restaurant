@@ -98,6 +98,7 @@ public class OrderFactory {
                                                                                                                       \\______/                     
         """ + ANSI_RESET);
         while (choice != 0) {
+            System.out.println("");
             System.out.println(ANSI_BLUE + "1. Create order" + ANSI_RESET);
             System.out.println(ANSI_BLUE + "2. Add Item to existing order" + ANSI_RESET);
             System.out.println(ANSI_BLUE + "3. Remove Item from existing order" + ANSI_RESET);

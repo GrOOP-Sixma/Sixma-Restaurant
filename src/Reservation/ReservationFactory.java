@@ -73,6 +73,7 @@ public class ReservationFactory {
                                                                                                                                                                 \\______/                     
         """ + ANSI_RESET);
         while (choice != 0) {
+            System.out.println("");
             System.out.println(ANSI_PURPLE+ "1. Make reservation" + ANSI_RESET);
             System.out.println(ANSI_PURPLE+ "2. Remove reservation" + ANSI_RESET);
             System.out.println(ANSI_PURPLE+ "3. View reservations" + ANSI_RESET);

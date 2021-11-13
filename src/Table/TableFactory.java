@@ -45,7 +45,7 @@ public class TableFactory {
         Scanner sc = new Scanner(System.in);
         System.out.println("""
         $$$$$$$$\\           $$\\       $$\\                 $$\\      $$\\                                                             
-            \\__$$  __|          $$ |      $$ |                $$$\\    $$$ |                                                            
+        \\__$$  __|          $$ |      $$ |                $$$\\    $$$ |                                                            
             $$ |    $$$$$$\\  $$$$$$$\\  $$ | $$$$$$\\        $$$$\\  $$$$ | $$$$$$\\  $$$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\  
             $$ |    \\____$$\\ $$  __$$\\ $$ |$$  __$$\\       $$\\$$\\$$ $$ | \\____$$\\ $$  __$$\\  \\____$$\\ $$  __$$\\ $$  __$$\\ $$  __$$\\ 
             $$ |    $$$$$$$ |$$ |  $$ |$$ |$$$$$$$$ |      $$ \\$$$  $$ | $$$$$$$ |$$ |  $$ | $$$$$$$ |$$ /  $$ |$$$$$$$$ |$$ |  \\__|
@@ -57,6 +57,7 @@ public class TableFactory {
                                                                                                         \\______/                     
         """);
         while (choice != 0) {
+            System.out.println("");
             System.out.println("1. Set up a table");
             System.out.println("2. Remove a table");
             System.out.println("3. Check table availability");

@@ -56,6 +56,7 @@ public class CustomerFactory {
                                                                                                                                               \\______/                     
         """);
         while (choice != 0) {
+            System.out.println("");
             System.out.println(ANSI_GREEN + "1. Add Customer" + ANSI_RESET);
             System.out.println(ANSI_GREEN + "2. Remove Customer" + ANSI_RESET);
             System.out.println(ANSI_GREEN + "3. View Customers" + ANSI_RESET);

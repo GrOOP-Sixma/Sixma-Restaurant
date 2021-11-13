@@ -69,6 +69,7 @@ public class MenuFactory {
                                                                                                     \\______/                     
         """ + ANSI_RESET);
         while (choice != 0) {
+            System.out.println("");
             System.out.println(ANSI_YELLOW + "1. Create menu item" + ANSI_RESET);
             System.out.println(ANSI_YELLOW + "2. Update menu item" + ANSI_RESET);
             System.out.println(ANSI_YELLOW + "3. Remove menu item" + ANSI_RESET);

@@ -73,6 +73,7 @@ public class SetMenuFactory {
                                                                                                                                          \\______/                     
         """ + ANSI_RESET);
         while (choice != 0) {
+            System.out.println("");
             System.out.println(ANSI_YELLOW + "1. Create set menu item" + ANSI_RESET);
             System.out.println(ANSI_YELLOW + "2. Update set menu item" + ANSI_RESET);
             System.out.println(ANSI_YELLOW + "3. Remove set menu item" + ANSI_RESET);

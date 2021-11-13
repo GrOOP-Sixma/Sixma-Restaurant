@@ -58,6 +58,7 @@ public class StaffFactory {
                                                                                                             \\______/                     
         """ + ANSI_RESET);
         while (choice != 0){
+            System.out.println("");
             System.out.println(ANSI_CYAN +  "1. Hire Staff" + ANSI_RESET);
             System.out.println(ANSI_CYAN +  "2. Fire Staff" + ANSI_RESET);
             System.out.println(ANSI_CYAN +  "3. View Staff" + ANSI_RESET);
