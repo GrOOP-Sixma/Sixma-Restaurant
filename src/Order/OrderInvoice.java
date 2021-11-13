@@ -67,6 +67,7 @@ public class OrderInvoice extends Order{
 
     private void calculateTotal() {
         total = subTotal + serviceChargeAmount + GSTAmount;
+        total = Math.round(total * 1000.0) / 1000.0;
     }
 
     public void printOrderInvoice() {

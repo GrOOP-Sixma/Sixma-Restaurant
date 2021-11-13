@@ -106,7 +106,7 @@ public class OrderController {
         }
     }
 
-    public void viewDaySalesReport(int day, int month, int year) {
+    public double viewDaySalesReport(int day, int month, int year) {
         HashMap<MenuItem, Integer> menuItemQuantity = new HashMap<>();
         HashMap<SetItem, Integer> setItemQuantity = new HashMap<>();
         double totalRevenue = 0;
@@ -155,9 +155,10 @@ public class OrderController {
         System.out.println("||Revenue earned:");
         DecimalFormat df = new DecimalFormat("0.00");
         System.out.println("||$" + df.format(totalRevenue));
+        return totalRevenue;
     }
 
-    public void viewMonthSalesReport(int month, int year) {
+    public double viewMonthSalesReport(int month, int year) {
         HashMap<MenuItem, Integer> menuItemQuantity = new HashMap<>();
         HashMap<SetItem, Integer> setItemQuantity = new HashMap<>();
         double totalRevenue = 0;
@@ -204,6 +205,7 @@ public class OrderController {
         System.out.println("||Revenue earned:");
         DecimalFormat df = new DecimalFormat("0.00");
         System.out.println("||$" + df.format(totalRevenue));
+        return totalRevenue;
     }
 
     public void writeInstances() {

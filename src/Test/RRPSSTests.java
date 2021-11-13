@@ -457,7 +457,7 @@ public class RRPSSTests {
         assertEquals(0, orderController.getOrders().size());
     }
 
-    // create an order and test if it is created
+    // create an order and test if it is created // not member
     @Test
     public void testOrderFactoryCreate() {
         OrderController orderController = orderFactory.getOrderController();
@@ -472,11 +472,11 @@ public class RRPSSTests {
         orderItems.put(menuFactory.getMenu().getMenuItem(1), 3);
 
         // create the order
-        orderController.addOrder(STAFF_NAME, 1, orderItems, setOrderItems);
+        orderController.addOrder(STAFF_NAME, 1, false, orderItems, setOrderItems);
         assertEquals(1, orderController.getOrders().size());
     }
 
-    // remove an order and test if it is removed
+    // remove an order and test if it is removed // not member
     @Test
     public void testOrderFactoryRemove() {
         OrderController orderController = orderFactory.getOrderController();
@@ -491,7 +491,7 @@ public class RRPSSTests {
         orderItems.put(menuFactory.getMenu().getMenuItem(1), 3);
 
         // create the order
-        orderController.addOrder(STAFF_NAME, 1, orderItems, setOrderItems);
+        orderController.addOrder(STAFF_NAME, 1, false, orderItems, setOrderItems);
         assertEquals(1, orderController.getOrders().size());
         orderController.removeOrder(1);
         assertEquals(0, orderController.getOrders().size());
@@ -512,7 +512,7 @@ public class RRPSSTests {
         orderItems.put(menuFactory.getMenu().getMenuItem(1), 3);
 
         // create the order
-        orderController.addOrder(STAFF_NAME, 1, orderItems, setOrderItems);
+        orderController.addOrder(STAFF_NAME, 1, false, orderItems, setOrderItems);
         assertEquals(1, orderController.getOrders().size());
         assertEquals(STAFF_NAME, orderController.getOrder(1).getStaffName());
         assertEquals(1, orderController.getOrder(1).getTableId());
@@ -534,7 +534,7 @@ public class RRPSSTests {
         orderItems.put(menuFactory.getMenu().getMenuItem(1), 3);
 
         // create the order
-        orderController.addOrder(STAFF_NAME, 1, orderItems, setOrderItems);
+        orderController.addOrder(STAFF_NAME, 1, false, orderItems, setOrderItems);
         
         // create the invoice
         orderController.addOrderInvoice(orderController.getOrder(1));
@@ -558,7 +558,7 @@ public class RRPSSTests {
         orderItems.put(menuFactory.getMenu().getMenuItem(1), 3);
 
         // create the order
-        orderController.addOrder(STAFF_NAME, 1, orderItems, setOrderItems);
+        orderController.addOrder(STAFF_NAME, 1, false, orderItems, setOrderItems);
         
         // create the invoice
         orderController.addOrderInvoice(orderController.getOrder(1));
@@ -595,7 +595,7 @@ public class RRPSSTests {
         setOrderItems.put(setMenuController.getSetItem(1), 3);
 
         // create the order
-        orderController.addOrder(STAFF_NAME, 1, orderItems, setOrderItems);
+        orderController.addOrder(STAFF_NAME, 1, false, orderItems, setOrderItems);
         
         // create the invoice
         orderController.addOrderInvoice(orderController.getOrder(1));
@@ -609,5 +609,191 @@ public class RRPSSTests {
         assertEquals(1, orderController.getOrderInvoices().get(0).getOrderId());
         assertEquals(STAFF_NAME, orderController.getOrderInvoices().get(0).getStaffName());
         assertEquals(1, orderController.getOrderInvoices().get(0).getTableId());
+    }
+
+    // price checking for members. members have a 20% discount before tax
+    @Test
+    public void testOrderFactoryInvoiceMemberTotal() {
+        OrderController orderController = orderFactory.getOrderController();
+        // create a 2 seater table // default is vacant
+        tableFactory.getTableController().addTable(2);
+        // add a menu item to the menu
+        menuFactory.getMenu().addMenuItem(MENU_NAME, MENU_PRICE, MENU_TYPE, MENU_DESCRIPTION);
+
+        // order 3 of the menu item
+        HashMap<MenuItem, Integer> orderItems = new HashMap<>();
+        HashMap<SetItem, Integer> setOrderItems = new HashMap<>();
+        orderItems.put(menuFactory.getMenu().getMenuItem(1), 3);
+
+        // create the order with member
+        orderController.addOrder(STAFF_NAME, 1, true, orderItems, setOrderItems);
+        
+        // create the invoice
+        orderController.addOrderInvoice(orderController.getOrder(1));
+
+        // check that the invoice is created
+        assertEquals(1, orderController.getOrderInvoices().size());
+        assertEquals(3 * MENU_PRICE * 0.8, orderController.getOrderInvoices().get(0).getSubTotal());
+        assertEquals((3 * MENU_PRICE * 0.8) * 0.1, orderController.getOrderInvoices().get(0).getServiceChargeAmount());
+        assertEquals((((3 * MENU_PRICE * 0.8) * 0.1) + (3 * MENU_PRICE * 0.8)) * 0.07, orderController.getOrderInvoices().get(0).getGSTAmount());
+        assertEquals(((((3 * MENU_PRICE * 0.8) * 0.1) + (3 * MENU_PRICE * 0.8)) * 0.07) + ((3 * MENU_PRICE * 0.8) * 0.1) + (3 * MENU_PRICE * 0.8), orderController.getOrderInvoices().get(0).getTotal());
+    }
+
+    // check that when 2 orders are made, one by a member and one by not a member, the member discount is applied
+    @Test
+    public void testOrderFactoryInvoiceMemberTotal2() {
+        OrderController orderController = orderFactory.getOrderController();
+        // create a 2 seater table // default is vacant
+        tableFactory.getTableController().addTable(2);
+        tableFactory.getTableController().addTable(2);
+        // add a menu item to the menu
+        menuFactory.getMenu().addMenuItem(MENU_NAME, MENU_PRICE, MENU_TYPE, MENU_DESCRIPTION);
+
+        // order 3 of the menu item
+        HashMap<MenuItem, Integer> orderItems = new HashMap<>();
+        HashMap<SetItem, Integer> setOrderItems = new HashMap<>();
+        orderItems.put(menuFactory.getMenu().getMenuItem(1), 3);
+
+        // create the order with member
+        orderController.addOrder(STAFF_NAME, 1, true, orderItems, setOrderItems);
+        orderController.addOrder(STAFF_NAME, 2, false, orderItems, setOrderItems);
+        // create the invoice
+        orderController.addOrderInvoice(orderController.getOrder(1));
+        orderController.addOrderInvoice(orderController.getOrder(2));
+
+        // check that the invoice is created
+        assertNotEquals(orderController.getOrderInvoice(1).getSubTotal(), orderController.getOrderInvoice(2).getSubTotal());
+        assertNotEquals(orderController.getOrderInvoice(1).getServiceChargeAmount(), orderController.getOrderInvoice(2).getServiceChargeAmount());
+        assertNotEquals(orderController.getOrderInvoice(1).getGSTAmount(), orderController.getOrderInvoice(2).getGSTAmount());
+        assertNotEquals(orderController.getOrderInvoice(1).getTotal(), orderController.getOrderInvoice(2).getTotal());
+    }
+
+    // ! sales report tests
+    // testing day sales
+    @Test
+    public void testOrderFactoryDaySales() {
+        OrderController orderController = orderFactory.getOrderController();
+        // create a 2 seater table // default is vacant
+        tableFactory.getTableController().addTable(2);
+        // add a menu item to the menu
+        menuFactory.getMenu().addMenuItem(MENU_NAME, MENU_PRICE, MENU_TYPE, MENU_DESCRIPTION);
+
+        // order 3 of the menu item
+        HashMap<MenuItem, Integer> orderItems = new HashMap<>();
+        HashMap<SetItem, Integer> setOrderItems = new HashMap<>();
+        orderItems.put(menuFactory.getMenu().getMenuItem(1), 3);
+
+        // create 2 of this order
+        orderController.addOrder(STAFF_NAME, 1, false, orderItems, setOrderItems);
+        orderController.addOrder(STAFF_NAME, 2, false, orderItems, setOrderItems);
+
+        // create order invoices
+        orderController.addOrderInvoice(orderController.getOrder(1));
+        orderController.addOrderInvoice(orderController.getOrder(2));
+
+        Calendar date = orderController.getOrderInvoice(1).getDate(); // lazy manually type
+        int day = date.get(Calendar.DAY_OF_MONTH);
+        int month = date.get(Calendar.MONTH);
+        int year = date.get(Calendar.YEAR);
+
+        // run the day sales report
+        // total revenue should be 3 * MENU_PRICE * 2, and the service charge should be 0.1 * 3 * MENU_PRICE * 2
+        assertEquals((double)(3 * MENU_PRICE * 2 + 3 * 2 * MENU_PRICE * 0.1), orderController.viewDaySalesReport(day, month, year));
+    }
+
+    // testing 1 member 1 not member
+    @Test
+    public void testOrderFactoryDaySales2() {
+        OrderController orderController = orderFactory.getOrderController();
+        // create a 2 seater table // default is vacant
+        tableFactory.getTableController().addTable(2);
+        // add a menu item to the menu
+        menuFactory.getMenu().addMenuItem(MENU_NAME, MENU_PRICE, MENU_TYPE, MENU_DESCRIPTION);
+
+        // order 3 of the menu item
+        HashMap<MenuItem, Integer> orderItems = new HashMap<>();
+        HashMap<SetItem, Integer> setOrderItems = new HashMap<>();
+        orderItems.put(menuFactory.getMenu().getMenuItem(1), 3);
+
+        // create 2 of this order
+        orderController.addOrder(STAFF_NAME, 1, true, orderItems, setOrderItems);
+        orderController.addOrder(STAFF_NAME, 2, false, orderItems, setOrderItems);
+
+        // create order invoices
+        orderController.addOrderInvoice(orderController.getOrder(1));
+        orderController.addOrderInvoice(orderController.getOrder(2));
+
+        Calendar date = orderController.getOrderInvoice(1).getDate(); // lazy manually type
+        int day = date.get(Calendar.DAY_OF_MONTH);
+        int month = date.get(Calendar.MONTH);
+        int year = date.get(Calendar.YEAR);
+
+        // run the day sales report
+        // total revenue should be 3 * MENU_PRICE * 1.8, and the service charge should be 0.1 * 3 * MENU_PRICE * 0.8 + 0.1 * 3 * MENU_PRICE
+        assertEquals((double)((3 * MENU_PRICE * 1.8) + (3 * MENU_PRICE * 0.1 * 0.8) + (3 * MENU_PRICE * 0.1)), orderController.viewDaySalesReport(day, month, year));
+    }
+
+    // testing month sales report
+    @Test
+    public void testOrderFactoryMonthSales() {
+        OrderController orderController = orderFactory.getOrderController();
+        // create a 2 seater table // default is vacant
+        tableFactory.getTableController().addTable(2);
+        // add a menu item to the menu
+        menuFactory.getMenu().addMenuItem(MENU_NAME, MENU_PRICE, MENU_TYPE, MENU_DESCRIPTION);
+
+        // order 3 of the menu item
+        HashMap<MenuItem, Integer> orderItems = new HashMap<>();
+        HashMap<SetItem, Integer> setOrderItems = new HashMap<>();
+        orderItems.put(menuFactory.getMenu().getMenuItem(1), 3);
+
+        // create 2 of this order
+        orderController.addOrder(STAFF_NAME, 1, false, orderItems, setOrderItems);
+        orderController.addOrder(STAFF_NAME, 2, false, orderItems, setOrderItems);
+
+        // create order invoices
+        orderController.addOrderInvoice(orderController.getOrder(1));
+        orderController.addOrderInvoice(orderController.getOrder(2));
+
+        Calendar date = orderController.getOrderInvoice(1).getDate(); // lazy manually type
+        int day = date.get(Calendar.DAY_OF_MONTH);
+        int month = date.get(Calendar.MONTH);
+        int year = date.get(Calendar.YEAR);
+
+        // run the month sales report
+        // total revenue should be 3 * MENU_PRICE * 2, and the service charge should be 0.1 * 3 * MENU_PRICE * 2
+        assertEquals((double)(3 * MENU_PRICE * 2 + 3 * 2 * MENU_PRICE * 0.1), orderController.viewMonthSalesReport(month, year));
+    }
+
+    // testing 1 member 1 not member
+    @Test
+    public void testOrderFactoryMonthSales2() {
+        OrderController orderController = orderFactory.getOrderController();
+        // create a 2 seater table // default is vacant
+        tableFactory.getTableController().addTable(2);
+        // add a menu item to the menu
+        menuFactory.getMenu().addMenuItem(MENU_NAME, MENU_PRICE, MENU_TYPE, MENU_DESCRIPTION);
+
+        // order 3 of the menu item
+        HashMap<MenuItem, Integer> orderItems = new HashMap<>();
+        HashMap<SetItem, Integer> setOrderItems = new HashMap<>();
+        orderItems.put(menuFactory.getMenu().getMenuItem(1), 3);
+
+        // create 2 of this order
+        orderController.addOrder(STAFF_NAME, 1, true, orderItems, setOrderItems);
+        orderController.addOrder(STAFF_NAME, 2, false, orderItems, setOrderItems);
+
+        // create order invoices
+        orderController.addOrderInvoice(orderController.getOrder(1));
+        orderController.addOrderInvoice(orderController.getOrder(2));
+
+        Calendar date = orderController.getOrderInvoice(1).getDate(); // lazy manually type
+        int day = date.get(Calendar.DAY_OF_MONTH);
+        int month = date.get(Calendar.MONTH);
+        int year = date.get(Calendar.YEAR);
+
+        // run the month sales report
+        // total revenue should be 3 * MENU_PRICE * 1.8, and the service charge should be 0.1 * 3 * MENU_PRICE * 0.8 + 0.1 * 3 * MENU_PRICE
+        assertEquals((double)((3 * MENU_PRICE * 1.8) + (3 * MENU_PRICE * 0.1 * 0.8) + (3 * MENU_PRICE * 0.1)), orderController.viewMonthSalesReport(month, year));
     }
 }
