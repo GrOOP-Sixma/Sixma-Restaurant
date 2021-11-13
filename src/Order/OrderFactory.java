@@ -28,6 +28,16 @@ public class OrderFactory {
     private OrderController orderController;
     private String name;
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
     public OrderFactory(String name, StaffController staffController, TableController tableController, ReservationController reservationController, Menu menu, SetMenu setMenu) {
         this.name = name;
         this.staffController = staffController;
@@ -53,7 +63,7 @@ public class OrderFactory {
                 return sc.nextDouble();
             }
             else {
-                System.out.println("Invalid input.");
+                System.out.println(ANSI_RED + "Invalid input." + ANSI_RESET);
                 sc.next();
             }
         }
@@ -66,7 +76,7 @@ public class OrderFactory {
                 return sc.nextInt();
             }
             else {
-                System.out.println("Invalid input.");
+                System.out.println(ANSI_RED + "Invalid input." + ANSI_RESET);
                 sc.next();
             }
         }
@@ -74,7 +84,7 @@ public class OrderFactory {
 
     public void run() {
         int choice = -1;
-        System.out.println("""
+        System.out.println(ANSI_BLUE + """
         $$$$$$\\                  $$\\                                     $$\\      $$\\                                                             
         $$  __$$\\                 $$ |                                    $$$\\    $$$ |                                                            
         $$ /  $$ | $$$$$$\\   $$$$$$$ | $$$$$$\\   $$$$$$\\   $$$$$$$\\       $$$$\\  $$$$ | $$$$$$\\  $$$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\  
@@ -86,16 +96,16 @@ public class OrderFactory {
                                                                                                                      $$\\   $$ |                    
                                                                                                                      \\$$$$$$  |                    
                                                                                                                       \\______/                     
-        """);
+        """ + ANSI_RESET);
         while (choice != 0) {
-            System.out.println("1. Create order");
-            System.out.println("2. Add Item to existing order");
-            System.out.println("3. Remove Item from existing order");
-            System.out.println("4. View orders");
-            System.out.println("5. Create order invoice");
-            System.out.println("6. View order invoices");
-            System.out.println("7. View Sales Report");
-            System.out.println("0. Exit");
+            System.out.println(ANSI_BLUE + "1. Create order" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "2. Add Item to existing order" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "3. Remove Item from existing order" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "4. View orders" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "5. Create order invoice" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "6. View order invoices" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "7. View Sales Report" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "0. Exit" + ANSI_RESET);
             loop: while (choice != 0) {
                 choice = getIntInput();
                 switch (choice) {
@@ -123,38 +133,38 @@ public class OrderFactory {
                         viewSalesReport();
                         break loop;
                     default:
-                        System.out.println("Invalid choice");
+                        System.out.println(ANSI_RED + "Invalid choice" + ANSI_RESET);
                 }
             }
         }
     }
 
     public void addOrder() {
-        System.out.println("Enter your staff id:");
+        System.out.println(ANSI_BLUE + "Enter your staff id:" + ANSI_RESET);
         int staffId = getIntInput();
         while (staffId <= 0) {
-            System.out.println("Invalid id");
+            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
             staffId = getIntInput();
         }
         Staff staff = staffController.getStaff(staffId);
         if (staff == null) {
-            System.out.println("There is no staff with id " + staffId);
+            System.out.println(ANSI_RED + "There is no staff with id " + staffId + ANSI_RESET);
             return;
         }
 
-        System.out.println("Enter table id:");
+        System.out.println(ANSI_BLUE + "Enter table id:" + ANSI_RESET);
         int tableId = getIntInput();
         while(tableId <= 0) {
-            System.out.println("Invalid id");
+            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
             tableId = getIntInput();
         }
         Table table = tableController.getTable(tableId);
         if (table == null) {
-            System.out.println("There is no table with id " + tableId);
+            System.out.println(ANSI_RED + "There is no table with id " + tableId + ANSI_RESET);
             return;
         }
         else if (table.getStatus() == TableStatus.VACANT) {
-            System.out.println("Table with id " + tableId + " is not occupied");
+            System.out.println(ANSI_BLUE + "Table with id " + tableId + " is not occupied" + ANSI_RESET);
             return;
         }
 
@@ -165,9 +175,9 @@ public class OrderFactory {
         Order order = new Order(staff.getName(), table.getTableId(), isMember, orderedMenuItems, orderedSetItems);
         int choice1 = -1;
         while (choice1 != 0) {
-            System.out.println("1. Add item");
-            System.out.println("2. Remove item");
-            System.out.println("0. Back");
+            System.out.println(ANSI_BLUE + "1. Add item" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "2. Remove item" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "0. Back" + ANSI_RESET);
             loop1: while (choice1 != 0) {
                 choice1 = getIntInput();
                 switch (choice1) {
@@ -176,9 +186,9 @@ public class OrderFactory {
                     case 1:
                         int choice2 = -1;
                         while (choice2 != 0) {
-                            System.out.println("1. Add menu item");
-                            System.out.println("2. Add set item");
-                            System.out.println("0. Back");
+                            System.out.println(ANSI_BLUE + "1. Add menu item" + ANSI_RESET);
+                            System.out.println(ANSI_BLUE + "2. Add set item" + ANSI_RESET);
+                            System.out.println(ANSI_BLUE + "0. Back" + ANSI_RESET);
                             loop2: while (choice2 != 0) {
                                 choice2 = getIntInput();
                                 switch (choice2) {
@@ -186,22 +196,22 @@ public class OrderFactory {
                                         continue;
                                     case 1:
                                         menu.viewMenu();
-                                        System.out.println("Enter id of menu item:");
+                                        System.out.println(ANSI_BLUE + "Enter id of menu item:" + ANSI_RESET);
                                         int menuItemId = getIntInput();
                                         while(menuItemId <= 0) {
-                                            System.out.println("Invalid id");
+                                            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
                                             menuItemId = getIntInput();
                                         }
                                         MenuItem menuItem = menu.getMenuItem(menuItemId);
                                         if (menuItem == null) {
-                                            System.out.println("There is no menu item with id " + menuItemId);
+                                            System.out.println(ANSI_RED + "There is no menu item with id " + menuItemId + ANSI_RESET);
                                             continue;
                                         }
 
-                                        System.out.println("Enter quantity:");
+                                        System.out.println(ANSI_BLUE + "Enter quantity:" + ANSI_RESET);
                                         int quantity = getIntInput();
                                         while (quantity <= 0) {
-                                            System.out.println("Invalid quantity");
+                                            System.out.println(ANSI_RED + "Invalid quantity" + ANSI_RESET);
                                             quantity = getIntInput();
                                         }
 
@@ -209,29 +219,29 @@ public class OrderFactory {
                                         break loop2;
                                     case 2:
                                         setMenu.viewSetMenu();
-                                        System.out.println("Enter id of set menu item:");
+                                        System.out.println(ANSI_BLUE + "Enter id of set menu item:" + ANSI_RESET);
                                         int setItemId = getIntInput();
                                         while(setItemId <= 0) {
-                                            System.out.println("Invalid id");
+                                            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
                                             setItemId = getIntInput();
                                         }
                                         SetItem setItem = setMenu.getSetItem(setItemId);
                                         if (setItem == null) {
-                                            System.out.println("There is no set menu item with id " + setItemId);
+                                            System.out.println(ANSI_RED + "There is no set menu item with id " + setItemId + ANSI_RESET);
                                             continue;
                                         }
 
-                                        System.out.println("Enter quantity:");
+                                        System.out.println(ANSI_BLUE + "Enter quantity:" + ANSI_RESET);
                                         quantity = getIntInput();
                                         while (quantity <= 0) {
-                                            System.out.println("Invalid quantity");
+                                            System.out.println(ANSI_RED + "Invalid quantity" + ANSI_RESET);
                                             quantity = getIntInput();
                                         }
 
                                         order.addSetItem(setItem, quantity);
                                         break loop2;
                                     default:
-                                        System.out.println("Invalid choice");
+                                        System.out.println(ANSI_RED + "Invalid choice" + ANSI_RESET);
                                 }
                             }
                         }
@@ -239,9 +249,9 @@ public class OrderFactory {
                     case 2:
                         choice2 = -1;
                         while (choice2 != 0) {
-                            System.out.println("1. Remove menu item");
-                            System.out.println("2. Remove set item");
-                            System.out.println("0. Back");
+                            System.out.println(ANSI_BLUE + "1. Remove menu item" + ANSI_RESET);
+                            System.out.println(ANSI_BLUE + "2. Remove set item" + ANSI_RESET);
+                            System.out.println(ANSI_BLUE + "0. Back" + ANSI_RESET);
                             loop2:
                             while (choice2 != 0) {
                                 choice2 = getIntInput();
@@ -250,62 +260,62 @@ public class OrderFactory {
                                         continue;
                                     case 1:
                                         order.printOrder();
-                                        System.out.println("Enter id of menu item:");
+                                        System.out.println(ANSI_BLUE + "Enter id of menu item:" + ANSI_RESET);
                                         int menuItemId = getIntInput();
                                         while(menuItemId <= 0) {
-                                            System.out.println("Invalid id");
+                                            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
                                             menuItemId = getIntInput();
                                         }
                                         MenuItem menuItem = menu.getMenuItem(menuItemId);
                                         if (menuItem == null) {
-                                            System.out.println("There is no menu item with id " + menuItemId);
+                                            System.out.println(ANSI_RED + "There is no menu item with id " + menuItemId + ANSI_RESET);
                                             continue;
                                         }
 
-                                        System.out.println("Enter quantity:");
+                                        System.out.println(ANSI_BLUE + "Enter quantity:" + ANSI_RESET);
                                         int quantity = getIntInput();
                                         while (quantity <= 0) {
-                                            System.out.println("Invalid quantity");
+                                            System.out.println(ANSI_RED + "Invalid quantity" + ANSI_RESET);
                                             quantity = getIntInput();
                                         }
 
                                         if (order.removeMenuItem(menuItem, quantity) == 0) {
-                                            System.out.println("The order does not consist of " + quantity + " " + menuItem.getName());
+                                            System.out.println(ANSI_RED + "The order does not consist of " + quantity + " " + menuItem.getName() + ANSI_RESET);
                                         }
                                         break loop2;
                                     case 2:
                                         order.printOrder();
-                                        System.out.println("Enter id of set menu item:");
+                                        System.out.println(ANSI_BLUE + "Enter id of set menu item:" + ANSI_RESET);
                                         int setItemId = getIntInput();
                                         while(setItemId <= 0) {
-                                            System.out.println("Invalid id");
+                                            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
                                             setItemId = getIntInput();
                                         }
                                         SetItem setItem = setMenu.getSetItem(setItemId);
                                         if (setItem == null) {
-                                            System.out.println("There is no menu item with id " + setItemId);
+                                            System.out.println(ANSI_RED + "There is no menu item with id " + setItemId + ANSI_RESET);
                                             continue;
                                         }
 
-                                        System.out.println("Enter quantity:");
+                                        System.out.println(ANSI_BLUE + "Enter quantity:" + ANSI_RESET);
                                         quantity = getIntInput();
                                         while (quantity <= 0) {
-                                            System.out.println("Invalid quantity");
+                                            System.out.println(ANSI_RED + "Invalid quantity" + ANSI_RESET);
                                             quantity = getIntInput();
                                         }
 
                                         if (order.removeSetItem(setItem, quantity) == 0) {
-                                            System.out.println("The order does not consist of " + quantity + " " + setItem.getName());
+                                            System.out.println(ANSI_RED + "The order does not consist of " + quantity + " " + setItem.getName() + ANSI_RESET);
                                         }
                                         break loop2;
                                     default:
-                                        System.out.println("Invalid choice");
+                                        System.out.println(ANSI_RED + "Invalid choice" + ANSI_RESET);
                                 }
                             }
                         }
                         break loop1;
                     default:
-                        System.out.println("Invalid choice");
+                        System.out.println(ANSI_RED + "Invalid choice" + ANSI_RESET);
                 }
             }
         }
@@ -314,23 +324,23 @@ public class OrderFactory {
     }
 
     public void addToOrder() {
-        System.out.println("Enter id of order to add items to:");
+        System.out.println(ANSI_BLUE + "Enter id of order to add items to:" + ANSI_RESET);
         int orderId = getIntInput();
         while(orderId <= 0) {
-            System.out.println("Invalid id");
+            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
             orderId = getIntInput();
         }
         Order order = orderController.getOrder(orderId);
         if (order == null) {
-            System.out.println("There is no order with id " + orderId);
+            System.out.println(ANSI_RED + "There is no order with id " + orderId);
             return;
         }
 
         int choice = -1;
         while (choice != 0) {
-            System.out.println("1. Add menu item");
-            System.out.println("2. Add set item");
-            System.out.println("0. Back");
+            System.out.println(ANSI_BLUE + "1. Add menu item" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "2. Add set item" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "0. Back" + ANSI_RESET);
             loop: while (choice != 0) {
                 choice = getIntInput();
                 switch (choice) {
@@ -338,22 +348,22 @@ public class OrderFactory {
                         continue;
                     case 1:
                         menu.viewMenu();
-                        System.out.println("Enter id of menu item:");
+                        System.out.println(ANSI_BLUE + "Enter id of menu item:" + ANSI_RESET);
                         int menuItemId = getIntInput();
                         while(menuItemId <= 0) {
-                            System.out.println("Invalid id");
+                            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
                             menuItemId = getIntInput();
                         }
                         MenuItem menuItem = menu.getMenuItem(menuItemId);
                         if (menuItem == null) {
-                            System.out.println("There is no menu item with id " + menuItemId);
+                            System.out.println(ANSI_RED + "There is no menu item with id " + menuItemId + ANSI_RESET);
                             continue;
                         }
 
-                        System.out.println("Enter quantity:");
+                        System.out.println(ANSI_BLUE + "Enter quantity:" + ANSI_RESET);
                         int quantity = getIntInput();
                         while (quantity <= 0) {
-                            System.out.println("Invalid quantity");
+                            System.out.println(ANSI_RED + "Invalid quantity" + ANSI_RESET);
                             quantity = getIntInput();
                         }
 
@@ -361,52 +371,52 @@ public class OrderFactory {
                         break loop;
                     case 2:
                         setMenu.viewSetMenu();
-                        System.out.println("Enter id of set menu item:");
+                        System.out.println(ANSI_BLUE + "Enter id of set menu item:" + ANSI_RESET);
                         int setItemId = getIntInput();
                         while(setItemId <= 0) {
-                            System.out.println("Invalid id");
+                            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
                             setItemId = getIntInput();
                         }
                         SetItem setItem = setMenu.getSetItem(setItemId);
                         if (setItem == null) {
-                            System.out.println("There is no menu item with id " + setItemId);
+                            System.out.println(ANSI_RED + "There is no menu item with id " + setItemId);
                             continue;
                         }
 
-                        System.out.println("Enter quantity:");
+                        System.out.println(ANSI_BLUE + "Enter quantity:" + ANSI_RESET);
                         quantity = getIntInput();
                         while (quantity <= 0) {
-                            System.out.println("Invalid quantity");
+                            System.out.println(ANSI_RED + "Invalid quantity" + ANSI_RESET);
                             quantity = getIntInput();
                         }
 
                         order.addSetItem(setItem, quantity);
                         break loop;
                     default:
-                        System.out.println("Invalid choice");
+                        System.out.println(ANSI_RED + "Invalid choice" + ANSI_RESET);
                 }
             }
         }
     }
 
     public void removeFromOrder() {
-        System.out.println("Enter id of order to remove items from:");
+        System.out.println(ANSI_BLUE + "Enter id of order to remove items from:" + ANSI_RESET);
         int orderId = getIntInput();
         while(orderId <= 0) {
-            System.out.println("Invalid id");
+            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
             orderId = getIntInput();
         }
         Order order = orderController.getOrder(orderId);
         if (order == null) {
-            System.out.println("There is no order with id " + orderId);
+            System.out.println(ANSI_RED + "There is no order with id " + orderId + ANSI_RESET);
             return;
         }
 
         int choice = -1;
         while (choice != 0) {
-            System.out.println("1. Remove menu item");
-            System.out.println("2. Remove set item");
-            System.out.println("0. Back");
+            System.out.println(ANSI_BLUE + "1. Remove menu item" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "2. Remove set item" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "0. Back" + ANSI_RESET);
             loop: while (choice != 0) {
                 choice = getIntInput();
                 switch (choice) {
@@ -414,56 +424,56 @@ public class OrderFactory {
                         continue;
                     case 1:
                         order.printOrder();
-                        System.out.println("Enter id of menu item:");
+                        System.out.println(ANSI_BLUE + "Enter id of menu item:" + ANSI_RESET);
                         int menuItemId = getIntInput();
                         while(menuItemId <= 0) {
-                            System.out.println("Invalid id");
+                            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
                             menuItemId = getIntInput();
                         }
                         MenuItem menuItem = menu.getMenuItem(menuItemId);
                         if (menuItem == null) {
-                            System.out.println("There is no menu item with id " + menuItemId);
+                            System.out.println(ANSI_RED + "There is no menu item with id " + menuItemId);
                             continue;
                         }
 
-                        System.out.println("Enter quantity:");
+                        System.out.println(ANSI_BLUE + "Enter quantity:" + ANSI_RESET);
                         int quantity = getIntInput();
                         while (quantity <= 0) {
-                            System.out.println("Invalid quantity");
+                            System.out.println(ANSI_RED + "Invalid quantity" + ANSI_RESET);
                             quantity = getIntInput();
                         }
 
                         if (order.removeMenuItem(menuItem, quantity) == 0) {
-                            System.out.println("The order does not consist of " + quantity + " " + menuItem.getName());
+                            System.out.println(ANSI_RED + "The order does not consist of " + quantity + " " + menuItem.getName() + ANSI_RESET);
                         }
                         break loop;
                     case 2:
                         order.printOrder();
-                        System.out.println("Enter id of set menu item:");
+                        System.out.println(ANSI_BLUE + "Enter id of set menu item:" + ANSI_RESET);
                         int setItemId = getIntInput();
                         while(setItemId <= 0) {
-                            System.out.println("Invalid id");
+                            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
                             setItemId = getIntInput();
                         }
                         SetItem setItem = setMenu.getSetItem(setItemId);
                         if (setItem == null) {
-                            System.out.println("There is no menu item with id " + setItemId);
+                            System.out.println(ANSI_RED + "There is no menu item with id " + setItemId + ANSI_RESET);
                             continue;
                         }
 
-                        System.out.println("Enter quantity:");
+                        System.out.println(ANSI_BLUE + "Enter quantity:" + ANSI_RESET);
                         quantity = getIntInput();
                         while (quantity <= 0) {
-                            System.out.println("Invalid quantity");
+                            System.out.println(ANSI_RED + "Invalid quantity" + ANSI_RESET);
                             quantity = getIntInput();
                         }
 
                         if (order.removeSetItem(setItem, quantity) == 0) {
-                            System.out.println("The order does not consist of " + quantity + " " + setItem.getName());
+                            System.out.println(ANSI_RED + "The order does not consist of " + quantity + " " + setItem.getName() + ANSI_RESET);
                         }
                         break loop;
                     default:
-                        System.out.println("Invalid choice");
+                        System.out.println(ANSI_RED + "Invalid choice" + ANSI_RESET);
                 }
             }
         }
@@ -474,15 +484,15 @@ public class OrderFactory {
     }
 
     public void createInvoice() {
-        System.out.println("Enter id of order to create invoice:");
+        System.out.println(ANSI_BLUE + "Enter id of order to create invoice:" + ANSI_RESET);
         int orderId = getIntInput();
         while(orderId <= 0) {
-            System.out.println("Invalid id");
+            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
             orderId = getIntInput();
         }
         Order order = orderController.getOrder(orderId);
         if (order == null) {
-            System.out.println("There is no order with id " + orderId);
+            System.out.println(ANSI_RED + "There is no order with id " + orderId + ANSI_RESET);
             return;
         }
 
@@ -497,27 +507,27 @@ public class OrderFactory {
 
     public void viewSalesReport() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("View sales report by:");
-        System.out.println("1. Day");
-        System.out.println("2. Month");
+        System.out.println(ANSI_BLUE + "View sales report by:" + ANSI_RESET);
+        System.out.println(ANSI_BLUE + "1. Day" + ANSI_RESET);
+        System.out.println(ANSI_BLUE + "2. Month" + ANSI_RESET);
         int choice = -1;
         while (choice != 0) {
             choice = getIntInput();
             switch (choice) {
                 case 1:
-                    System.out.println("Enter day (DD/MM/YYYY):");
+                    System.out.println(ANSI_BLUE + "Enter day (DD/MM/YYYY):" + ANSI_RESET);
                     String dateString = "";
                     boolean valid = false;
                     while (!valid) {
                         try {
                             dateString = sc.nextLine();
-                            LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT));
+                            LocalDate.parse(dateString, DateTimeFormatter.ofPattern(ANSI_BLUE + "dd/MM/uuuu" + ANSI_RESET).withResolverStyle(ResolverStyle.STRICT));
                             valid = true;
                         } catch (DateTimeParseException e) {
-                            System.out.println("Invalid date");
+                            System.out.println(ANSI_RED + "Invalid date" + ANSI_RESET);
                         }
                     }
-                    String[] dateAttributes = dateString.split("/");
+                    String[] dateAttributes = dateString.split(ANSI_BLUE + "/" + ANSI_RESET);
                     int day = Integer.parseInt(dateAttributes[0]);
                     int month = Integer.parseInt(dateAttributes[1]) - 1;
                     int year = Integer.parseInt(dateAttributes[2]);
@@ -525,26 +535,26 @@ public class OrderFactory {
                     orderController.viewDaySalesReport(day, month, year);
                     break;
                 case 2:
-                    System.out.println("Enter month (MM/YYYY):");
+                    System.out.println(ANSI_BLUE + "Enter month (MM/YYYY):" + ANSI_RESET);
                     dateString = "";
                     valid = false;
                     while (!valid) {
                         try {
                             dateString = "01/" + sc.nextLine();
-                            LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT));
+                            LocalDate.parse(dateString, DateTimeFormatter.ofPattern(ANSI_BLUE + "dd/MM/uuuu" + ANSI_RESET).withResolverStyle(ResolverStyle.STRICT));
                             valid = true;
                         } catch (DateTimeParseException e) {
-                            System.out.println("Invalid date");
+                            System.out.println(ANSI_RED + "Invalid date" + ANSI_RESET);
                         }
                     }
-                    dateAttributes = dateString.split("/");
+                    dateAttributes = dateString.split(ANSI_BLUE + "/" + ANSI_RESET);
                     month = Integer.parseInt(dateAttributes[1]) - 1;
                     year = Integer.parseInt(dateAttributes[2]);
 
                     orderController.viewMonthSalesReport(month, year);
                     break;
                 default:
-                    System.out.println("Invalid choice");
+                    System.out.println(ANSI_RED + "Invalid choice" + ANSI_RESET);
             }
         }
     }

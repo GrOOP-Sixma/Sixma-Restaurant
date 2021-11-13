@@ -6,6 +6,16 @@ public class CustomerFactory {
     private CustomerController customerController;
     private String name;
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
     // constructors
     public CustomerFactory(String name) {
         customerController = new CustomerController(name);
@@ -46,10 +56,10 @@ public class CustomerFactory {
                                                                                                                                               \\______/                     
         """);
         while (choice != 0) {
-            System.out.println("1. Add Customer");
-            System.out.println("2. Remove Customer");
-            System.out.println("3. View Customers");
-            System.out.println("0. Exit");
+            System.out.println(ANSI_GREEN + "1. Add Customer" + ANSI_RESET);
+            System.out.println(ANSI_GREEN + "2. Remove Customer" + ANSI_RESET);
+            System.out.println(ANSI_GREEN + "3. View Customers" + ANSI_RESET);
+            System.out.println(ANSI_GREEN + "0. Exit" + ANSI_RESET);
             loop: while (choice != 0) {
                 choice = getIntInput();
                 switch (choice) {
@@ -65,7 +75,7 @@ public class CustomerFactory {
                         viewCustomer();
                         break loop;
                     default:
-                        System.out.println("Invalid choice.");
+                        System.out.println(ANSI_RED + "Invalid choice." + ANSI_RESET);
                 }
             }
         }
@@ -73,19 +83,19 @@ public class CustomerFactory {
 
     public void addCustomer() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("\nEnter name of new customer:");
+        System.out.println(ANSI_GREEN + "\nEnter name of new customer:" + ANSI_RESET);
         String name = sc.nextLine();
 
-        System.out.println("Enter contact number of new customer:");
+        System.out.println(ANSI_GREEN + "Enter contact number of new customer:" + ANSI_RESET);
         int contactNo = getIntInput();
         while (contactNo < 80000000 || contactNo > 99999999) {
-            System.out.println("Invalid contact number");
+            System.out.println(ANSI_RED + "Invalid contact number" + ANSI_RESET);
             contactNo = getIntInput();
         }
 
-        System.out.println("Is the new customer a member:");
-        System.out.println("1. Yes");
-        System.out.println("2. No");
+        System.out.println(ANSI_GREEN + "Is the new customer a member:" + ANSI_RESET);
+        System.out.println(ANSI_GREEN + "1. Yes" + ANSI_RESET);
+        System.out.println(ANSI_GREEN + "2. No" + ANSI_RESET);
         Customer newCustomer;
         int choice = -1;
         while (choice != 1 && choice != 2) {
@@ -100,24 +110,24 @@ public class CustomerFactory {
                     customerController.addCustomer(newCustomer);
                     break;
                 default:
-                    System.out.println("Invalid choice");
+                    System.out.println("Invalid choice" + ANSI_RESET);
             }
         }
     }
 
     public void removeCustomer() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("\nEnter name of customer to remove:");
+        System.out.println(ANSI_GREEN + "\nEnter name of customer to remove:" + ANSI_RESET);
         String name = sc.nextLine();
 
-        System.out.println("Enter id of customer:");
+        System.out.println(ANSI_GREEN + "Enter id of customer:" + ANSI_RESET);
         int id = getIntInput();
         while (id <= 0) {
-            System.out.println("Invalid id");
+            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
             id = getIntInput();
         }
         if (customerController.removeCustomer(name, id) == 0) {
-            System.out.println(name + " is not a registered customer");
+            System.out.println(ANSI_RED + name + " is not a registered customer" + ANSI_RESET);
         }
     }
 

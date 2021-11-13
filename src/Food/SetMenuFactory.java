@@ -8,6 +8,16 @@ public class SetMenuFactory {
     private SetMenu setMenu;
     private String name;
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
     // constructors
     public SetMenuFactory(String name, Menu menu) {
         this.name = name;
@@ -27,7 +37,7 @@ public class SetMenuFactory {
                 return sc.nextDouble();
             }
             else {
-                System.out.println("Invalid input.");
+                System.out.println(ANSI_RED + "Invalid input." + ANSI_RESET);
                 sc.next();
             }
         }
@@ -40,7 +50,7 @@ public class SetMenuFactory {
                 return sc.nextInt();
             }
             else {
-                System.out.println("Invalid input.");
+                System.out.println(ANSI_RED + "Invalid input." + ANSI_RESET);
                 sc.next();
             }
         }
@@ -49,7 +59,7 @@ public class SetMenuFactory {
     public void run() {
         int choice = -1;
         Scanner sc = new Scanner(System.in);
-        System.out.println("""
+        System.out.println(ANSI_YELLOW + """
         $$$$$$\\              $$\\           $$\\      $$\\                                     $$\\      $$\\                                                             
         $$  __$$\\             $$ |          $$$\\    $$$ |                                    $$$\\    $$$ |                                                            
         $$ /  \\__| $$$$$$\\  $$$$$$\\         $$$$\\  $$$$ | $$$$$$\\  $$$$$$$\\  $$\\   $$\\       $$$$\\  $$$$ | $$$$$$\\  $$$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\  
@@ -61,13 +71,13 @@ public class SetMenuFactory {
                                                                                                                                         $$\\   $$ |                    
                                                                                                                                         \\$$$$$$  |                    
                                                                                                                                          \\______/                     
-        """);
+        """ + ANSI_RESET);
         while (choice != 0) {
-            System.out.println("1. Create set menu item");
-            System.out.println("2. Update set menu item");
-            System.out.println("3. Remove set menu item");
-            System.out.println("4. View set menu items");
-            System.out.println("0. Exit");
+            System.out.println(ANSI_YELLOW + "1. Create set menu item" + ANSI_RESET);
+            System.out.println(ANSI_YELLOW + "2. Update set menu item" + ANSI_RESET);
+            System.out.println(ANSI_YELLOW + "3. Remove set menu item" + ANSI_RESET);
+            System.out.println(ANSI_YELLOW + "4. View set menu items" + ANSI_RESET);
+            System.out.println(ANSI_YELLOW + "0. Exit" + ANSI_RESET);
             loop: while (choice != 0) {
                 choice = getIntInput();
                 switch (choice) {
@@ -86,7 +96,7 @@ public class SetMenuFactory {
                         viewSetItems();
                         break loop;
                     default:
-                        System.out.println("Invalid choice");
+                        System.out.println(ANSI_RED + "Invalid choice" + ANSI_RESET);
                 }
             }
         }
@@ -95,20 +105,20 @@ public class SetMenuFactory {
     // create a new menu
     public void addSetItem() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter name of set menu item:");
+        System.out.println(ANSI_YELLOW + "Enter name of set menu item:" + ANSI_RESET);
         String name = sc.nextLine();
 
-        System.out.println("Enter price of set menu item:");
+        System.out.println(ANSI_YELLOW + "Enter price of set menu item:" + ANSI_RESET);
         double price = getDoubleInput();
         while (price <= 0) {
-            System.out.println("Invalid price");
+            System.out.println(ANSI_RED + "Invalid price" + ANSI_RESET);
             price = getDoubleInput();
         }
 
-        System.out.println("Enter number of menu items in set menu item:");
+        System.out.println(ANSI_YELLOW + "Enter number of menu items in set menu item:" + ANSI_RESET);
         int setSize = getIntInput();
         while (setSize <= 0) {
-            System.out.println("Invalid size");
+            System.out.println(ANSI_RED + "Invalid size" + ANSI_RESET);
             setSize = getIntInput();
         }
 
@@ -117,16 +127,16 @@ public class SetMenuFactory {
         for (int i=0; i<setSize; i++) {
             MenuItem menuItem = null;
             while (menuItem == null) {
-                System.out.println("Menu item " + (i + 1));
-                System.out.println("Enter id of menu item to be added to set menu item:");
+                System.out.println(ANSI_YELLOW + "Menu item " + (i + 1));
+                System.out.println(ANSI_YELLOW + "Enter id of menu item to be added to set menu item:" + ANSI_RESET);
                 int id = getIntInput();
                 while (id <= 0) {
-                    System.out.println("Invalid id");
+                    System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
                     id = getIntInput();
                 }
                 menuItem = menu.getMenuItem(id);
                 if (menuItem == null) {
-                    System.out.println("There is no menu item with id " + id);
+                    System.out.println(ANSI_RED + "There is no menu item with id " + id);
                 }
             }
             setItems.add(menuItem);
@@ -137,94 +147,94 @@ public class SetMenuFactory {
     }
 
     public void removeSetItem() {
-        System.out.println("Enter id of set menu item to be removed:");
+        System.out.println(ANSI_YELLOW + "Enter id of set menu item to be removed:" + ANSI_RESET);
         int id = getIntInput();
         while (id <= 0) {
-            System.out.println("Invalid id");
+            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
             id = getIntInput();
         }
 
         if (setMenu.removeSetItem(id) == 0) {
-            System.out.println("There is no menu item with id "+ id);
+            System.out.println(ANSI_RED + "There is no menu item with id "+ id);
         }
     }
 
     public void modifySetItem() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter id of set menu item to be modified:");
+        System.out.println(ANSI_YELLOW + "Enter id of set menu item to be modified:" + ANSI_RESET);
         int setItemId = getIntInput();
         while (setItemId <= 0) {
-            System.out.println("Invalid id");
+            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
             setItemId = getIntInput();
         }
         SetItem setItem = setMenu.getSetItem(setItemId);
         if (setItem == null) {
-            System.out.println("There is no set menu item with id " + setItemId);
+            System.out.println(ANSI_RED + "There is no set menu item with id " + setItemId);
             return;
         }
 
         int choice = -1;
         while (choice != 0) {
-            System.out.println("1. Modify name");
-            System.out.println("2. Modify price");
-            System.out.println("3. Add menu item");
-            System.out.println("4. Remove menu item");
-            System.out.println("0. Back");
+            System.out.println(ANSI_YELLOW + "1. Modify name" + ANSI_RESET);
+            System.out.println(ANSI_YELLOW + "2. Modify price" + ANSI_RESET);
+            System.out.println(ANSI_YELLOW + "3. Add menu item" + ANSI_RESET);
+            System.out.println(ANSI_YELLOW + "4. Remove menu item" + ANSI_RESET);
+            System.out.println(ANSI_YELLOW + "0. Back" + ANSI_RESET);
             loop: while (choice != 0) {
                 choice = getIntInput();
                 switch (choice) {
                     case 0:
                         continue;
                     case 1:
-                        System.out.println("Enter new name of set menu item:");
+                        System.out.println(ANSI_YELLOW + "Enter new name of set menu item:" + ANSI_RESET);
                         String name = sc.nextLine();
                         setItem.setName(name);
                         break loop;
                     case 2:
-                        System.out.println("Enter new price of set menu item:");
+                        System.out.println(ANSI_YELLOW + "Enter new price of set menu item:" + ANSI_RESET);
                         double price = getDoubleInput();
                         while (price <= 0) {
-                            System.out.println("Invalid price");
+                            System.out.println(ANSI_RED + "Invalid price" + ANSI_RESET);
                             price = getDoubleInput();
                         }
                         setItem.setPrice(price);
                         break loop;
                     case 3:
                         menu.viewMenu();
-                        System.out.println("Enter id of menu item to be added to set menu item:");
+                        System.out.println(ANSI_YELLOW + "Enter id of menu item to be added to set menu item:" + ANSI_RESET);
                         int menuItemId = getIntInput();
                         while (menuItemId <= 0) {
-                            System.out.println("Invalid id");
+                            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
                             menuItemId = getIntInput();
                         }
                         MenuItem menuItem = menu.getMenuItem(menuItemId);
                         if (menuItem == null) {
-                            System.out.println("There is no menu item with id " + menuItemId);
+                            System.out.println(ANSI_RED + "There is no menu item with id " + menuItemId);
                             break loop;
                         }
                         setItem.addMenuItem(menuItem);
                         break loop;
                     case 4:
                         setItem.printSetItem();
-                        System.out.println("Enter id of menu item to be removed from set menu item:");
+                        System.out.println(ANSI_YELLOW + "Enter id of menu item to be removed from set menu item:" + ANSI_RESET);
                         menuItemId = getIntInput();
                         while (menuItemId <= 0) {
-                            System.out.println("Invalid id");
+                            System.out.println(ANSI_RED + "Invalid id" + ANSI_RESET);
                             menuItemId = getIntInput();
                         }
                         menuItem = menu.getMenuItem(menuItemId);
                         if (menuItem == null) {
-                            System.out.println("There is no menu item with id " + menuItemId);
+                            System.out.println(ANSI_RED + "There is no menu item with id " + menuItemId);
                             break loop;
                         }
                         if (!setItem.getSetItems().contains(menuItem)) {
-                            System.out.println("Set menu item does not contain menu item with id " + menuItemId);
+                            System.out.println(ANSI_RED + "Set menu item does not contain menu item with id " + menuItemId);
                             break loop;
                         }
                         setItem.removeMenuItem(menuItem);
                         break loop;
                     default:
-                        System.out.println("Invalid choice");
+                        System.out.println(ANSI_RED + "Invalid choice" + ANSI_RESET);
                 }
             }
         }
