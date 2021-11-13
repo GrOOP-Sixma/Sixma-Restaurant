@@ -1,6 +1,5 @@
 package Order;
 
-import java.lang.reflect.Member;
 import java.util.Calendar;
 import java.text.DecimalFormat;
 
@@ -52,6 +51,10 @@ public class OrderInvoice extends Order{
         for (SetItem setItem : orderedSetItems.keySet()) {
             subTotal += setItem.getPrice() * orderedSetItems.get(setItem);
         }
+
+        if (isMember) {
+            subTotal *= 0.8;
+        }
     }
 
     private void calculateServiceChargeAmount() {
@@ -59,21 +62,11 @@ public class OrderInvoice extends Order{
     }
 
     private void calculateGSTAmount() {
-        if (isMember) {
-            GSTAmount = (subTotal + serviceChargeAmount) * 0.8 * GST_RATE;
-        }
-        else {
-            GSTAmount = (subTotal + serviceChargeAmount) * GST_RATE;
-        }
+        GSTAmount = (subTotal + serviceChargeAmount) * GST_RATE;
     }
 
     private void calculateTotal() {
-        if (isMember) {
-            total = (subTotal + serviceChargeAmount) * 0.8 + GSTAmount;
-        }
-        else {
-            total = subTotal + serviceChargeAmount + GSTAmount;
-        }
+        total = subTotal + serviceChargeAmount + GSTAmount;
     }
 
     public void printOrderInvoice() {
@@ -97,7 +90,7 @@ public class OrderInvoice extends Order{
         System.out.println("Sub Total: $" + df.format(subTotal));
         System.out.println("Service Charge: $" + df.format(serviceChargeAmount));
         if (isMember) {
-            System.out.println("Discount: $" + df.format((subTotal * serviceChargeAmount) * 0.2));
+            System.out.println("Discount: $" + df.format((subTotal) * 0.2));
         }
         System.out.println("GST: $" + df.format(GSTAmount));
         System.out.println("Total: $" + df.format(total));
