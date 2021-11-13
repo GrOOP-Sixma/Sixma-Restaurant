@@ -2,6 +2,9 @@ package Staff;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import Customer.Customer;
+
 import java.io.*;
 
 import Restaurant.RestaurantBack.Gender;
@@ -130,5 +133,9 @@ public class StaffController {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Staff> getStaffList() {
+        return staffList;
     }
 }

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
+import Customer.Customer;
+
 import java.io.*;
 
 public class TableController {
@@ -190,5 +193,9 @@ public class TableController {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+    }
+
+    public Map<Integer, ArrayList<Table>> getTableMap() {
+        return tableMap;
     }
 }

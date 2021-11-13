@@ -25,6 +25,14 @@ public class OrderController {
         readInstances();
     }
 
+    public ArrayList<Order> getOrders() {
+        return orders;
+    }
+
+    public ArrayList<OrderInvoice> getOrderInvoices() {
+        return orderInvoices;
+    }
+
     // methods
     public void addOrder(String staffName, int tableId, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
         Order order = new Order(staffName, tableId, orderedMenuItems, orderedSetItems);

@@ -2,7 +2,9 @@ package Factory;
 
 import java.util.Scanner;
 
-public class RRPSS {
+import Restaurant.RestaurantBack.Gender;
+
+public class RRPSS implements Runnable{
     private Restaurant restaurant;
 
     // constructor
@@ -21,9 +23,39 @@ public class RRPSS {
             }
         }
     }
+    
+    // check if restaurant is a new restaurant
+    public boolean isNewRestaurant() {
+        // check if number of staff is 0
+        if (this.restaurant.getStaffFactory().getStaffController().getStaffList().size() == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     public void run() {
         Scanner sc = new Scanner(System.in);
+
+        if (isNewRestaurant()) {
+            System.out.println("It looks like this is the first time this program is being run");
+            System.out.println("Please enter the name of your name: ");
+            String ownerName = sc.nextLine();
+            System.out.println("Enter 1 if you are male, or 2 if you are female");
+            Gender gender;
+            if (getIntInput() == 1) {
+                gender = Gender.MALE;
+            } else {
+                gender = Gender.FEMALE;
+            }
+
+            // create owner
+            this.restaurant.getStaffFactory().getStaffController().addStaff(ownerName, gender, "Owner");
+            System.out.println("Welcome to the RRPSS!");
+            System.out.println("------------------------------------------------------------");
+        }
+
         int choice = -1;
         while (choice != 0) {
             System.out.println("\nWhat would you like to do?");
