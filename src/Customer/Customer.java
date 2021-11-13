@@ -1,4 +1,4 @@
-package Customer;
+Custpackage Customer;
 
 import Restaurant.Person;
 
