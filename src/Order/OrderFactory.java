@@ -1,5 +1,9 @@
 package Order;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -78,6 +82,7 @@ public class OrderFactory {
             System.out.println("4. View orders");
             System.out.println("5. Create order invoice");
             System.out.println("6. View order invoices");
+            System.out.println("7. View Sales Report");
             System.out.println("0. Exit");
             loop: while (choice != 0) {
                 choice = getIntInput();
@@ -101,6 +106,9 @@ public class OrderFactory {
                         break loop;
                     case 6:
                         viewOrderInvoices();
+                        break loop;
+                    case 7:
+                        viewSalesReport();
                         break loop;
                     default:
                         System.out.println("Invalid choice");
@@ -471,6 +479,60 @@ public class OrderFactory {
 
     public void viewOrderInvoices() {
         orderController.viewOrderInvoices();
+    }
+
+    public void viewSalesReport() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("View sales report by:");
+        System.out.println("1. Day");
+        System.out.println("2. Month");
+        int choice = -1;
+        while (choice != 0) {
+            choice = getIntInput();
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter day (DD/MM/YYYY):");
+                    String dateString = "";
+                    boolean valid = false;
+                    while (!valid) {
+                        try {
+                            dateString = sc.nextLine();
+                            LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT));
+                            valid = true;
+                        } catch (DateTimeParseException e) {
+                            System.out.println("Invalid date");
+                        }
+                    }
+                    String[] dateAttributes = dateString.split("/");;
+                    int day = Integer.parseInt(dateAttributes[0]);
+                    int month = Integer.parseInt(dateAttributes[1]) - 1;
+                    int year = Integer.parseInt(dateAttributes[2]);
+
+                    orderController.viewDaySalesReport(day, month, year);
+                    break;
+                case 2:
+                    System.out.println("Enter month (MM/YYYY):");
+                    dateString = "";
+                    valid = false;
+                    while (!valid) {
+                        try {
+                            dateString = sc.nextLine();
+                            LocalDate.parse(dateString, DateTimeFormatter.ofPattern("MM/uuuu").withResolverStyle(ResolverStyle.STRICT));
+                            valid = true;
+                        } catch (DateTimeParseException e) {
+                            System.out.println("Invalid date");
+                        }
+                    }
+                    dateAttributes = dateString.split("/");;
+                    month = Integer.parseInt(dateAttributes[1]) - 1;
+                    year = Integer.parseInt(dateAttributes[2]);
+
+                    orderController.viewMonthSalesReport(month, year);
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+            }
+        }
     }
 
     public void writeInstances() {
