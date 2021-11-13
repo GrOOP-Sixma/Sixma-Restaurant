@@ -14,6 +14,16 @@ public class Order {
     protected final HashMap<MenuItem, Integer> orderedMenuItems;
     protected final HashMap<SetItem, Integer> orderedSetItems;
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
     // constructors
     public Order(String staffName, int tableId, boolean isMember, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
         orderId = getNextOrderId();
@@ -97,19 +107,19 @@ public class Order {
     }
 
     public void printOrder() {
-        System.out.println("-------------------------------");
-        System.out.println("Order ID: " + orderId);
-        System.out.println("Staff: " + staffName);
-        System.out.println("Table ID: " + tableId);
-        System.out.println("-------------------");
-        System.out.println("MenuItems:");
+        System.out.println(ANSI_BLUE+  "-------------------------------" + ANSI_RESET);
+        System.out.println(ANSI_BLUE+  "Order ID: " + orderId + ANSI_RESET);
+        System.out.println(ANSI_BLUE+  "Staff: " + staffName + ANSI_RESET);
+        System.out.println(ANSI_BLUE+  "Table ID: " + tableId + ANSI_RESET);
+        System.out.println(ANSI_BLUE+  "-------------------" + ANSI_RESET);
+        System.out.println(ANSI_BLUE+  "MenuItems:" + ANSI_RESET);
         for (MenuItem menuItem : orderedMenuItems.keySet()) {
-            System.out.println("||" + orderedMenuItems.get(menuItem) + " x " + menuItem.getName());
+            System.out.println(ANSI_BLUE+  "||" + orderedMenuItems.get(menuItem) + " x " + menuItem.getName() + " ||" + ANSI_RESET);
         }
-        System.out.println("-------------------");
-        System.out.println("SetItems:");
+        System.out.println(ANSI_BLUE+  "-------------------" + ANSI_RESET);
+        System.out.println(ANSI_BLUE+  "SetItems:" + ANSI_RESET);
         for (SetItem setItem : orderedSetItems.keySet()) {
-            System.out.println("||" + orderedSetItems.get(setItem) + " x " + setItem.getName());
+            System.out.println(ANSI_BLUE+  "||" + orderedSetItems.get(setItem) + " x " + setItem.getName() + " ||" + ANSI_RESET);
         }
     }
 }

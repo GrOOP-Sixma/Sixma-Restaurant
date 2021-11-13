@@ -33,7 +33,7 @@ public class CustomerFactory {
                 return sc.nextInt();
             }
             else {
-                System.out.println("Invalid input.");
+                System.out.println(ANSI_RED + "Invalid input." + ANSI_RESET);
                 sc.next();
             }
         }

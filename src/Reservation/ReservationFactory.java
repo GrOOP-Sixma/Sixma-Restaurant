@@ -78,6 +78,7 @@ public class ReservationFactory {
             System.out.println(ANSI_PURPLE+ "3. View reservations" + ANSI_RESET);
             System.out.println(ANSI_PURPLE+ "4. Update reservations" + ANSI_RESET);
             System.out.println(ANSI_PURPLE+ "0. Exit" + ANSI_RESET);
+            System.out.println(ANSI_PURPLE+ "\n" + ANSI_RESET);
             loop: while (choice != 0) {
                 choice = getIntInput();
                 switch (choice) {
