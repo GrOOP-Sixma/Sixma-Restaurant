@@ -1,55 +1,67 @@
 package Food;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
 public class SetItem extends Products {
-    private int setSize;
-    private MenuItem[] setItems;
-    private double setPrice;
-    
-    public SetItem() {
-        super();
-    }
+    private int setItemId;
+    private static int nextSetItemId = 1;
+    private final ArrayList<MenuItem> setItems;
 
-    // setters
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSetSize() {
-        this.setSize = this.setItems.length;
-    }
-
-    public void setSetItems(MenuItem[] setItems) {
+    // constructors
+    public SetItem(String name, double price, ArrayList<MenuItem> setItems) {
+        super(name, price);
+        setItemId = getNextSetItemId();
         this.setItems = setItems;
-        setSetSize();
     }
 
-    public void setSetPrice(double setPrice) {
-        this.setPrice = setPrice;
+    public SetItem(String name, double price, int setItemId, ArrayList<MenuItem> setItems) {
+        super(name, price);
+        this.setItemId = setItemId;
+        this.setItems = setItems;
     }
 
     // getters
-    public String getName() {
-        return name;
+    public int getSetItemId() {return setItemId;}
+    public ArrayList<MenuItem> getSetItems() {return setItems;}
+
+    // setters
+    public static void setNextSetItemId(int nextSetItemId) {SetItem.nextSetItemId = nextSetItemId;}
+
+    // methods
+    private static int getNextSetItemId() {
+        return nextSetItemId++;
     }
 
-    public int getSetSize() {
-        return setSize;
+    public void addMenuItem(MenuItem menuItem) {
+        setItems.add(menuItem);
     }
 
-    public MenuItem[] getSetItems() {
-        return setItems;
+    public void removeMenuItem(MenuItem menuItem) {
+        setItems.remove(menuItem);
     }
 
-    public double getSetPrice() {
-        return setPrice;
-    }
-
-    public void printSet() {
-        System.out.println("Set size: " + setSize);
-        System.out.println("Set items: ");
-        for (int i = 0; i < setItems.length; i++) {
-            System.out.println(setItems[i].getName());
+    public void printSetItem() {
+        System.out.println("-------------------------------");
+        System.out.println("Set ID: " + setItemId);
+        System.out.println("Name: " + name);
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.out.println("Price: $" + df.format(price));
+        System.out.println("Number of Items: " + setItems.size());
+        for (MenuItem menuItem : setItems) {
+            System.out.println("-------------------");
+            System.out.println("||Item ID: " + menuItem.getMenuItemId());
+            System.out.println("||Name: " + menuItem.getName());
+            if (menuItem.getFoodType() == FoodType.MAIN_COURSE) {
+                System.out.println("||Food Type: Main Course");
+            }
+            else if (menuItem.getFoodType() == FoodType.DRINKS) {
+                System.out.println("||Food Type: Drinks");
+            }
+            else {
+                System.out.println("||Food Type: Dessert");
+            }
+            System.out.println("||Description: " + menuItem.getDescription());
         }
-        System.out.println("Set price: " + setPrice);
-    }    
+    }
 }

@@ -1,5 +1,6 @@
 package Table;
+
 public enum TableStatus {
-	RESERVED,
-	VACANT
+    RESERVED,
+    VACANT;
 }

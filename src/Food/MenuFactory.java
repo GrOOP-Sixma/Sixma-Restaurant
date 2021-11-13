@@ -3,118 +3,207 @@ package Food;
 import java.util.Scanner;
 
 public class MenuFactory {
-    private Menu menu;
+    private final Menu menu;
+    private String name;
 
-    public MenuFactory() {menu = new Menu();} // creates the menu object
+    // constructors
+    public MenuFactory(String name) {
+        menu = new Menu(name);
+        this.name = name;
+    }
 
-    public Menu getMenu() {return menu;} // returns the menu OBJECT
+    // getters
+    public Menu getMenu() {return menu;}
 
-    public void run() { 
-        int choice = -1;
-        Scanner scanner = new Scanner(System.in);
-        while (choice != 0) {
-            System.out.println("Enter 1 to add a new menu item");
-            System.out.println("Enter 2 to remove a menu item");
-            System.out.println("Enter 3 to update a menu item");
-            System.out.println("Enter 4 to view all menu items");
-            System.out.println("Enter 0 to exit");
-            choice = scanner.nextInt();
-            switch (choice) {
-                case 1:
-                    addMenuItem();
-                    break;
-                case 2:
-                    removeMenuItem();
-                    break;
-                case 3:
-                    modifyMenuItem();
-                    break;
-                case 4:
-                    viewMenuItems();
-                    break;
-                case 0:
-                    break;
-                default:
-                    System.out.println("Invalid choice");
-                    break;
+    // methods
+    public double getDoubleInput() {
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            if (sc.hasNextDouble()) {
+                return sc.nextDouble();
+            }
+            else {
+                System.out.println("Invalid input.");
+                sc.next();
             }
         }
-        scanner.close();
+    }
+
+    public int getIntInput() {
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            if (sc.hasNextInt()) {
+                return sc.nextInt();
+            }
+            else {
+                System.out.println("Invalid input.");
+                sc.next();
+            }
+        }
+    }
+
+    public void run() {
+        int choice = -1;
+        Scanner sc = new Scanner(System.in);
+        while (choice != 0) {
+            System.out.println("\nMenu Manager:");
+            System.out.println("1. Create menu item");
+            System.out.println("2. Update menu item");
+            System.out.println("3. Remove menu item");
+            System.out.println("4. View menu items");
+            System.out.println("0. Exit");
+            loop: while (choice != 0) {
+                choice = getIntInput();
+                switch (choice) {
+                    case 0:
+                        continue;
+                    case 1:
+                        addMenuItem();
+                        break loop;
+                    case 2:
+                        modifyMenuItem();
+                        break loop;
+                    case 3:
+                        removeMenuItem();
+                        break loop;
+                    case 4:
+                        viewMenuItems();
+                        break loop;
+                    default:
+                        System.out.println("Invalid choice");
+                }
+            }
+        }
     }
 
     public void addMenuItem() {
-        System.out.println("Creating a new menu item...");
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the name of the menu item:");
-        String name = scanner.nextLine();
-        System.out.println("Enter the type of the menu item:");
-        String type = scanner.nextLine();
-        FoodType foodType = FoodType.valueOf(type);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter name of menu item:");
+        String name = sc.nextLine();
+
+        System.out.println("Enter price of menu item:");
+        double price = getDoubleInput();
+        while (price <= 0) {
+            System.out.println("Invalid price");
+            price = getDoubleInput();
+        }
+
+        System.out.println("Enter type of menu item:");
+        System.out.println("1. Main Course");
+        System.out.println("2. Drinks");
+        System.out.println("3. Dessert");
+        int foodType = getIntInput();
+        while (foodType != 1 && foodType != 2 && foodType != 3) {
+            System.out.println("Invalid choice");
+            foodType = getIntInput();
+        }
+
         System.out.println("Enter the description of the menu item:");
-        String description = scanner.nextLine();
-        System.out.println("Enter the price of the menu item:");
-        double price = scanner.nextDouble();
-        MenuItem menuItem = new MenuItem(name, foodType, description, price); // create a menu item
-        menu.addMenuItem(menuItem); // add it to the menu
-        scanner.close();
+        String description = sc.nextLine();
+
+        MenuItem menuItem;
+        if (foodType == 1) {
+            menuItem = new MenuItem(name, price, FoodType.MAIN_COURSE, description);
+        }
+        else if (foodType == 2) {
+            menuItem = new MenuItem(name, price, FoodType.DRINKS, description);
+        }
+        else {
+            menuItem = new MenuItem(name, price, FoodType.DESSERT, description);
+        }
+        menu.addMenuItem(menuItem);
     }
 
     public void removeMenuItem() {
-        System.out.println("Enter id of menu item to be removed");
-        Scanner scanner = new Scanner(System.in);
-        int id = scanner.nextInt();
-        menu.removeMenuItem(id);
-        System.out.println("Menu item removed");
-        scanner.close();
+        System.out.println("Enter id of menu item to be removed:");
+        int id = getIntInput();
+        while (id <= 0) {
+            System.out.println("Invalid id");
+            id = getIntInput();
+        }
+
+        if (menu.removeMenuItem(id) == 0) {
+            System.out.println("There is no menu item with id " + id);
+        }
     }
 
     public void modifyMenuItem() {
-        System.out.println("Enter id of menu item to be modified");
-        Scanner scanner = new Scanner(System.in);
-        int id = scanner.nextInt();
-        MenuItem menuItem = (MenuItem) menu.getMenuItem(id);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter id of menu item to be modified:");
+        int id = getIntInput();
+        while (id <= 0) {
+            System.out.println("Invalid id");
+            id = getIntInput();
+        }
+        MenuItem menuItem = menu.getMenuItem(id);
+        if (menuItem == null) {
+            System.out.println("There is no menu item with id " + id);
+            return;
+        }
+
         int choice = -1;
         while (choice != 0) {
-            System.out.println("Enter 0 to exit");
-            System.out.println("Enter 1 to modify name");
-            System.out.println("Enter 2 to modify type");
-            System.out.println("Enter 3 to modify description");
-            System.out.println("Enter 4 to modify price");
-            choice = scanner.nextInt();
-            switch (choice) {
-                case 1:
-                    System.out.println("Enter new name");
-                    String name = scanner.nextLine();
-                    menuItem.setName(name);
-                    break;
-                case 2:
-                    System.out.println("Enter new type");
-                    String type = scanner.nextLine();
-                    FoodType foodType = FoodType.valueOf(type);
-                    menuItem.setFoodType(foodType);
-                    break;
-                case 3:
-                    System.out.println("Enter new description");
-                    String description = scanner.nextLine();
-                    menuItem.setDescription(description);
-                    break;
-                case 4:
-                    System.out.println("Enter new price");
-                    double price = scanner.nextDouble();
-                    menuItem.setPrice(price);
-                    break;
-                case 0:
-                    break;
-                default:
-                    System.out.println("Invalid choice");
-                    break;
+            System.out.println("1. Modify name");
+            System.out.println("2. Modify price");
+            System.out.println("3. Modify type");
+            System.out.println("4. Modify description");
+            System.out.println("0. Back");
+            loop: while (choice != 0) {
+                choice = getIntInput();
+                switch (choice) {
+                    case 0:
+                        continue;
+                    case 1:
+                        System.out.println("Enter new name of menu item:");
+                        String name = sc.nextLine();
+                        menuItem.setName(name);
+                        break loop;
+                    case 2:
+                        System.out.println("Enter new price of menu item:");
+                        double price = getDoubleInput();
+                        while (price <= 0) {
+                            System.out.println("Invalid price");
+                            price = getDoubleInput();
+                        }
+                        menuItem.setPrice(price);
+                        break loop;
+                    case 3:
+                        System.out.println("Enter new type of menu item:");
+                        System.out.println("1. Main Course");
+                        System.out.println("2. Drinks");
+                        System.out.println("3. Dessert");
+                        int foodType = getIntInput();
+                        while (foodType != 1 && foodType != 2 && foodType != 3) {
+                            System.out.println("Invalid choice");
+                            foodType = getIntInput();
+                        }
+                        if (foodType == 1) {
+                            menuItem.setFoodType(FoodType.MAIN_COURSE);
+                        }
+                        else if (foodType == 2) {
+                            menuItem.setFoodType(FoodType.DRINKS);
+                        }
+                        else {
+                            menuItem.setFoodType(FoodType.DESSERT);
+                        }
+                        break loop;
+                    case 4:
+                        System.out.println("Enter new description of menu item:");
+                        String description = sc.nextLine();
+                        menuItem.setDescription(description);
+                        break loop;
+                    default:
+                        System.out.println("Invalid choice");
+                }
             }
         }
-        scanner.close();
     }
 
     public void viewMenuItems() {
-        System.out.println("Viewing all menu items");
-        menu.printMenu();
+        menu.viewMenu();
+    }
+
+    public void writeInstances() {
+        menu.writeInstances();
     }
 }

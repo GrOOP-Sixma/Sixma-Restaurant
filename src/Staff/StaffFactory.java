@@ -6,67 +6,109 @@ import Restaurant.RestaurantBack.Gender;
 
 public class StaffFactory {
     private StaffController staffController;
+    private String name;
 
-    public StaffFactory(){staffController = new StaffController();}
+    // constructors
+    public StaffFactory(String name) {
+        staffController = new StaffController(name);
+        this.name = name;
+    }
 
+    // getters
     public StaffController getStaffController() {return staffController;}
+
+    // methods
+    public int getIntInput() {
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            if (sc.hasNextInt()) {
+                return sc.nextInt();
+            }
+            else {
+                System.out.println("Invalid input.");
+                sc.next();
+            }
+        }
+    }
 
     public void run(){
         int choice = -1;
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         while (choice != 0){
+            System.out.println("\nStaff Manager:");
             System.out.println("1. Hire Staff");
             System.out.println("2. Fire Staff");
             System.out.println("3. View Staff");
             System.out.println("0. Exit");
-            choice = scanner.nextInt();
-            switch (choice){
-                case 1:
-                    hireStaff();
-                    break;
-                case 2:
-                    fireStaff();
-                    break;
-                case 3:
-                    viewStaff();
-                    break;
-                case 0:
-                    break;
-                default:
-                    System.out.println("Invalid choice");
-                    break;
+            loop: while (choice != 0) {
+                choice = getIntInput();
+                switch (choice) {
+                    case 0:
+                        continue;
+                    case 1:
+                        hireStaff();
+                        break loop;
+                    case 2:
+                        fireStaff();
+                        break loop;
+                    case 3:
+                        viewStaff();
+                        break loop;
+                    default:
+                        System.out.println("Invalid choice");
+                }
             }
         }
-        scanner.close();
     }
 
     public void hireStaff(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter name of new staff");
-        String name = scanner.nextLine();
-        System.out.println("Enter gender of new staff");
-        String gender = scanner.nextLine();
-        Gender staffGender = Gender.valueOf(gender);
-        System.out.println("Enter role of new staff");
-        String role = scanner.nextLine();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter name of new staff:");
+        String name = sc.nextLine();
 
-        // create the staff
-        Staff newStaff = new Staff(name, staffGender, role);
+        System.out.println("Enter gender of new staff:");
+        System.out.println("1. Male");
+        System.out.println("2. Female");
+        int gender = getIntInput();
+        while (gender != 1 && gender != 2) {
+            System.out.println("Invalid choice");
+            gender = getIntInput();
+        }
+
+        System.out.println("Enter role of new staff:");
+        String role = sc.nextLine();
+
+        Staff newStaff;
+        if (gender == 1) {
+            newStaff = new Staff(name, Gender.MALE, role);
+        }
+        else {
+            newStaff = new Staff(name, Gender.FEMALE, role);
+        }
         staffController.addStaff(newStaff);
-        scanner.close();
     }
 
     public void fireStaff(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter name of staff to fire");
-        String name = scanner.nextLine();
-        System.out.println("Enter id of staff");
-        int id = scanner.nextInt();
-        staffController.removeStaff(name, id);
-        scanner.close();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter name of staff to fire:");
+        String name = sc.nextLine();
+
+        System.out.println("Enter id of staff:");
+        int id = getIntInput();
+        while (id <= 0) {
+            System.out.println("Invalid id");
+            id = getIntInput();
+        }
+        if (staffController.removeStaff(name, id) == 0) {
+            System.out.println(name + " is not a registered staff");
+        }
     }
 
     public void viewStaff(){
         staffController.viewStaff();
+    }
+
+    public void writeInstances() {
+        staffController.writeInstances();
     }
 }

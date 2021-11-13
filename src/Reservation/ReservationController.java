@@ -1,30 +1,37 @@
 package Reservation;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.Scanner;
 import java.util.Calendar;
+import java.io.*;
 
-import Customer.Customer;
-import Table.Table;
+import Customer.*;
+import Table.*;
 
-public class ReservationController implements Serializable{
+public class ReservationController {
+    private final CustomerController customerController;
+    private final TableController tableController;
     private final ArrayList<Reservation> reservationList;
+    private String name;
 
-    // constructor
-    public ReservationController() {
+    // constructors
+    public ReservationController(String name, CustomerController customerController, TableController tableController) {
+        this.name = name;
+        this.customerController = customerController;
+        this.tableController = tableController;
         reservationList = new ArrayList<>();
+        readInstances();
     }
 
     // methods
-    public void addReservation(Customer customer, Table table, int numOfPax, Calendar reservationDate) {
-        Reservation reservation = new Reservation(customer, table, numOfPax, reservationDate);
+    public void addReservation(Calendar reservationDate, Customer customer, int numPax, Table table) {
+        Reservation reservation = new Reservation(reservationDate, customer, numPax, table);
+        reservationList.add(reservation);
+    }
+
+    public void addReservation(int reservationId, Calendar reservationDate, Customer customer, int numPax, Table table) {
+        Reservation reservation = new Reservation(reservationId, reservationDate, customer, numPax, table);
         reservationList.add(reservation);
     }
 
@@ -32,80 +39,139 @@ public class ReservationController implements Serializable{
         reservationList.add(reservation);
     }
 
-    public void removeReservation(int reservationId) {
-        for (int i=0; i<reservationList.size(); i++) {
-            if (reservationList.get(i).getReservationID() == reservationId) {
-                reservationList.remove(i);
-                break;
+    public int removeReservation(int reservationId) {
+        for (Reservation reservation : reservationList) {
+            if (reservation.getReservationId() == reservationId) {
+                reservation.getTable().unreserveTable();
+                reservationList.remove(reservation);
+                return 1;
             }
         }
+        return 0;
     }
 
-    public void removeReservation(Customer customer) {
-        for (int i=0; i<reservationList.size(); i++) {
-            if (reservationList.get(i).getCustomerName().equals(customer.getName()) && reservationList.get(i).getCustomerContactNo() == customer.getContactNo()) {
-                reservationList.remove(i);
-                break;
+    public void finishReservation(Table table) {
+        for (Reservation reservation : reservationList) {
+            if (reservation.getTable() == table) {
+                reservationList.remove(reservation);
+                return;
             }
         }
     }
 
     public Reservation getReservation(int reservationId) {
-        for (Reservation reservation : reservationList)
-            if (reservation.getReservationID() == reservationId)
+        for (Reservation reservation : reservationList) {
+            if (reservation.getReservationId() == reservationId) {
                 return reservation;
+            }
+        }
+        return null;
+    }
 
+    public Reservation getReservation(Table table) {
+        for (Reservation reservation : reservationList) {
+            if (reservation.getTable() == table) {
+                return reservation;
+            }
+        }
         return null;
     }
 
     public void viewReservations() {
-        for (Reservation reservation : reservationList)
-            System.out.println(reservation);
-    }
-
-    // convert to byte array
-    public byte[] objectToByteArray() {
-        byte[] byteArray = new byte[0];
+        System.out.println("\nReservations:");
         for (Reservation reservation : reservationList) {
-            byte[] temp = reservation.toByteArray();
-            byteArray = concatenateByteArrays(byteArray, temp);
+            reservation.printReservation();
         }
-        return byteArray;
     }
 
-    public byte[] concatenateByteArrays(byte[] a, byte[] b) {
-        byte[] result = new byte[a.length + b.length];
-        System.arraycopy(a, 0, result, 0, a.length);
-        System.arraycopy(b, 0, result, a.length, b.length);
-        return result;
+    public void updateReservations() {
+        ArrayList<Reservation> toRemove = new ArrayList<>();
+        for (Reservation reservation : reservationList) {
+            Calendar reservationDate = reservation.getReservationDate();
+            Calendar nowDate = Calendar.getInstance();
+            if (reservationDate.before(nowDate)) {
+                reservation.getTable().unreserveTable();
+                toRemove.add(reservation);
+            }
+        }
+        reservationList.removeAll(toRemove);
     }
 
-    // byte array to file
-    public void toFile() {
+    public void writeInstances() {
+        int reservationId;
+        Calendar reservationDate;
+        Customer customer;
+        int numPax;
+        Table table;
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream("../data/reservation.dat");
-            fileOutputStream.write(this.objectToByteArray());
-            fileOutputStream.close();
-        } catch (Exception e) {
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name  + "Reservation.txt");
+            myObj.createNewFile(); // if file already exists will do nothing
+            FileWriter myWriter = new FileWriter(System.getProperty("user.dir") + "/tmp/" + this.name  + "Reservation.txt");
+            for (Reservation reservation : reservationList) {
+                reservationId = reservation.getReservationId();
+                reservationDate = reservation.getReservationDate();
+                int year = reservationDate.get(Calendar.YEAR);
+                int month = reservationDate.get(Calendar.MONTH);
+                int day = reservationDate.get(Calendar.DAY_OF_MONTH);
+                int hour = reservationDate.get(Calendar.HOUR_OF_DAY);
+                int minute = reservationDate.get(Calendar.MINUTE);
+                int second = reservationDate.get(Calendar.SECOND);
+                customer = reservation.getCustomer();
+                numPax = reservation.getNumPax();
+                table = reservation.getTable();
+                myWriter.write(reservationId + ";" + year + ";" + month + ";" + day + ";" + hour + ";" + minute + ";" + second + ";" + customer.getCustomerId() + ";" + numPax + ";" + table.getTableId() + "\n");
+            }
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }
 
-    // file to byte array
-    public byte[] fileToByteArray() {
+    public void readInstances() {
+        int reservationId;
+        int year;
+        int month;
+        int day;
+        int hour;
+        int minute;
+        int second;
+        int customerId;
+        int numPax;
+        int tableId;
+        int maxReservationId = 0;
         try {
-            byte[] byteArray = Files.readAllBytes(Paths.get("../data/reservatiion.dat"));
-            return byteArray;
-        } catch (Exception e) {
+            File myObj = new File(System.getProperty("user.dir") + "/tmp/" + this.name  + "Reservation.txt");
+            myObj.createNewFile(); // if file already exists will do nothing
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] attributes = data.split(";");
+                reservationId = Integer.parseInt(attributes[0]);
+                year = Integer.parseInt(attributes[1]);
+                month = Integer.parseInt(attributes[2]);
+                day = Integer.parseInt(attributes[3]);
+                hour = Integer.parseInt(attributes[4]);
+                minute = Integer.parseInt(attributes[5]);
+                second = Integer.parseInt(attributes[6]);
+                Calendar reservationDate = new GregorianCalendar(year, month, day, hour, minute, second);
+                customerId = Integer.parseInt(attributes[7]);
+                Customer customer = customerController.getCustomer(customerId);
+                numPax = Integer.parseInt(attributes[8]);
+                tableId = Integer.parseInt(attributes[9]);
+                Table table = tableController.getTable(tableId);
+                addReservation(reservationId, reservationDate, customer, numPax, table);
+                if (reservationId > maxReservationId) {
+                    maxReservationId = reservationId;
+                }
+            }
+            Reservation.setNextReservationId(maxReservationId + 1);
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
             e.printStackTrace();
         }
-        return null;
-    }
-
-    // byte array to object
-    public static ReservationController byteArrayToObject(byte[] byteArray) throws ClassNotFoundException, IOException {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
-        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-        return (ReservationController) objectInputStream.readObject();
     }
 }

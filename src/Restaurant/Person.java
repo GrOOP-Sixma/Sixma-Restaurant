@@ -4,9 +4,7 @@ public class Person {
     private String name;
 
     // constructor
-    public Person(String name) {
-        this.name = name;
-    }
+    public Person(String name) {this.name = name;}
 
     // getters
     public String getName() {return name;}
