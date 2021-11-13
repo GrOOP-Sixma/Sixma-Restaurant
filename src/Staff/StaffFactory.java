@@ -2,6 +2,7 @@ package Staff;
 
 import java.util.Scanner;
 
+import Factory.AsciiPrinter;
 import Restaurant.RestaurantBack.Gender;
 
 public class StaffFactory {
@@ -67,6 +68,7 @@ public class StaffFactory {
                 choice = getIntInput();
                 switch (choice) {
                     case 0:
+                        AsciiPrinter.print();
                         continue;
                     case 1:
                         hireStaff();

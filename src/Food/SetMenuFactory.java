@@ -3,6 +3,8 @@ package Food;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Factory.AsciiPrinter;
+
 public class SetMenuFactory {
     private Menu menu;
     private SetMenu setMenu;
@@ -83,6 +85,7 @@ public class SetMenuFactory {
                 choice = getIntInput();
                 switch (choice) {
                     case 0:
+                        AsciiPrinter.print();
                         continue;
                     case 1:
                         addSetItem();

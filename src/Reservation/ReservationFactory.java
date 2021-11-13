@@ -9,6 +9,7 @@ import java.time.format.ResolverStyle;
 import java.util.Scanner;
 
 import Customer.*;
+import Factory.AsciiPrinter;
 import Table.*;
 
 
@@ -84,6 +85,7 @@ public class ReservationFactory {
                 choice = getIntInput();
                 switch (choice) {
                     case 0:
+                        AsciiPrinter.print();
                         continue;
                     case 1:
                         makeReservation();
@@ -161,10 +163,10 @@ public class ReservationFactory {
             while (!valid) {
                 try {
                     dateString = sc.nextLine();
-                    LocalDate.parse(dateString, DateTimeFormatter.ofPattern(ANSI_PURPLE+ "dd/MM/uuuu HH:mm:ss").withResolverStyle(ResolverStyle.STRICT));
+                    LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd/MM/uuuu HH:mm:ss").withResolverStyle(ResolverStyle.STRICT));
                     valid = true;
                 } catch (DateTimeParseException e) {
-                    System.out.println(ANSI_RED+ "Invalid date" + ANSI_RESET);
+                    System.out.println(ANSI_RED + "Invalid date" + ANSI_RESET);
                 }
             }
 

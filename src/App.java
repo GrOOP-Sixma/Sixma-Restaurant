@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.Scanner;
 
+import Factory.AsciiPrinter;
 import Factory.RRPSS;
 
 public class App {
@@ -38,5 +39,6 @@ public class App {
         System.out.println("RRPSS is runnning");
         System.out.println("------------------------------------------------------------");
         rrpss.run();
+        AsciiPrinter.printExit();
     }
 }

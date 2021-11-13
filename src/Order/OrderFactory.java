@@ -7,6 +7,7 @@ import java.time.format.ResolverStyle;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import Factory.AsciiPrinter;
 import Staff.Staff;
 import Table.Table;
 import Table.TableStatus;
@@ -111,6 +112,7 @@ public class OrderFactory {
                 choice = getIntInput();
                 switch (choice) {
                     case 0:
+                        AsciiPrinter.print();
                         continue;
                     case 1:
                         addOrder();
@@ -165,7 +167,7 @@ public class OrderFactory {
             return;
         }
         else if (table.getStatus() == TableStatus.VACANT) {
-            System.out.println(ANSI_BLUE + "Table with id " + tableId + " is not occupied" + ANSI_RESET);
+            System.out.println(ANSI_RED + "Table with id " + tableId + " is not occupied" + ANSI_RESET);
             return;
         }
 
@@ -508,13 +510,16 @@ public class OrderFactory {
 
     public void viewSalesReport() {
         Scanner sc = new Scanner(System.in);
-        System.out.println(ANSI_BLUE + "View sales report by:" + ANSI_RESET);
-        System.out.println(ANSI_BLUE + "1. Day" + ANSI_RESET);
-        System.out.println(ANSI_BLUE + "2. Month" + ANSI_RESET);
         int choice = -1;
         while (choice != 0) {
+            System.out.println(ANSI_BLUE + "View sales report by:" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "1. Day" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "2. Month" + ANSI_RESET);
+            System.out.println(ANSI_BLUE + "0. Exit" + ANSI_RESET);
             choice = getIntInput();
             switch (choice) {
+                case 0:
+                    break;
                 case 1:
                     System.out.println(ANSI_BLUE + "Enter day (DD/MM/YYYY):" + ANSI_RESET);
                     String dateString = "";
@@ -522,13 +527,13 @@ public class OrderFactory {
                     while (!valid) {
                         try {
                             dateString = sc.nextLine();
-                            LocalDate.parse(dateString, DateTimeFormatter.ofPattern(ANSI_BLUE + "dd/MM/uuuu" + ANSI_RESET).withResolverStyle(ResolverStyle.STRICT));
+                            LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT));
                             valid = true;
                         } catch (DateTimeParseException e) {
                             System.out.println(ANSI_RED + "Invalid date" + ANSI_RESET);
                         }
                     }
-                    String[] dateAttributes = dateString.split(ANSI_BLUE + "/" + ANSI_RESET);
+                    String[] dateAttributes = dateString.split("/");
                     int day = Integer.parseInt(dateAttributes[0]);
                     int month = Integer.parseInt(dateAttributes[1]) - 1;
                     int year = Integer.parseInt(dateAttributes[2]);
@@ -542,13 +547,13 @@ public class OrderFactory {
                     while (!valid) {
                         try {
                             dateString = "01/" + sc.nextLine();
-                            LocalDate.parse(dateString, DateTimeFormatter.ofPattern(ANSI_BLUE + "dd/MM/uuuu" + ANSI_RESET).withResolverStyle(ResolverStyle.STRICT));
+                            LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT));
                             valid = true;
                         } catch (DateTimeParseException e) {
                             System.out.println(ANSI_RED + "Invalid date" + ANSI_RESET);
                         }
                     }
-                    dateAttributes = dateString.split(ANSI_BLUE + "/" + ANSI_RESET);
+                    dateAttributes = dateString.split("/");
                     month = Integer.parseInt(dateAttributes[1]) - 1;
                     year = Integer.parseInt(dateAttributes[2]);
 

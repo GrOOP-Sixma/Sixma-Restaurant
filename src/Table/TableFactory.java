@@ -3,6 +3,8 @@ package Table;
 import java.util.Random;
 import java.util.Scanner;
 
+import Factory.AsciiPrinter;
+
 public class TableFactory {
     private TableController tableController;
     String name;
@@ -34,7 +36,7 @@ public class TableFactory {
                 return sc.nextInt();
             }
             else {
-                System.out.println("Invalid input.");
+                System.out.println(ANSI_RED + "Invalid input." + ANSI_RESET);
                 sc.next();
             }
         }
@@ -43,7 +45,7 @@ public class TableFactory {
     public void run() {
         int choice = -1;
         Scanner sc = new Scanner(System.in);
-        System.out.println("""
+        System.out.println(ANSI_GREEN + """
         $$$$$$$$\\           $$\\       $$\\                 $$\\      $$\\                                                             
         \\__$$  __|          $$ |      $$ |                $$$\\    $$$ |                                                            
             $$ |    $$$$$$\\  $$$$$$$\\  $$ | $$$$$$\\        $$$$\\  $$$$ | $$$$$$\\  $$$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\  
@@ -55,19 +57,20 @@ public class TableFactory {
                                                                                                         $$\\   $$ |                    
                                                                                                         \\$$$$$$  |                    
                                                                                                         \\______/                     
-        """);
+        """ + ANSI_RESET);
         while (choice != 0) {
-            System.out.println("");
-            System.out.println("1. Set up a table");
-            System.out.println("2. Remove a table");
-            System.out.println("3. Check table availability");
-            System.out.println("4. Create generic tables");
-            System.out.println("5. View all tables");
-            System.out.println("0. Exit");
+            System.out.println(ANSI_GREEN + "" + ANSI_RESET);
+            System.out.println(ANSI_GREEN + "1. Set up a table" + ANSI_RESET);
+            System.out.println(ANSI_GREEN + "2. Remove a table" + ANSI_RESET);
+            System.out.println(ANSI_GREEN + "3. Check table availability" + ANSI_RESET);
+            System.out.println(ANSI_GREEN + "4. Create generic tables" + ANSI_RESET);
+            System.out.println(ANSI_GREEN + "5. View all tables" + ANSI_RESET);
+            System.out.println(ANSI_GREEN + "0. Exit" + ANSI_RESET);
             loop: while (choice != 0) {
                 choice = getIntInput();
                 switch (choice) {
                     case 0:
+                        AsciiPrinter.print();
                         continue;
                     case 1:
                         addTable();
@@ -85,17 +88,17 @@ public class TableFactory {
                         viewTable();
                         break loop;
                     default:
-                        System.out.println("Invalid choice");
+                        System.out.println(ANSI_RED + "Invalid choice" + ANSI_RESET);
                 }
             }
         }
     }
 
     public void addTable() {
-        System.out.println("Enter capacity of table to be set up");
+        System.out.println(ANSI_GREEN + "Enter capacity of table to be set up" + ANSI_RESET);
         int numSeats = getIntInput();
         while (numSeats <= 0 || numSeats > 10) {
-            System.out.println("Invalid number of seats");
+            System.out.println(ANSI_RED + "Invalid number of seats" + ANSI_RESET);
             numSeats = getIntInput();
         }
 
@@ -104,15 +107,15 @@ public class TableFactory {
     }
 
     public void removeTable() {
-        System.out.println("Enter id of table to be removed");
+        System.out.println(ANSI_GREEN + "Enter id of table to be removed" + ANSI_RESET);
         int id = getIntInput();
         while (id <= 0) {
-            System.out.println("Invalid Id");
+            System.out.println(ANSI_RED + "Invalid Id" + ANSI_RESET);
             id = getIntInput();
         }
 
         if (tableController.removeTable(id) == 0) {
-            System.out.println("There is no table with id " + id);
+            System.out.println(ANSI_RED + "There is no table with id " + id);
         }
     }
 
@@ -127,14 +130,14 @@ public class TableFactory {
                     // get random 1 or 0 
                     Random rand = new Random(System.currentTimeMillis());
                     int test = rand.nextInt(5); // 1 in 5 chance of creating a table
-                    if (test == 0) {
+                    if (test == 1) {
                         Table newTable = new Table(i);
                         tableController.addTable(newTable);
                     }
                 }
             }
         } else {
-            System.out.println("There are already tables in the system");
+            System.out.println(ANSI_RED + "There are already tables in the system" + ANSI_RESET);
         }
     }
 

@@ -2,6 +2,8 @@ package Food;
 
 import java.util.Scanner;
 
+import Factory.AsciiPrinter;
+
 public class MenuFactory {
     private final Menu menu;
     private String name;
@@ -79,6 +81,7 @@ public class MenuFactory {
                 choice = getIntInput();
                 switch (choice) {
                     case 0:
+                        AsciiPrinter.print();
                         continue;
                     case 1:
                         addMenuItem();
@@ -211,7 +214,7 @@ public class MenuFactory {
                         }
                         break loop;
                     case 4:
-                        System.out.println(ANSI_RED + "Enter new description of menu item:" + ANSI_RESET);
+                        System.out.println(ANSI_YELLOW + "Enter new description of menu item:" + ANSI_RESET);
                         String description = sc.nextLine();
                         menuItem.setDescription(description);
                         break loop;
