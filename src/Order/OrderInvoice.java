@@ -1,5 +1,6 @@
 package Order;
 
+import java.lang.reflect.Member;
 import java.util.Calendar;
 import java.text.DecimalFormat;
 
@@ -18,7 +19,7 @@ public class OrderInvoice extends Order{
 
     // constructors
     public OrderInvoice(Order order) {
-        super(order.getOrderId(), order.getStaffName(), order.getTableId(), order.getOrderedMenuItems(), order.getOrderedSetItems());
+        super(order.getOrderId(), order.getStaffName(), order.getTableId(), order.isMember(), order.getOrderedMenuItems(), order.getOrderedSetItems());
         date = Calendar.getInstance();
         calculateSubtotal();
         calculateServiceChargeAmount();
@@ -27,7 +28,7 @@ public class OrderInvoice extends Order{
     }
 
     public OrderInvoice(Order order, Calendar date, double subTotal, double serviceChargeAmount, double GSTAmount, double total) {
-        super(order.getOrderId(), order.getStaffName(), order.getTableId(), order.getOrderedMenuItems(), order.getOrderedSetItems());
+        super(order.getOrderId(), order.getStaffName(), order.getTableId(), order.isMember, order.getOrderedMenuItems(), order.getOrderedSetItems());
         this.date = date;
         this.subTotal = subTotal;
         this.serviceChargeAmount = serviceChargeAmount;
@@ -58,11 +59,21 @@ public class OrderInvoice extends Order{
     }
 
     private void calculateGSTAmount() {
-        GSTAmount = (subTotal + serviceChargeAmount) * GST_RATE;
+        if (isMember) {
+            GSTAmount = (subTotal + serviceChargeAmount) * 0.8 * GST_RATE;
+        }
+        else {
+            GSTAmount = (subTotal + serviceChargeAmount) * GST_RATE;
+        }
     }
 
     private void calculateTotal() {
-        total = subTotal + serviceChargeAmount + GSTAmount;
+        if (isMember) {
+            total = (subTotal + serviceChargeAmount) * 0.8 + GSTAmount;
+        }
+        else {
+            total = subTotal + serviceChargeAmount + GSTAmount;
+        }
     }
 
     public void printOrderInvoice() {
@@ -85,6 +96,9 @@ public class OrderInvoice extends Order{
         }
         System.out.println("Sub Total: $" + df.format(subTotal));
         System.out.println("Service Charge: $" + df.format(serviceChargeAmount));
+        if (isMember) {
+            System.out.println("Discount: $" + df.format((subTotal * serviceChargeAmount) * 0.2));
+        }
         System.out.println("GST: $" + df.format(GSTAmount));
         System.out.println("Total: $" + df.format(total));
         int year = date.get(Calendar.YEAR);

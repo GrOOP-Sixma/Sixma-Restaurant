@@ -10,22 +10,25 @@ public class Order {
     private static int nextOrderId = 1;
     protected String staffName;
     protected int tableId;
+    protected boolean isMember;
     protected final HashMap<MenuItem, Integer> orderedMenuItems;
     protected final HashMap<SetItem, Integer> orderedSetItems;
 
     // constructors
-    public Order(String staffName, int tableId, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
+    public Order(String staffName, int tableId, boolean isMember, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
         orderId = getNextOrderId();
         this.staffName = staffName;
         this.tableId = tableId;
+        this.isMember = isMember;
         this.orderedMenuItems = orderedMenuItems;
         this.orderedSetItems = orderedSetItems;
     }
 
-    public Order(int orderId, String staffName, int tableId, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
+    public Order(int orderId, String staffName, int tableId, boolean isMember, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
         this.orderId = orderId;
         this.staffName = staffName;
         this.tableId = tableId;
+        this.isMember = isMember;
         this.orderedMenuItems = orderedMenuItems;
         this.orderedSetItems = orderedSetItems;
 
@@ -35,6 +38,7 @@ public class Order {
     public int getOrderId() {return orderId;}
     public String getStaffName() {return staffName;}
     public int getTableId() {return tableId;}
+    public boolean isMember() {return isMember;}
     public HashMap<MenuItem, Integer> getOrderedMenuItems() {return orderedMenuItems;}
     public HashMap<SetItem, Integer> getOrderedSetItems() {return orderedSetItems;}
 

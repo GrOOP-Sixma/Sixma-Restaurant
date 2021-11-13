@@ -146,9 +146,11 @@ public class OrderFactory {
             return;
         }
 
+        boolean isMember = reservationController.getReservation(table).getCustomer().isMember();
+
         HashMap<MenuItem, Integer> orderedMenuItems = new HashMap<>();
         HashMap<SetItem, Integer> orderedSetItems = new HashMap<>();
-        Order order = new Order(staff.getName(), table.getTableId(), orderedMenuItems, orderedSetItems);
+        Order order = new Order(staff.getName(), table.getTableId(), isMember, orderedMenuItems, orderedSetItems);
         int choice1 = -1;
         while (choice1 != 0) {
             System.out.println("1. Add item");
@@ -503,7 +505,7 @@ public class OrderFactory {
                             System.out.println("Invalid date");
                         }
                     }
-                    String[] dateAttributes = dateString.split("/");;
+                    String[] dateAttributes = dateString.split("/");
                     int day = Integer.parseInt(dateAttributes[0]);
                     int month = Integer.parseInt(dateAttributes[1]) - 1;
                     int year = Integer.parseInt(dateAttributes[2]);
@@ -516,14 +518,14 @@ public class OrderFactory {
                     valid = false;
                     while (!valid) {
                         try {
-                            dateString = sc.nextLine();
-                            LocalDate.parse(dateString, DateTimeFormatter.ofPattern("MM/uuuu").withResolverStyle(ResolverStyle.STRICT));
+                            dateString = "01/" + sc.nextLine();
+                            LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT));
                             valid = true;
                         } catch (DateTimeParseException e) {
                             System.out.println("Invalid date");
                         }
                     }
-                    dateAttributes = dateString.split("/");;
+                    dateAttributes = dateString.split("/");
                     month = Integer.parseInt(dateAttributes[1]) - 1;
                     year = Integer.parseInt(dateAttributes[2]);
 
