@@ -85,7 +85,7 @@ public class MenuItem extends Products {
     public void setFoodType(FoodType foodType) {this.foodType = foodType;}
     /**
      * Sets the description of this MenuItem
-     * @param This MenuItem's description
+     * @param description This MenuItem's description
      */
     public void setDescription(String description) {this.description = description;}
 

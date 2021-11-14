@@ -3,4 +3,6 @@ Customer
 Factory
 Food
 Order
-Table
+Reservation
+Restaurant
+Restaurant.RestaurantBack

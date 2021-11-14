@@ -4,42 +4,45 @@ import java.util.Calendar;
 
 import Customer.Customer;
 import Table.Table;
-/*
+/**
  * Represents a Reservation to be made at the restaurant
+ * @author tengwei
+ * @version 1.0
+ * @since 2021-11-14
  */
 
 public class Reservation {
-    /*
+    /**
      * The Id of this Reservation
      */
     private final int reservationId;
-    /*
+    /**
      * The Id of this nextReservationId
      */
     private static int nextReservationId = 1;
-    /*
+    /**
      * The Calendar object representing this Reservation date
      */
     private Calendar reservationDate;
-    /*
+    /**
      * The customer making this Reservation
      */
     private Customer customer;
-    /*
+    /**
      * The number of people coming for this Reservation
      */
     private int numPax;
-    /*
+    /**
      * The table of this Reservation
      */
     private Table table;
 
     // constructors
-    /*
+    /**
      * Creates a new Reservation with This Reservation's date, customer, number of customers and table
      * @param reservationDate This Reservation's date
      * @param customer This Reservation's customer
-     * @param numpax This Reservation's number of customers
+     * @param numPax This Reservation's number of customers
      * @param table This Reservation's table
      */
     
@@ -51,12 +54,12 @@ public class Reservation {
         this.table = table;
         table.reserveTable();
     }
-    /*
+    /**
      *Creates a new Reservation with This Reservation's reservationId, reservationDate, customer, number of customers and table
-     * @param reservationID This Reservation's Id
+     * @param reservationId This Reservation's reservationId
      * @param reservationDate This Reservation's date
      * @param customer This Reservation's customer
-     * @param numpax This Reservation's number of customers
+     * @param numPax This Reservation's number of customers
      * @param table This Reservation's table
      */
 
@@ -71,74 +74,74 @@ public class Reservation {
     }
 
     // getters
-    /*
+    /**
      * Gets the reservation Id of This Reservation
-     * @return this Reservation's Id
+     * @return this Reservation's reservationId
      */
     public int getReservationId() {return reservationId;}
-    /*
+    /**
      * Gets the reservation date of This Reservation
-     * @return this Reservation's date
+     * @return this Reservation's reservationDate
      */
     public Calendar getReservationDate() {return reservationDate;}
-    /*
+    /**
      * Gets the customer of This Reservation
      * @return this Reservation's customer
      */
     public Customer getCustomer() {return customer;}
-    /*
+    /**
      * Gets the name of the customer of This Reservation
      * @return this Reservation's customer name
      */
     public String getCustomerName() {return customer.getName();}
-    /*
+    /**
      * Gets the contact number of the customer of This Reservation
      * @return this Reservation's customer contact number
      */
     public int getCustomerContactNo() {return customer.getContactNo();}
-    /*
+    /**
      * Gets the number of customers of This Reservation
      * @return this Reservation's number of customers
      */
     public int getNumPax() {return numPax;}
-    /*
+    /**
      * Gets the table of This Reservation
      * @return this Reservation's table
      */
     public Table getTable() {return table;}
 
     // setters
-    /*
-     * Sets the next reservation Id
-     * @param nextReservationId the Id of the reservation after this Reservation
+    /**
+     * Sets the next reservationId
+     * @param nextReservationId the reservationId of the reservation after this Reservation
      */
     public static void setNextReservationId(int nextReservationId) {Reservation.nextReservationId = nextReservationId;}
-    /*
-     * Sets the date for This Reservation
-     * @param reservationDate the date of the reservation
+    /**
+     * Sets the date for this Reservation
+     * @param reservationDate the date of This Reservation
      */
     public void setReservationDate(Calendar reservationDate) {this.reservationDate = reservationDate;}
-    /*
-     * Sets the customer for This Reservation
+    /**
+     * Sets the customer for this Reservation
      * @param customer the customer for This Reservation
      */
     public void setCustomer(Customer customer) {this.customer = customer;}
-    /*
-     * Sets the number of pax for This Reservation
-     * @param numPax the number of pax for this Reservation
+    /**
+     * Sets the number of people for this Reservation
+     * @param numPax the number of people for This Reservation
      */
     public void setNumPax(int numPax) {this.numPax = numPax;}
 
     // methods
-    /*
-     * Gets the next Reservation's Id
+    /**
+     * Gets the next Reservation's reservationId
      * @return nextReservationId incremented by 1
      */
     public static int getNextReservationId() {
         return nextReservationId++;
     }
 
-    /*
+    /**
      * Prints the details of this Reservation
      */
     public void printReservation() {

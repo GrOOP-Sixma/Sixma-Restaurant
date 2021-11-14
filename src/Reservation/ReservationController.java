@@ -8,37 +8,40 @@ import java.io.*;
 
 import Customer.*;
 import Table.*;
-/*
+/**
  * Represents a control class to execute the methods on the Reservation class
+ * @author tengwei
+ * @version 1.0
+ * @since 2021-11-14
  */
 
 public class ReservationController {
-    /*
+    /**
      * The customerConroller of the ReservationController
      */
     private final CustomerController customerController;
-    /*
+    /**
      * The tableController of the ReservationController
      */
     private final TableController tableController;
-    /*
+    /**
      * The list of reservations
      */
     private final ArrayList<Reservation> reservationList;
-    /*
+    /**
      * The name of this ReservationController
      */
     private String name;
 
     // constructors
-    /*
+    /**
      * Creates a new ReservationController witht the given name
      * @param name This ReservationController's name
      * @param customerController This ReservationController's customerController
      * @param tableController This ReservationController's tableController
      */
     
-    public ReservationController(String name, CustomerController customerController, TableController tableController) {
+    public ReservationController(String name, CustomerController customerController, TableController tableController) throws FileNotFoundException, IOException{
         this.name = name;
         this.customerController = customerController;
         this.tableController = tableController;
@@ -46,7 +49,7 @@ public class ReservationController {
         readInstances();
     }
 
-    /* 
+    /**
      * Gets the current and upcoming Reservations in the reservationList
      * @return this ReservationController's reservationList
      */
@@ -55,9 +58,9 @@ public class ReservationController {
     }
 
     // methods
-    /*
+    /**
      * Adds a reservation into this ReservationController's reservationList
-     * @param reservationDate this Reservations reservationDate
+     * @param reservationDate this Reservation's reservationDate
      * @param customer this Reservation's customer
      * @param numPax this Reservation's numPax
      * @param table this Reservation's table
@@ -67,7 +70,7 @@ public class ReservationController {
         reservationList.add(reservation);
     }
 
-    /*
+    /**
      * Adds a reservation into this ReservationController's reservationList
      * @param reservationId this ReservationController's
      * @param reservationDate this Reservation's reservationDate
@@ -80,7 +83,7 @@ public class ReservationController {
         reservationList.add(reservation);
     }
 
-    /*
+    /**
      * Adds a reservation into this ReservationController's reservationList
      * @param reservation this new Reservation Object
      */
@@ -88,10 +91,10 @@ public class ReservationController {
         reservationList.add(reservation);
     }
 
-    /*
+    /**
      * Removes a Reservation from this ReservationController's reservationList
      * if the reservationList contains the reservation in the reservationId
-     * @param reservationId
+     * @param reservationId this reservation's reservationId
      * @return whether this Reservation has been removed from the reservationList
      */
     public int removeReservation(int reservationId) {
@@ -105,11 +108,10 @@ public class ReservationController {
         return 0;
     }
 
-    /*
+    /**
      * Removes a reservation from the reservationList
      * if the table is in the reservationList
      * @param table the reservation's table
-     * @return whether this Reservation has been removed from the reservationList
      */
     public void finishReservation(Table table) {
         for (Reservation reservation : reservationList) {
@@ -120,10 +122,10 @@ public class ReservationController {
         }
     }
 
-    /*
+    /**
      * Gets the Reservation from this ReservationController's reservationList
      * if the reservationList contains the reservationId
-     * @param reservationId
+     * @param reservationId this reservation's reservationId
      * @return whether this reservation is in reservationList
      */
     public Reservation getReservation(int reservationId) {
@@ -135,10 +137,10 @@ public class ReservationController {
         return null;
     }
 
-    /*
+    /**
      * Gets the Reservation from this ReservationController's reservationList
      * if the reservationList contains the table
-     * @param table
+     * @param table this reservation's table
      * @return whether this reservation is in reservationList
      */
     public Reservation getReservation(Table table) {
@@ -150,7 +152,7 @@ public class ReservationController {
         return null;
     }
 
-    /*
+    /**
      * Prints the reservations in This ReservtionControllers's reservationList
      */
     public void viewReservations() {
@@ -160,7 +162,7 @@ public class ReservationController {
         }
     }
 
-    /*
+    /**
      * Updates This ReservationController's reservationList 
      * if the reservation is expired then remove it from the reservationList
      */
@@ -177,11 +179,11 @@ public class ReservationController {
         reservationList.removeAll(toRemove);
     }
 
-    /*
+    /**
      * Writes an Instance of Reservation into a txt file
-     * @throws IOException If an input or ouput error has occurred
+     * @throws IOException If an input or output error has occurred
      */
-    public void writeInstances() {
+    public void writeInstances() throws IOException{
         int reservationId;
         Calendar reservationDate;
         Customer customer;
@@ -212,12 +214,12 @@ public class ReservationController {
         }
     }
 
-    /*
+    /**
      * Reads an Instance of reservations from a txt file
+     * @throws FileNotFoundException If file cannot be found
      * @throws IOException If an input or ouput error has occurred
-     * @throws ileNotFoundException If file not found
      */
-    public void readInstances() {
+    public void readInstances() throws FileNotFoundException, IOException{
         int reservationId;
         int year;
         int month;

@@ -43,7 +43,7 @@ public class OrderController {
      * @param menu this OrderController's menu
      * @param setMenu this OrderController's setMenu
      */
-    public OrderController(String name, Menu menu, SetMenu setMenu) {
+    public OrderController(String name, Menu menu, SetMenu setMenu) throws FileNotFoundException, IOException{
         this.name = name;
         this.menu = menu;
         this.setMenu = setMenu;
@@ -314,7 +314,7 @@ public class OrderController {
      * Save all of the order and orderInvoice in the OrderController's orders and orderInvoices in a file
      * @throws IOException If an input or output error has occurred
      */
-    public void writeInstances() {
+    public void writeInstances() throws IOException{
         int orderId;
         String staffName;
         int tableId;
@@ -405,7 +405,7 @@ public class OrderController {
      * @throws FileNotFoundException If the file cannot be found
      * @throws IOException If an input or output exception has occurred
      */
-    public void readInstances() {
+    public void readInstances() throws FileNotFoundException, IOException{
         int orderId;
         String staffName;
         int tableId;

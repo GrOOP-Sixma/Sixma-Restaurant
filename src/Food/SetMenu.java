@@ -29,7 +29,7 @@ public class SetMenu {
      * @param name This SetMenu's name
      * @param menu This SetMenu's menu
      */
-    public SetMenu(String name, Menu menu) {
+    public SetMenu(String name, Menu menu) throws FileNotFoundException, IOException{
         this.name = name;
         this.menu = menu;
         setMenu = new ArrayList<>();
@@ -137,7 +137,7 @@ public class SetMenu {
      * Save all of the setItem in this SetMenu's setMenu into a file
      * @throws IOException If an input or outpur exception has occurred
      */
-    public void writeInstances() {
+    public void writeInstances() throws IOException{
         String name;
         double price;
         int setItemId;
@@ -172,7 +172,7 @@ public class SetMenu {
      * @throws FileNotFoundException If the file cannot be found
      * @throws IOException If an input or output exception has occurred
      */
-    public void readInstances() {
+    public void readInstances() throws FileNotFoundException, IOException{
         String name;
         double price;
         int setItemId;

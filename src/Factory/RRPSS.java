@@ -129,6 +129,7 @@ public class RRPSS implements Runnable{
     
     /**
      * Gets this RRPSS's restaurant
+     * @return this RRPSS's restaurant
      */
     public Restaurant getRestaurant() {return this.restaurant;}
 }
