@@ -1,9 +1,23 @@
 package Table;
-
+/**
+ * Represents a Table at the restaurant
+ * @author chris
+ *
+ */
 public class Table {
+	/**
+	 * The unique table id of this Table
+	 */
     private int tableId;
+    /**
+     * The next table id of this Table
+     */
     private static int nextTableId = 1;
+    /**
+     * The number of seats in the table
+     */
     private int numSeats;
+    
     private TableStatus status;
 
     // constructors
