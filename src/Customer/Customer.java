@@ -1,31 +1,34 @@
 package Customer;
 
 import Restaurant.Person;
-/*
+/**
  * Represents a customer intending to go/at the restaurant
+ * @author tengwei
+ * @version 1.0
+ * @since 2021-11-14
  */
 public class Customer extends Person{
-	/*
+	/**
 	 * The contact number of this Customer
 	 */
     private int contactNo;
-    /*
+    /**
      * The unique customerId for each Customer
      */
     private int customerId;
-    /*
+    /**
      * The initialisation of the customerId
      */
     private static int nextCustomerId = 1;
-    /*
+    /**
      * Check whether this Customer is a member to be qualified for
      * membership discount
      */
     private boolean isMember;
 
     // constructors
-    /*
-     * Creates a new Customer with the customer's name, contact number and membership
+    /**
+     * Creates a new Customer with this Customer's name, contact number and membership
      * @param name This Customer's name
      * @param contactNo This Customer's contact number
      * @param isMember This Customer's membership
@@ -38,7 +41,7 @@ public class Customer extends Person{
         this.isMember = isMember;
     }
     
-    /*
+    /**
      * Creates a new Customer with the customer's name, contact number, customerId and membership
      * @param name This Customer's name
      * @param contactNo This Customer's contact number
@@ -53,35 +56,35 @@ public class Customer extends Person{
     }
 
     // getters
-    /*
+    /**
      * Gets the contact number of this Customer
      * @return this Customer's contact number
      */
     public int getContactNo() {return contactNo;}
     
-    /*
+    /**
      * Gets the customer Id of this Customer
      * @return this Customer's customerId
      */
     public int getCustomerId() {return customerId;}
-    /*
+    /**
      * Gets the membership for this Customer
      * @return this Customer's membership
      */
     public boolean isMember() {return isMember;}
 
     // setters
-    /*
+    /**
      * Sets contact number for this Customer
      * @param contactNo This Customer's contact number
      */
     public void setContactNo(int contactNo) {this.contactNo = contactNo;}
-    /*
+    /**
      * Sets the customerId of this Customer
      * @param nextCustomerId This Customer's customerId
      */
     public static void setNextCustomerId(int nextCustomerId) {Customer.nextCustomerId = nextCustomerId;}
-    /*
+    /**
      * Sets the membership for this Customer
      * @param isMember This Customer's membership
      */
@@ -89,7 +92,7 @@ public class Customer extends Person{
 
     // methods
     
-    /*
+    /**
      * Gets the next customerId
      * @return nextCustomerId incremented by 1
      */
@@ -97,7 +100,7 @@ public class Customer extends Person{
         return nextCustomerId++;
     }
     
-    /*
+    /**
      * Prints the details of this Customer
      */
     public void printCustomer() {

@@ -2,7 +2,12 @@ import java.io.File;
 import java.util.Scanner;
 
 import Factory.RRPSS;
-
+/**
+ * Represents the application to run our RRPSS system
+ * @author tengwei
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public class App {
     public static void main(String[] args) {
         System.out.println("Welcome to the RRPSS!");

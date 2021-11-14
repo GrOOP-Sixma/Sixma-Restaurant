@@ -18,16 +18,53 @@ import Food.Menu;
 import Food.MenuItem;
 import Food.SetMenu;
 import Food.SetItem;
-
+/**
+ * Represents a boundary class to get the user input 
+ * in order for the OrderController class to perform
+ * the various method executions on the Order and OrderInvoice class
+ * @author tengwei
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public class OrderFactory {
+	/**
+	 * The staffController of this OrderFactory
+	 */
     private StaffController staffController;
+    /**
+     * The tableController of this OrderFactory
+     */
     private TableController tableController;
+    /**
+     * The reservationController of this OrderFactory
+     */
     private ReservationController reservationController;
+    /**
+     * The menu of this OrderFactory
+     */
     private Menu menu;
+    /**
+     * The setMenu of this OrderFactory
+     */
     private SetMenu setMenu;
+    /**
+     * The orderController of this OrderFactory
+     */
     private OrderController orderController;
+    /**
+     * The name of this OrderFactory
+     */
     private String name;
 
+    /**
+     * Creates a new OrderFactory with this OrderFactory's name, staffController, tableController, reservationController, menu and setMenu
+     * @param name this OrderFactory's name
+     * @param staffController this OrderFactory's staffController
+     * @param tableController this OrderFactory's tableController
+     * @param reservationController this OrderFactory's reservationController
+     * @param menu this OrderFactory's menu
+     * @param setMenu this OrderFactory's setMenu
+     */
     public OrderFactory(String name, StaffController staffController, TableController tableController, ReservationController reservationController, Menu menu, SetMenu setMenu) {
         this.name = name;
         this.staffController = staffController;
@@ -39,13 +76,37 @@ public class OrderFactory {
     }
 
     // getters
+    /**
+     * Gets the staffController of this OrderFactory
+     * @return this OrderFactory's staffController
+     */
     public StaffController getStaffController() {return staffController;}
+    /**
+     * Gets the tableController of this OrderFactory
+     * @return this OrderFactory's staffController
+     */
     public TableController getTableController() {return tableController;}
+    /**
+     * Gets the menu of this OrderFactory
+     * @return this OrderFactory's menu
+     */
     public Menu getMenu() {return menu;}
+    /**
+     * Gets the setMenu of this OrderFactory
+     * @return this OrderFactory's setMenu
+     */
     public SetMenu getSetMenu() {return setMenu;}
+    /**
+     * Gets the orderController of this OrderFactory
+     * @return this OrderFactory's orderController
+     */
     public OrderController getOrderController() {return orderController;}
 
     // methods
+    /**
+     * Gets the input of the user for double data type
+     * @return the user's input
+     */
     public double getDoubleInput() {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -59,6 +120,10 @@ public class OrderFactory {
         }
     }
 
+    /**
+     * Gets the input of the user for int data type
+     * @return the user's input
+     */
     public int getIntInput() {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -72,6 +137,9 @@ public class OrderFactory {
         }
     }
 
+    /**
+     * Runs the OrderFactory to take in user input
+     */
     public void run() {
         int choice = -1;
         while (choice != 0) {
@@ -117,6 +185,9 @@ public class OrderFactory {
         }
     }
 
+    /**
+     * Create and add an order to this OrderFactory's orderController's orders
+     */
     public void addOrder() {
         System.out.println("Enter your staff id:");
         int staffId = getIntInput();
@@ -299,6 +370,9 @@ public class OrderFactory {
         reservationController.finishReservation(table);
     }
 
+    /**
+     * Add menuItem or setItem to an existing order in this OrderFactory's orderController's orders
+     */
     public void addToOrder() {
         System.out.println("Enter id of order to add items to:");
         int orderId = getIntInput();
@@ -375,6 +449,10 @@ public class OrderFactory {
         }
     }
 
+    /**
+     * Remove menuItem or setItem from an order in this OrderFactory's orderController's orders
+     * if the order contains the quantity of menuItem or setItem
+     */
     public void removeFromOrder() {
         System.out.println("Enter id of order to remove items from:");
         int orderId = getIntInput();
@@ -455,10 +533,17 @@ public class OrderFactory {
         }
     }
 
+    /**
+     * View all of the order of this OrderFactory's orderController's orders
+     */
     public void viewOrders() {
         orderController.viewOrders();
     }
 
+    /**
+     * Create and add an orderInvoice into this OrderFactory's orderController's orderInvoices
+     * if the orderInvoices contains the orderInvoice
+     */
     public void createInvoice() {
         System.out.println("Enter id of order to create invoice:");
         int orderId = getIntInput();
@@ -477,10 +562,17 @@ public class OrderFactory {
         table.unreserveTable();
     }
 
+    /**
+     * View all of the orderInvoice in this OrderFactory's orderController's orderInvoices
+     */
     public void viewOrderInvoices() {
         orderController.viewOrderInvoices();
     }
 
+    /**
+     * View the sales report of this OrderFactory 
+     * on a specific day or month
+     */
     public void viewSalesReport() {
         Scanner sc = new Scanner(System.in);
         System.out.println("View sales report by:");
@@ -535,6 +627,9 @@ public class OrderFactory {
         }
     }
 
+    /**
+     * Save all of the order and orderInvoices in this OrderFactory's orderController's orders and orderInvoices
+     */
     public void writeInstances() {
         orderController.writeInstances();
     }

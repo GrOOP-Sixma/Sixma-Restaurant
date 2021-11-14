@@ -1,21 +1,46 @@
 package Food;
 
 import java.util.Scanner;
-
+/**
+ * Represents a boundary class to get the user input
+ * in order for the Menu class to perform the 
+ * various method executions on the MenuItem class 
+ * @author tengwei
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public class MenuFactory {
+	/**
+	 * The menu of this MenuFactory
+	 */
     private final Menu menu;
+    /**
+     * The name of this MenuFactory
+     */
     private String name;
 
     // constructors
+    /**
+     * Create a new MenuFactory with the given name
+     * @param name This MenuFactory's name
+     */
     public MenuFactory(String name) {
         menu = new Menu(name);
         this.name = name;
     }
 
     // getters
+    /**
+     * Gets the menu of this MenuFactory
+     * @return this MenuFactory's menu 
+     */
     public Menu getMenu() {return menu;}
 
     // methods
+    /**
+     * Gets the input of the user for double data type
+     * @return the user's input
+     */
     public double getDoubleInput() {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -28,7 +53,10 @@ public class MenuFactory {
             }
         }
     }
-
+    /**
+     * Gets the input of the user for int data type
+     * @return the user's input
+     */
     public int getIntInput() {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -42,6 +70,9 @@ public class MenuFactory {
         }
     }
 
+    /**
+     * Runs the MenuFactory to take in user input
+     */
     public void run() {
         int choice = -1;
         Scanner sc = new Scanner(System.in);
@@ -75,7 +106,9 @@ public class MenuFactory {
             }
         }
     }
-
+    /**
+     * Adds a new menuItem into this MenuFactory's menu
+     */
     public void addMenuItem() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter name of menu item:");
@@ -113,7 +146,10 @@ public class MenuFactory {
         }
         menu.addMenuItem(menuItem);
     }
-
+    /**
+     * Removes a menuItem from this MenuFactory's menu
+     * if the menuItem is in the menu
+     */
     public void removeMenuItem() {
         System.out.println("Enter id of menu item to be removed:");
         int id = getIntInput();
@@ -126,7 +162,10 @@ public class MenuFactory {
             System.out.println("There is no menu item with id " + id);
         }
     }
-
+    /**
+     * Modifies a menuItem in this MenuFactory's menu
+     * if the menuItem is in the menu
+     */
     public void modifyMenuItem() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter id of menu item to be modified:");
@@ -198,11 +237,16 @@ public class MenuFactory {
             }
         }
     }
-
+    /**
+     * View all of the menuItem on this MenuFactory's menu
+     */
     public void viewMenuItems() {
         menu.viewMenu();
     }
-
+    
+    /**
+     * Save all of the menuItem in this MenuFactory's menu
+     */
     public void writeInstances() {
         menu.writeInstances();
     }

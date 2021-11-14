@@ -2,13 +2,34 @@ package Food;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
+/**
+ * Represents a boundary class to get the user input 
+ * in order for the SetMenu class to perform the 
+ * various method executions on the SetItem class
+ * @author tengwei
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public class SetMenuFactory {
+	/**
+	 * The menu of this SetMenuFactory
+	 */
     private Menu menu;
+    /**
+     * The setMenu of this SetMenuFactory
+     */
     private SetMenu setMenu;
+    /**
+     * The name of this SetMenuFactory
+     */
     private String name;
 
     // constructors
+    /**
+     * Creates a new SetMenuFactory with the given name and menu
+     * @param name This SetMenuFactory's name
+     * @param menu This SetMenuFactory's menu
+     */
     public SetMenuFactory(String name, Menu menu) {
         this.name = name;
         this.menu = menu;
@@ -16,10 +37,22 @@ public class SetMenuFactory {
     }
 
     // getters
+    /**
+     * Gets the menu of this SetMenuFactory
+     * @return This SetMenuFactory's menu
+     */
     public Menu getMenu() {return menu;}
+    /**
+     * Gets the setMenu of this SetMenuFactory
+     * @return This SetMenuFactory's setMenu
+     */
     public SetMenu getSetMenu() {return setMenu;}
 
     // methods
+    /**
+     * Gets the input of the user for double data type
+     * @return the user's input
+     */
     public double getDoubleInput() {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -33,6 +66,10 @@ public class SetMenuFactory {
         }
     }
 
+    /**
+     * Gets the input of the user for int data type
+     * @return the user's input
+     */
     public int getIntInput() {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -46,6 +83,9 @@ public class SetMenuFactory {
         }
     }
 
+    /**
+     * Runs the SetMenuFactory to take in user input
+     */
     public void run() {
         int choice = -1;
         Scanner sc = new Scanner(System.in);
@@ -81,6 +121,9 @@ public class SetMenuFactory {
     }
 
     // create a new menu
+    /**
+     * Adds a new setItem into this SetMenuFactory's setMenu
+     */
     public void addSetItem() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter name of set menu item:");
@@ -124,6 +167,10 @@ public class SetMenuFactory {
         setMenu.addSetItem(setItem);
     }
 
+    /**
+     * Removes an existing setItem from this SetMenuFactory's setMenu
+     * if the setItem is in the setMenu
+     */
     public void removeSetItem() {
         System.out.println("Enter id of set menu item to be removed:");
         int id = getIntInput();
@@ -137,6 +184,10 @@ public class SetMenuFactory {
         }
     }
 
+    /**
+     * Modifies a setItem in this SetMenuFactory's setMenu
+     * if the setItem is in the setMenu
+     */
     public void modifySetItem() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter id of set menu item to be modified:");
@@ -218,10 +269,16 @@ public class SetMenuFactory {
         }
     }
 
+    /**
+     * View all of the setItem in this SetMenuFactory's setMenu
+     */
     public void viewSetItems() {
         setMenu.viewSetMenu();
     }
 
+    /**
+     * Save all of the setItem in this SetMenuFactory's setMenu
+     */
     public void writeInstances() {
         setMenu.writeInstances();
     }

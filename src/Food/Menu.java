@@ -3,12 +3,27 @@ package Food;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
-
+/**
+ * Represents a control class to execute the methods on the MenuItem class
+ * @author tengwei
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public class Menu {
+	/**
+	 * The list of menuItem in this Menu
+	 */
     private final ArrayList<MenuItem> menu;
+    /**
+     * The name of this Menu
+     */
     private String name;
 
     // constructors
+    /**
+     * Creates a new Menu with the given name
+     * @param name This Menu's name
+     */
     public Menu(String name) {
         menu = new ArrayList<>();
         this.name = name;
@@ -23,29 +38,62 @@ public class Menu {
     }
 
     // getters
+    /**
+     * Gets the name of this Menu
+     * @return This Menu's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets all of the menuItems in this Menu's menu
+     * @return This Menu's menu
+     */
     public ArrayList<MenuItem> getMenu() {
         return menu;
     }
 
     // methods
+    /**
+     * Adds a menuItem into this Menu's menu
+     * @param name this menuItem's name
+     * @param price this menuItem's price
+     * @param foodType this menuItem's foodType
+     * @param description this menuItem's description
+     */
     public void addMenuItem(String name, double price, FoodType foodType, String description) {
         MenuItem menuItem = new MenuItem(name, price, foodType, description);
         menu.add(menuItem);
     }
 
+    /**
+     * Adds a menuItem into this Menu's menu
+     * @param name this menuItem's name
+     * @param price this menuItem's price
+     * @param menuItemId this menuItem's menuItemId
+     * @param foodType this menuItem's foodType
+     * @param description this menuItem's description
+     */
     public void addMenuItem(String name, double price, int menuItemId, FoodType foodType, String description) {
         MenuItem menuItem = new MenuItem(name, price, menuItemId, foodType, description);
         menu.add(menuItem);
     }
-
+    
+    /**
+     * Adds a menuItem into this Menu's menu
+     * @param menuItem this new menuItem object
+     */
     public void addMenuItem(MenuItem menuItem) {
         menu.add(menuItem);
     }
-
+    
+    /**
+     * Removes a menuItem from this Menu's menu
+     * if the menu contains the menuItem
+     * @param menuItemId this menuItem's menuItemId
+     * @return whether this menuItem has been removed from the menu
+     */
     public int removeMenuItem(int menuItemId) {
         for (int i=0; i<menu.size(); i++) {
             if (menu.get(i).getMenuItemId() == menuItemId) {
@@ -56,6 +104,12 @@ public class Menu {
         return 0;
     }
 
+    /**
+     * Gets the menuItem from this Menu's menu
+     * if the menu contains the menuItem
+     * @param menuItemId this menuItem's menuItemId
+     * @return whether this menuItem is in the menu
+     */
     public MenuItem getMenuItem(int menuItemId) {
         for (MenuItem menuItem : menu) {
             if (menuItem.getMenuItemId() == menuItemId) {
@@ -65,6 +119,9 @@ public class Menu {
         return null;
     }
 
+    /**
+     * View all of the menuItems in this Menu's menu
+     */
     public void viewMenu() {
         System.out.println("\nAla Carte Menu:");
         for (MenuItem menuItem : menu) {
@@ -72,6 +129,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Save all of the menuItem in this Menu's menu into a file
+     * @throws IOException If an input or output exception has occurred
+     */
     public void writeInstances() {
         String name;
         double price;
@@ -106,6 +167,11 @@ public class Menu {
         }
     }
 
+    /**
+     * Read all of the menuItem in this Menu's menu
+     * @throws FileNotFoundException If the file cannot be found
+     * @throws IOException If any input or output exception occurred
+     */
     public void readInstances() {
         String name;
         double price;

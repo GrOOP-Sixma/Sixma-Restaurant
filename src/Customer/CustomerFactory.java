@@ -1,23 +1,26 @@
 package Customer;
 
 import java.util.Scanner;
-/*
+/**
  * Represents a boundary class to get the user input
  * in order for the CustomerController class to perform the 
  * various method executions on the Customer class
+ * @author tengwei
+ * @version 1.0
+ * @since 2021-11-14
  */
 public class CustomerFactory {
-	/*
+	/**
 	 * The customerController of this CustomerFactory
 	 */
     private CustomerController customerController;
-    /*
+    /**
      * The name of this CustomerFactory
      */
     private String name;
 
     // constructors
-    /*
+    /**
      * Creates a new CustomerFactory with the given name
      * @param name This CustomerFactory's name
      */
@@ -27,15 +30,15 @@ public class CustomerFactory {
     }
 
     // getters
-    /*
+    /**
      * Gets this CustomerFactory's customerController
      * @return this CustomerFactory's customerController
      */
     public CustomerController getCustomerController() {return customerController;}
 
     // methods
-    /*
-     * Gets the input of the user
+    /**
+     * Gets the input of the user for int data type
      * @return the user's input
      */
     public int getIntInput() {
@@ -51,7 +54,7 @@ public class CustomerFactory {
         }
     }
     
-    /*
+    /**
      * Runs the CustomerFactory to take in user input
      */
     public void run() {
@@ -84,8 +87,8 @@ public class CustomerFactory {
         }
     }
     
-    /*
-     * Adds a new Customer into this CustomerFactory's
+    /**
+     * Adds a new customer into this CustomerFactory's
      * customerController's customerList
      */
     public void addCustomer() {
@@ -122,8 +125,8 @@ public class CustomerFactory {
         }
     }
     
-    /*
-     * Removes an existing Customer from this CustomerFactory's
+    /**
+     * Removes an existing customer from this CustomerFactory's
      * customerController's customerList if the customer is in the customerList
      */
     public void removeCustomer() {
@@ -142,15 +145,15 @@ public class CustomerFactory {
         }
     }
     
-    /*
-     * View all the Customers on the customerController's customerList
+    /**
+     * View all of the customer in the customerController's customerList
      */
     public void viewCustomer() {
         customerController.viewCustomer();
     }
     
-    /*
-     * Saves the Customers in the customerController's customerList into a file
+    /**
+     * Save all of the customers in the customerController's customerList into a file
      */
     public void writeInstances() {
         customerController.writeInstances();

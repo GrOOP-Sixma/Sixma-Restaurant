@@ -4,21 +4,24 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 
-/*
+/**
  * Represents a control class to execute the methods on the Customer class
+ * @author tengwei
+ * @version 1.0
+ * @since 2021-11-14
  */
 public class CustomerController {
-	/*
+	/**
 	 * The list of current customers that have reserved a table at the restaurant
 	 */
     private final ArrayList<Customer> customerList;
-    /*
+    /**
      * The name of this CustomerController
      */
     private String name;
 
     // constructor
-    /*
+    /**
      * Creates a new CustomerController with the given name
      * @param name This CustomerController's name
      */
@@ -28,7 +31,7 @@ public class CustomerController {
         readInstances();
     }
     
-    /*
+    /**
      * Gets the current and upcoming customers in the customerList
      * @return this CustomerController's customerList
      */
@@ -37,42 +40,42 @@ public class CustomerController {
     }
 
     // methods
-    /*
-     * Adds a Customer into this customerController's customerList
-     * @param name this Customer's name
-     * @param contactNo this Customer's contact number
-     * @param isMember this Customer's membership
+    /**
+     * Adds a customer into this customerController's customerList
+     * @param name this customer's name
+     * @param contactNo this customer's contact number
+     * @param isMember this customer's membership
      */
     public void addCustomer(String name, int contactNo, boolean isMember) {
         Customer customer = new Customer(name, contactNo, isMember);
         customerList.add(customer);
     }
-    /*
-     * Adds a Customer into this CustomerController's customerList
-     * @param name this Customer's name
-     * @param contactNo this Customer's contact number
-     * @param customerId this Customer's customerId
-     * @param isMember this Customer's membership
+    /**
+     * Adds a customer into this CustomerController's customerList
+     * @param name this customer's name
+     * @param contactNo this customer's contact number
+     * @param customerId this customer's customerId
+     * @param isMember this customer's membership
      */
     public void addCustomer(String name, int contactNo, int customerId, boolean isMember) {
         Customer customer = new Customer(name, contactNo, customerId, isMember);
         customerList.add(customer);
     }
     
-    /*
-     * Adds a Customer into this CustomerController's customerList
-     * @param customer this new Customer object
+    /**
+     * Adds a customer into this CustomerController's customerList
+     * @param customer this new customer object
      */
     public void addCustomer(Customer customer) {
         customerList.add(customer);
     }
     
-    /*
-     * Removes a Customer from this CustomerController's customerList 
+    /**
+     * Removes a customer from this CustomerController's customerList 
      * if the customerList contains the customer
-     * @param name this Customer's name
-     * @param customerId this Customer's customerId
-     * @return whether this Customer has been removed from the customerList
+     * @param name this customer's name
+     * @param customerId this customer's customerId
+     * @return whether this customer has been removed from the customerList
      */
     public int removeCustomer(String name, int customerId) {
         for (int i=0; i<customerList.size(); i++) {
@@ -84,10 +87,11 @@ public class CustomerController {
         return 0;
     }
     
-    /*
-     * Gets the Customer from this CustomerController's customerList
-     * @param this Customer's customerId
-     * @return whether this Customer is in the customerList
+    /**
+     * Gets the customer from this CustomerController's customerList
+     * if the customerList contains the customer
+     * @param this customer's customerId
+     * @return whether this customer is in the customerList
      */
     public Customer getCustomer(int customerId) {
         for (Customer customer : customerList) {
@@ -98,11 +102,11 @@ public class CustomerController {
         return null;
     }
     
-    /*
-     * Gets the Customer from this CustomerController's customerList
-     * @param name this Customer's name
-     * @param contactNo this Customer's contact number
-     * @return whether this Customer is in the customerList
+    /**
+     * Gets the customer from this CustomerController's customerList
+     * @param name this customer's name
+     * @param contactNo this customer's contact number
+     * @return whether this customer is in the customerList
      */
     public Customer getCustomer(String name, int contactNo) {
         for (Customer customer : customerList) {
@@ -113,8 +117,8 @@ public class CustomerController {
         return null;
     }
 
-    /*
-     * View all the Customers in the CustomerController's customerList
+    /**
+     * View all of the customers in this CustomerController's customerList
      */
     public void viewCustomer() {
         System.out.println("\nCustomers:");
@@ -123,8 +127,8 @@ public class CustomerController {
         }
     }
 
-    /*
-     * Saves the Customers in the CustomerController's customerList into a file
+    /**
+     * Save the customers in this CustomerController's customerList into a file
      * @throws IOException If an input or output exception has occurred 
      */
     public void writeInstances() {
@@ -153,9 +157,10 @@ public class CustomerController {
         }
     }
 
-    /*
-     * Read the Customers in the CustomerController's customerList
-     * @IOException If an input or output exception occurred
+    /**
+     * Read the customers in the CustomerController's customerList
+     * @throws FileNotFoundException If the file cannot be found
+     * @throws IOException If an input or output exception has occurred
      */
     public void readInstances() {
         String name;
