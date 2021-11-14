@@ -3,14 +3,27 @@ package Factory;
 import java.util.Scanner;
 
 import Restaurant.RestaurantBack.Gender;
-
+/*
+ * Represents the UI of the Restaurant Reservation and Point of Sale System
+ */
 public class RRPSS implements Runnable{
+	/*
+	 * This RRPSS's restaurant
+	 */
     private Restaurant restaurant;
 
     // constructor
+    /*
+     * Creates a new RRPSS with the given name
+     * @param name This RRPSS's name
+     */
     public RRPSS(String name) {this.restaurant = new Restaurant(name);}
 
     // methods
+    /*
+     * Gets the input of the user
+     * @return the user's input
+     */
     public int getIntInput() {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -23,7 +36,10 @@ public class RRPSS implements Runnable{
             }
         }
     }
-    
+    /*
+     * Checks if the restaurant is a new restaurant
+     * @return boolean of this restaurant existence
+     */
     // check if restaurant is a new restaurant
     public boolean isNewRestaurant() {
         // check if number of staff is 0
@@ -34,7 +50,9 @@ public class RRPSS implements Runnable{
             return false;
         }
     }
-
+    /*
+     * Runs the RRPSS to take in user input
+     */
     public void run() {
         Scanner sc = new Scanner(System.in);
 
@@ -105,6 +123,9 @@ public class RRPSS implements Runnable{
         restaurant.writeInstances();
         sc.close();
     }
-
+    
+    /*
+     * Gets this RRPSS's restaurant
+     */
     public Restaurant getRestaurant() {return this.restaurant;}
 }

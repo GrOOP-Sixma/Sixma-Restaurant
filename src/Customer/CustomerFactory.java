@@ -1,21 +1,43 @@
 package Customer;
 
 import java.util.Scanner;
-
+/*
+ * Represents a boundary class to get the user input
+ * in order for the CustomerController class to perform the 
+ * various method executions on the Customer class
+ */
 public class CustomerFactory {
+	/*
+	 * This CustomerFactory's customerController
+	 */
     private CustomerController customerController;
+    /*
+     * The name of this CustomerFactory
+     */
     private String name;
 
     // constructors
+    /*
+     * Creates a new CustomerFactory with the given name
+     * @param name This CustomerFactory's name
+     */
     public CustomerFactory(String name) {
         customerController = new CustomerController(name);
         this.name = name;
     }
 
     // getters
+    /*
+     * Gets this CustomerFactory's customerController
+     * @return this CustomerFactory's customerController
+     */
     public CustomerController getCustomerController() {return customerController;}
 
     // methods
+    /*
+     * Gets the input of the user
+     * @return the user's input
+     */
     public int getIntInput() {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -28,7 +50,10 @@ public class CustomerFactory {
             }
         }
     }
-
+    
+    /*
+     * Runs the CustomerFactory to take in user input
+     */
     public void run() {
         int choice = -1;
         Scanner sc = new Scanner(System.in);
@@ -58,7 +83,11 @@ public class CustomerFactory {
             }
         }
     }
-
+    
+    /*
+     * Adds a new Customer into this CustomerFactory's
+     * customerController's customerList
+     */
     public void addCustomer() {
         Scanner sc = new Scanner(System.in);
         System.out.println("\nEnter name of new customer:");
@@ -92,7 +121,11 @@ public class CustomerFactory {
             }
         }
     }
-
+    
+    /*
+     * Removes an existing Customer from this CustomerFactory's
+     * customerController's customerList if the customer is in the customerList
+     */
     public void removeCustomer() {
         Scanner sc = new Scanner(System.in);
         System.out.println("\nEnter name of customer to remove:");
@@ -108,11 +141,17 @@ public class CustomerFactory {
             System.out.println(name + " is not a registered customer");
         }
     }
-
+    
+    /*
+     * View all the Customers on the customerController's customerList
+     */
     public void viewCustomer() {
         customerController.viewCustomer();
     }
-
+    
+    /*
+     * Saves the Customers in the customerController's customerList into a file
+     */
     public void writeInstances() {
         customerController.writeInstances();
     }
