@@ -8,12 +8,26 @@ import Customer.Customer;
 import java.io.*;
 
 import Restaurant.RestaurantBack.Gender;
-
+/**
+ * Represents a control class to execute the methods on the Staff class
+ * @author chris
+ *
+ */
 public class StaffController {
+	/**
+	 * The list of current staff that work at the restaurant
+	 */
     private final ArrayList<Staff> staffList;
+    /**
+     * The name of this Staff
+     */
     private String name;
 
     // constructor
+    /**
+     * Creates a new StaffController with the given name
+     * @param name this StaffController's name
+     */
     public StaffController(String name) {
         staffList = new ArrayList<>();
         this.name = name;
@@ -21,20 +35,43 @@ public class StaffController {
     }
 
     // methods
+    /**
+     * Adds a Staff into this StaffController's staffList
+     * @param name this Staff's name
+     * @param gender this Staff's gender
+     * @param role this Staff's role
+     */
     public void addStaff(String name, Gender gender, String role) {
         Staff staff = new Staff(name, gender, role);
         staffList.add(staff);
     }
-
+    
+    /**
+     * Adds a Staff into this StaffController's staffList
+     * @param name this Staff's name
+     * @param gender this Staff's gender
+     * @param staffId this Staff's staffId
+     * @param role this Staff's role
+     */
     public void addStaff(String name, Gender gender, int staffId, String role) {
         Staff staff = new Staff(name, gender, staffId, role);
         staffList.add(staff);
     }
 
+    /**
+     * Adds a staff into this StaffController's stafflist
+     * @param staff this new Staff object
+     */
     public void addStaff(Staff staff) {
         staffList.add(staff);
     }
 
+    /**
+     * Removes a Staff from this StaffController's staffList
+     * @param name this Staff's name
+     * @param staffId this Staff's staffId
+     * @return whether or nor this Staff as been removed from the staffList
+     */
     public int removeStaff(String name, int staffId) {
         for (int i=0; i<staffList.size(); i++) {
             if (staffList.get(i).getName().equals(name) && staffList.get(i).getStaffId() == staffId) {
@@ -45,6 +82,11 @@ public class StaffController {
         return 0;
     }
 
+    /**
+     * Gets the staff from this StaffController's staffList
+     * @param staffId this Staff's staffId
+     * @return whether or not this Staff is in the staffList
+     */
     public Staff getStaff(int staffId) {
         for (Staff staff : staffList) {
             if (staff.getStaffId() == staffId) {
@@ -54,6 +96,12 @@ public class StaffController {
         return null;
     }
 
+    /**
+     * Gets the staff from this StaffController's staffList
+     * @param name this Staff's name
+     * @param staffId this Staff's Staff Id
+     * @return whether or not this Staff is in the staffList
+     */
     public Staff getStaff(String name, int staffId) {
         for (Staff staff : staffList) {
             if (staff.getName().equals(name) && staff.getStaffId() == staffId) {
@@ -62,7 +110,10 @@ public class StaffController {
         }
         return null;
     }
-
+    
+    /**
+     * View all the Staff in the StaffController's staffList
+     */
     public void viewStaff() {
         System.out.println("\nStaffs:");
         for (Staff staff : staffList) {
@@ -70,6 +121,10 @@ public class StaffController {
         }
     }
 
+    /**
+     * Saves the Staff in the StaffControllers's staffList into a file
+     * @throws IOException If an input or output exception has occurred
+     */
     public void writeInstances() {
         String name;
         Gender gender;
@@ -98,6 +153,11 @@ public class StaffController {
         }
     }
 
+    /**
+     * Read the Staffs in the StaffController's staffList 
+     * @throws IOException If an input or output exception occurred
+     * @throws FileNotFoundException If a file is not found
+     */
     public void readInstances() {
         String name;
         int gender;
@@ -135,6 +195,10 @@ public class StaffController {
         }
     }
 
+    /**
+     * Get all of the Staff in this StaffController staffList
+     * @return
+     */
     public ArrayList<Staff> getStaffList() {
         return staffList;
     }

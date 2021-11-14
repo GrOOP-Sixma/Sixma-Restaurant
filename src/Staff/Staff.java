@@ -79,14 +79,31 @@ public class Staff extends Person {
      * @param gender this Staff's gender
      */
     public void setGender(Gender gender) {this.gender = gender;}
+    
+    /*
+     * Sets the nextStaffId for this Staff
+     * @param nextStaffId
+     */
     public static void setNextStaffId(int nextStaffId) {Staff.nextStaffId = nextStaffId;}
+    
+    /*
+     * Sets the role for this Staff
+     * @param role
+     */
     public void setRole(String role) {this.role = role;}
 
     // methods
+    /*
+     * Gets the next staffId
+     * @return nextStaffId incremented by 1
+     */
     private static int getNextStaffId() {
         return nextStaffId++;
     }
 
+    /*
+     * Prints the details of this Staff
+     */
     public void printStaff() {
         System.out.println("-------------------------------");
         System.out.println("Staff ID: " + staffId);

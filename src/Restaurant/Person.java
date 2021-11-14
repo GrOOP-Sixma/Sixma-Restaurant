@@ -1,8 +1,8 @@
 package Restaurant;
 
 /**
- * Represents a Person intending to go start a restaurant
- * @author tengwei
+ * Represents a person to initialise a Restaurant
+ * @author chris
  * @version 1.0
  * @since 2021-11-14
  */
