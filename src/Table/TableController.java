@@ -9,11 +9,26 @@ import Customer.Customer;
 
 import java.io.*;
 
+/**
+ * Represents a control class to execute the methods on the Table class
+ * @author chris
+ *
+ */
 public class TableController {
+	/**
+	 * The list of current tables that are in the restaurant
+	 */
     private final Map<Integer, ArrayList<Table>> tableMap;
+    /**
+     * name This TableController's name
+     */
     private String name;
 
     // constructors
+    /**
+     * Creates a new TableController with the given name
+     * @param name This TableController's name
+     */
     public TableController(String name) {
         tableMap = new HashMap<>();
         this.name = name;
@@ -21,6 +36,10 @@ public class TableController {
     }
 
     // methods
+    /**
+     * Adds a table into this TableController's tableList
+     * @param numSeats this Table's number of seats
+     */
     public void addTable(int numSeats) {
         Table table = new Table(numSeats);
 
@@ -35,6 +54,12 @@ public class TableController {
         tableList.add(table);
     }
 
+    /**
+     * Adds a table into this TableController's tableList
+     * @param numSeats this Table's number of seats
+     * @param tableId this Table's tableId
+     * @param status this Table's status
+     */
     public void addTable(int numSeats, int tableId, TableStatus status) {
         Table table = new Table(numSeats, tableId, status);
 
@@ -49,6 +74,10 @@ public class TableController {
         tableList.add(table);
     }
 
+    /**
+     * Adds a table into this TableController's tableList
+     * @param table this Table's Table
+     */
     public void addTable(Table table) {
         ArrayList<Table> tableList;
         if (!tableMap.containsKey(table.getNumSeats())) {
@@ -61,6 +90,11 @@ public class TableController {
         tableList.add(table);
     }
 
+    /**
+     * Removes a table from this TableController's tableList
+     * @param tableId this Table's name
+     * @return whether this Table has been removed from the tableList
+     */
     public int removeTable(int tableId) {
         for (int i=1; i<=10; i++) {
             if (!tableMap.containsKey(i)) {
@@ -81,6 +115,11 @@ public class TableController {
         return 0;
     }
 
+    /**
+     * Gets the table from this TableController's tableList
+     * @param tableId this Table's tableId
+     * @return whether this Table is in the TableList
+     */
     public Table getTable(int tableId) {
         for (ArrayList<Table> tableList : tableMap.values()) {
             for (Table table : tableList) {
@@ -92,6 +131,11 @@ public class TableController {
         return null;
     }
 
+    /**
+     * Gets a vacant table from this TableController's tableList
+     * @param numSeats this Table's number of seats
+     * @return whether or not this Table is in the TableList
+     */
     public Table getVacantTable(int numSeats) {
         for (int i=numSeats; i<=10; i++) {
             if (tableMap.containsKey(i)) {
@@ -106,6 +150,9 @@ public class TableController {
         return null;
     }
 
+    /**
+     * View the tables that are available
+     */
     public void checkAvailability() {
         System.out.println("\nTable Availability:");
         System.out.println("Capacity: Vacancy");
@@ -131,6 +178,10 @@ public class TableController {
         }
     }
 
+    /**
+     * Saves the Tables in the TableController's tableList into a file
+     * @throws IOException If an input or output exception has occurred
+     */
     public void writeInstances() {
         int tableId;
         int numSeats;
@@ -160,6 +211,11 @@ public class TableController {
         }
     }
 
+    /**
+     * Reads the Tables in the TableController's tableList from a file
+     * @throws IOException If an input or output exception has occurred
+     * @throws FileNotFoundException If the file is not found
+     */
     public void readInstances() {
         int tableId;
         int numSeats;
@@ -195,6 +251,10 @@ public class TableController {
         }
     }
 
+    /**
+     * The list of tableStatus of the Table's tableList
+     * @return the tableMap
+     */
     public Map<Integer, ArrayList<Table>> getTableMap() {
         return tableMap;
     }

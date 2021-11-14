@@ -2,21 +2,41 @@ package Table;
 
 import java.util.Random;
 import java.util.Scanner;
-
+/**
+ * Represents a boundary class to get the user input
+ * @author chris
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public class TableFactory {
+	/**
+	 * The tableController of this TableFactory
+	 */
     private TableController tableController;
     String name;
 
     // constructors
+    /**
+     * Creates a new TableFactory with the given name
+     * @param name This TableFactory's name
+     */
     public TableFactory(String name) {
         tableController = new TableController(name);
         this.name = name;
     }
 
     // getters
+    /**
+     * Gets this TableFactory's tableController
+     * @return this TableFactory's tableController
+     */
     public TableController getTableController() {return tableController;}
 
     // methods
+    /**
+     * Gets the input of the user
+     * @return the user's input
+     */
     public int getIntInput() {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -30,6 +50,9 @@ public class TableFactory {
         }
     }
 
+    /**
+     * Runs the TableFactory to take in the user input
+     */
     public void run() {
         int choice = -1;
         Scanner sc = new Scanner(System.in);
@@ -68,6 +91,10 @@ public class TableFactory {
         }
     }
 
+    /**
+     * Adds a new Table into this TableFactory'ss
+     * tableController's tableList
+     */
     public void addTable() {
         System.out.println("Enter capacity of table to be set up");
         int numSeats = getIntInput();
@@ -80,6 +107,10 @@ public class TableFactory {
         tableController.addTable(newTable);
     }
 
+    /**
+     * Removes an existing table from this TableFactory's
+     * tableController's tableList if the customer is in the tableList
+     */
     public void removeTable() {
         System.out.println("Enter id of table to be removed");
         int id = getIntInput();
@@ -93,6 +124,9 @@ public class TableFactory {
         }
     }
 
+    /**
+     * Creates tables if there are no tables
+     */
     public void createGenericTables() {
         // if there are no tables, create tables
         if (tableController.getTableMap().size() == 0) {
@@ -115,9 +149,19 @@ public class TableFactory {
         }
     }
 
+    /**
+     * Checks availability of tables in this 
+     * TableFactory's tableList
+     */
     public void checkAvailability() {tableController.checkAvailability();}
 
+    /**
+     * View all the Tables on the tableController's tableList
+     */
     public void viewTable() {tableController.viewTable();}
-
+    
+    /**
+     * Saves the tables in tableController's tableList into a file
+     */
     public void writeInstances() {tableController.writeInstances();}
 }
