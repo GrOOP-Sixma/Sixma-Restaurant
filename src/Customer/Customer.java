@@ -26,6 +26,16 @@ public class Customer extends Person{
      */
     private boolean isMember;
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
     // constructors
     /**
      * Creates a new Customer with this Customer's name, contact number and membership
@@ -104,15 +114,15 @@ public class Customer extends Person{
      * Prints the details of this Customer
      */
     public void printCustomer() {
-        System.out.println("-------------------------------");
-        System.out.println("Customer ID: " + customerId);
-        System.out.println("Name: " + this.getName());
-        System.out.println("Contact Number: " + contactNo);
+        System.out.println( ANSI_GREEN + "-------------------------------" + ANSI_RESET);
+        System.out.println( ANSI_GREEN + "Customer ID: " + customerId + ANSI_RESET);
+        System.out.println( ANSI_GREEN + "Name: " + this.getName() + ANSI_RESET);
+        System.out.println( ANSI_GREEN + "Contact Number: " + contactNo + ANSI_RESET);
         if (isMember()) {
-            System.out.println("Member: Yes");
+            System.out.println( ANSI_GREEN + "Member: Yes" + ANSI_RESET);
         }
         else {
-            System.out.println("Member: No");
+            System.out.println( ANSI_GREEN + "Member: No" + ANSI_RESET);
         }
     }
 }

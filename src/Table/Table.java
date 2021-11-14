@@ -24,6 +24,16 @@ public class Table {
      */
     private TableStatus status;
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
     // constructors
     /**
      * Creates a new Table with the table's number of seats
@@ -105,14 +115,14 @@ public class Table {
      * Prints the details of this Table
      */
     public void printTable() {
-        System.out.println("-------------------------------");
-        System.out.println("Table ID: " + tableId);
-        System.out.println("Capacity: " + numSeats);
+        System.out.println(ANSI_GREEN + "-------------------------------" + ANSI_RESET);
+        System.out.println(ANSI_GREEN + "Table ID: " + tableId + ANSI_RESET);
+        System.out.println(ANSI_GREEN + "Capacity: " + numSeats + ANSI_RESET);
         if (status == TableStatus.VACANT) {
-            System.out.println("Status: Vacant");
+            System.out.println(ANSI_GREEN + "Status: Vacant" + ANSI_RESET);
         }
         else {
-            System.out.println("Status: Reserved");
+            System.out.println(ANSI_GREEN + "Status: Reserved" + ANSI_RESET);
         }
     }
 }

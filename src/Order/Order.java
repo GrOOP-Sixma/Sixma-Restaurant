@@ -30,11 +30,22 @@ public class Order {
     /**
      * The ordered menu items of this Order
      */
+    protected boolean isMember;
     protected final HashMap<MenuItem, Integer> orderedMenuItems;
     /**
      * The ordered set menu items of this Order
      */
     protected final HashMap<SetItem, Integer> orderedSetItems;
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
 
     // constructors
     /**
@@ -45,9 +56,11 @@ public class Order {
      * @param orderedSetItems this Order's ordered set items
      */
     public Order(String staffName, int tableId, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
+    public Order(String staffName, int tableId, boolean isMember, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
         orderId = getNextOrderId();
         this.staffName = staffName;
         this.tableId = tableId;
+        this.isMember = isMember;
         this.orderedMenuItems = orderedMenuItems;
         this.orderedSetItems = orderedSetItems;
     }
@@ -60,9 +73,12 @@ public class Order {
      * @param orderedSetItems this Order's ordered set items
      */
     public Order(int orderId, String staffName, int tableId, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
+
+    public Order(int orderId, String staffName, int tableId, boolean isMember, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
         this.orderId = orderId;
         this.staffName = staffName;
         this.tableId = tableId;
+        this.isMember = isMember;
         this.orderedMenuItems = orderedMenuItems;
         this.orderedSetItems = orderedSetItems;
 
@@ -88,6 +104,7 @@ public class Order {
      * Gets the ordered menu items of this Order
      * @return this Order's orderedMenuItems
      */
+    public boolean isMember() {return isMember;}
     public HashMap<MenuItem, Integer> getOrderedMenuItems() {return orderedMenuItems;}
     /**
      * Gets the ordered set items of this Order
@@ -193,19 +210,19 @@ public class Order {
      * Prints this Order's details
      */
     public void printOrder() {
-        System.out.println("-------------------------------");
-        System.out.println("Order ID: " + orderId);
-        System.out.println("Staff: " + staffName);
-        System.out.println("Table ID: " + tableId);
-        System.out.println("-------------------");
-        System.out.println("MenuItems:");
+        System.out.println(ANSI_BLUE+  "-------------------------------" + ANSI_RESET);
+        System.out.println(ANSI_BLUE+  "Order ID: " + orderId + ANSI_RESET);
+        System.out.println(ANSI_BLUE+  "Staff: " + staffName + ANSI_RESET);
+        System.out.println(ANSI_BLUE+  "Table ID: " + tableId + ANSI_RESET);
+        System.out.println(ANSI_BLUE+  "-------------------" + ANSI_RESET);
+        System.out.println(ANSI_BLUE+  "MenuItems:" + ANSI_RESET);
         for (MenuItem menuItem : orderedMenuItems.keySet()) {
-            System.out.println("||" + orderedMenuItems.get(menuItem) + " x " + menuItem.getName());
+            System.out.println(ANSI_BLUE+  "||" + orderedMenuItems.get(menuItem) + " x " + menuItem.getName() + " ||" + ANSI_RESET);
         }
-        System.out.println("-------------------");
-        System.out.println("SetItems:");
+        System.out.println(ANSI_BLUE+  "-------------------" + ANSI_RESET);
+        System.out.println(ANSI_BLUE+  "SetItems:" + ANSI_RESET);
         for (SetItem setItem : orderedSetItems.keySet()) {
-            System.out.println("||" + orderedSetItems.get(setItem) + " x " + setItem.getName());
+            System.out.println(ANSI_BLUE+  "||" + orderedSetItems.get(setItem) + " x " + setItem.getName() + " ||" + ANSI_RESET);
         }
     }
 }

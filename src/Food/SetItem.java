@@ -22,6 +22,16 @@ public class SetItem extends Products {
      */
     private final ArrayList<MenuItem> setItems;
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
     // constructors
     /**
      * Creates a new SetItem with this SetItem's name, price, setItems
@@ -95,26 +105,26 @@ public class SetItem extends Products {
      * Prints this SetItem's details
      */
     public void printSetItem() {
-        System.out.println("-------------------------------");
-        System.out.println("Set ID: " + setItemId);
-        System.out.println("Name: " + name);
-        DecimalFormat df = new DecimalFormat("0.00");
-        System.out.println("Price: $" + df.format(price));
-        System.out.println("Number of Items: " + setItems.size());
+        System.out.println(ANSI_YELLOW+  "-------------------------------" + ANSI_RESET);
+        System.out.println(ANSI_YELLOW+  "Set ID: " + setItemId + ANSI_RESET);
+        System.out.println(ANSI_YELLOW+  "Name: " + name + ANSI_RESET);
+        DecimalFormat df = new DecimalFormat("0.00" );
+        System.out.println(ANSI_YELLOW+  "Price: $" + df.format(price) + ANSI_RESET);
+        System.out.println(ANSI_YELLOW+  "Number of Items: " + setItems.size() + ANSI_RESET);
         for (MenuItem menuItem : setItems) {
-            System.out.println("-------------------");
-            System.out.println("||Item ID: " + menuItem.getMenuItemId());
-            System.out.println("||Name: " + menuItem.getName());
+            System.out.println(ANSI_YELLOW+  "-------------------" + ANSI_RESET);
+            System.out.println(ANSI_YELLOW+  "||Item ID: " + menuItem.getMenuItemId() + ANSI_RESET);
+            System.out.println(ANSI_YELLOW+  "||Name: " + menuItem.getName() + ANSI_RESET);
             if (menuItem.getFoodType() == FoodType.MAIN_COURSE) {
-                System.out.println("||Food Type: Main Course");
+                System.out.println(ANSI_YELLOW+  "||Food Type: Main Course" + ANSI_RESET);
             }
             else if (menuItem.getFoodType() == FoodType.DRINKS) {
-                System.out.println("||Food Type: Drinks");
+                System.out.println(ANSI_YELLOW+  "||Food Type: Drinks" + ANSI_RESET);
             }
             else {
-                System.out.println("||Food Type: Dessert");
+                System.out.println(ANSI_YELLOW+  "||Food Type: Dessert" + ANSI_RESET);
             }
-            System.out.println("||Description: " + menuItem.getDescription());
+            System.out.println(ANSI_YELLOW+  "||Description: " + menuItem.getDescription() + ANSI_RESET);
         }
     }
 }

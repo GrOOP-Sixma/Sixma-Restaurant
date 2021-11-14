@@ -26,6 +26,16 @@ public class MenuItem extends Products {
      */
     private String description;
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
     // constructors
     /**
      * Creates a new MenuItem with the MenuItem's name, price, foodType and description
@@ -102,20 +112,20 @@ public class MenuItem extends Products {
      * Prints the details of this MenuItem
      */
     public void printMenuItem() {
-        System.out.println("-------------------------------");
-        System.out.println("Item ID: " + menuItemId);
-        System.out.println("Name: " + name);
+        System.out.println( ANSI_YELLOW + "-------------------------------" + ANSI_RESET);
+        System.out.println( ANSI_YELLOW + "Item ID: " + menuItemId + ANSI_RESET);
+        System.out.println( ANSI_YELLOW + "Name: " + name + ANSI_RESET);
         if (foodType == FoodType.MAIN_COURSE) {
-            System.out.println("Food Type: Main Course");
+            System.out.println( ANSI_YELLOW + "Food Type: Main Course" + ANSI_RESET);
         }
         else if (foodType == FoodType.DRINKS) {
-            System.out.println("Food Type: Drinks");
+            System.out.println( ANSI_YELLOW + "Food Type: Drinks" + ANSI_RESET);
         }
         else {
-            System.out.println("Food Type: Dessert");
+            System.out.println( ANSI_YELLOW + "Food Type: Dessert" + ANSI_RESET);
         }
         DecimalFormat df = new DecimalFormat("0.00");
-        System.out.println("Price: $" + df.format(price));
-        System.out.println("Description: " + description);
+        System.out.println( ANSI_YELLOW + "Price: $" + df.format(price) + ANSI_RESET);
+        System.out.println( ANSI_YELLOW + "Description: " + description + ANSI_RESET);
     }
 }

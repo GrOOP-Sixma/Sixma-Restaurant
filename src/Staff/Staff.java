@@ -26,6 +26,16 @@ public class Staff extends Person {
      */
     private String role;
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+
     // constructors
     /**
      * Creates a new Staff with the staff's name, gender and role
@@ -105,15 +115,15 @@ public class Staff extends Person {
      * Prints the details of this Staff
      */
     public void printStaff() {
-        System.out.println("-------------------------------");
-        System.out.println("Staff ID: " + staffId);
-        System.out.println("Name: " + this.getName());
+        System.out.println( ANSI_CYAN + "-------------------------------" + ANSI_RESET);
+        System.out.println( ANSI_CYAN + "Staff ID: " + staffId + ANSI_RESET);
+        System.out.println( ANSI_CYAN + "Name: " + this.getName() + ANSI_RESET);
         if (gender == Gender.MALE) {
-            System.out.println("Gender: Male");
+            System.out.println( ANSI_CYAN + "Gender: Male" + ANSI_RESET);
         }
         else {
-            System.out.println("Gender: Female");
+            System.out.println( ANSI_CYAN + "Gender: Female" + ANSI_RESET);
         }
-        System.out.println("Role: " + role);
+        System.out.println( ANSI_CYAN + "Role: " + role + ANSI_RESET);
     }
 }

@@ -90,6 +90,13 @@ public class OrderController {
      */
     public void addOrder(int orderId, String staffName, int tableId, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
         Order order = new Order(orderId, staffName, tableId, orderedMenuItems, orderedSetItems);
+    public void addOrder(String staffName, int tableId, boolean isMember, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
+        Order order = new Order(staffName, tableId, isMember, orderedMenuItems, orderedSetItems);
+        orders.add(order);
+    }
+
+    public void addOrder(int orderId, String staffName, int tableId, boolean isMember, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
+        Order order = new Order(orderId, staffName, tableId, isMember, orderedMenuItems, orderedSetItems);
         orders.add(order);
     }
 
@@ -206,6 +213,7 @@ public class OrderController {
      * @param year this orderInvoice's year
      */
     public void viewDaySalesReport(int day, int month, int year) {
+    public double viewDaySalesReport(int day, int month, int year) {
         HashMap<MenuItem, Integer> menuItemQuantity = new HashMap<>();
         HashMap<SetItem, Integer> setItemQuantity = new HashMap<>();
         double totalRevenue = 0;
@@ -254,6 +262,7 @@ public class OrderController {
         System.out.println("||Revenue earned:");
         DecimalFormat df = new DecimalFormat("0.00");
         System.out.println("||$" + df.format(totalRevenue));
+        return totalRevenue;
     }
 
     /**
@@ -262,6 +271,7 @@ public class OrderController {
      * @param year this orderInvoice's year
      */
     public void viewMonthSalesReport(int month, int year) {
+    public double viewMonthSalesReport(int month, int year) {
         HashMap<MenuItem, Integer> menuItemQuantity = new HashMap<>();
         HashMap<SetItem, Integer> setItemQuantity = new HashMap<>();
         double totalRevenue = 0;
@@ -308,6 +318,7 @@ public class OrderController {
         System.out.println("||Revenue earned:");
         DecimalFormat df = new DecimalFormat("0.00");
         System.out.println("||$" + df.format(totalRevenue));
+        return totalRevenue;
     }
 
     /**
@@ -318,6 +329,7 @@ public class OrderController {
         int orderId;
         String staffName;
         int tableId;
+        int isMember;
         int menuItemsSize;
         String orderedMenuItems;
         int setItemsSize;
@@ -330,6 +342,12 @@ public class OrderController {
                 orderId = order.getOrderId();
                 staffName = order.getStaffName();
                 tableId = order.getTableId();
+                if (order.isMember) {
+                    isMember = 1;
+                }
+                else {
+                    isMember = 0;
+                }
                 menuItemsSize = 0;
                 orderedMenuItems = "";
                 for (MenuItem menuItem : order.getOrderedMenuItems().keySet()) {
@@ -344,7 +362,7 @@ public class OrderController {
                     orderedSetItems = orderedSetItems + setItem.getSetItemId() + ";" + order.getOrderedSetItems().get(setItem) + ";";
                 }
                 orderedSetItems = orderedSetItems.substring(0, orderedSetItems.length() - 1);
-                myWriter.write(orderId + ";" + staffName + ";" + tableId + ";" + menuItemsSize + ";" + orderedMenuItems + ";" + setItemsSize + ";" + orderedSetItems + "\n");
+                myWriter.write(orderId + ";" + staffName + ";" + tableId + ";" + isMember + ";" + menuItemsSize + ";" + orderedMenuItems + ";" + setItemsSize + ";" + orderedSetItems + "\n");
             }
             myWriter.close();
         } catch (IOException e) {
@@ -365,6 +383,12 @@ public class OrderController {
                 orderId = orderInvoice.getOrderId();
                 staffName = orderInvoice.getStaffName();
                 tableId = orderInvoice.getTableId();
+                if (orderInvoice.isMember) {
+                    isMember = 1;
+                }
+                else {
+                    isMember = 0;
+                }
                 menuItemsSize = 0;
                 orderedMenuItems = "";
                 for (MenuItem menuItem : orderInvoice.getOrderedMenuItems().keySet()) {
@@ -390,7 +414,7 @@ public class OrderController {
                 serviceChargeAmount = orderInvoice.getServiceChargeAmount();
                 GSTAmount = orderInvoice.getGSTAmount();
                 total = orderInvoice.getTotal();
-                myWriter.write(orderId + ";" + staffName + ";" + tableId + ";" + menuItemsSize + ";" + orderedMenuItems + ";" + setItemsSize + ";" + orderedSetItems + ";" +
+                myWriter.write(orderId + ";" + staffName + ";" + tableId + ";" + isMember + ";" + menuItemsSize + ";" + orderedMenuItems + ";" + setItemsSize + ";" + orderedSetItems + ";" +
                         year + ";" + month + ";" + day + ";" + hour + ";" + minute + ";" + second + ";" + subTotal + ";" + serviceChargeAmount + ";" + GSTAmount + ";" + total + "\n");
             }
             myWriter.close();
@@ -409,6 +433,7 @@ public class OrderController {
         int orderId;
         String staffName;
         int tableId;
+        int isMember;
         int menuItemsSize;
         HashMap<MenuItem, Integer> orderedMenuItems;
         int setItemsSize;
@@ -424,23 +449,29 @@ public class OrderController {
                 orderId = Integer.parseInt(attributes[0]);
                 staffName = attributes[1];
                 tableId = Integer.parseInt(attributes[2]);
-                menuItemsSize = Integer.parseInt(attributes[3]);
+                isMember = Integer.parseInt(attributes[3]);
+                menuItemsSize = Integer.parseInt(attributes[4]);
                 orderedMenuItems = new HashMap<>();
                 for (int i=0; i<menuItemsSize; i++) {
-                    int menuItemId = Integer.parseInt(attributes[4 + 2 * i]);
+                    int menuItemId = Integer.parseInt(attributes[5 + 2 * i]);
                     MenuItem menuItem = menu.getMenuItem(menuItemId);
-                    int quantity = Integer.parseInt(attributes[4 + 2 * i + 1]);
+                    int quantity = Integer.parseInt(attributes[5 + 2 * i + 1]);
                     orderedMenuItems.put(menuItem, quantity);
                 }
-                setItemsSize = Integer.parseInt(attributes[4 + 2 * menuItemsSize]);
+                setItemsSize = Integer.parseInt(attributes[5 + 2 * menuItemsSize]);
                 orderedSetItems = new HashMap<>();
                 for (int i=0; i<setItemsSize; i++) {
-                    int setItemId = Integer.parseInt(attributes[4 + 2 * menuItemsSize + 1 + 2 * i]);
+                    int setItemId = Integer.parseInt(attributes[5 + 2 * menuItemsSize + 1 + 2 * i]);
                     SetItem setItem = setMenu.getSetItem(setItemId);
-                    int quantity = Integer.parseInt(attributes[4 + 2 * menuItemsSize + 1 + 2 * i + 1]);
+                    int quantity = Integer.parseInt(attributes[5 + 2 * menuItemsSize + 1 + 2 * i + 1]);
                     orderedSetItems.put(setItem, quantity);
                 }
-                addOrder(orderId, staffName, tableId, orderedMenuItems, orderedSetItems);
+                if (isMember == 1) {
+                    addOrder(orderId, staffName, tableId, true, orderedMenuItems, orderedSetItems);
+                }
+                else {
+                    addOrder(orderId, staffName, tableId, false, orderedMenuItems, orderedSetItems);
+                }
                 if (orderId > maxOrderId) {
                     maxOrderId = orderId;
                 }
@@ -474,34 +505,41 @@ public class OrderController {
                 orderId = Integer.parseInt(attributes[0]);
                 staffName = attributes[1];
                 tableId = Integer.parseInt(attributes[2]);
-                menuItemsSize = Integer.parseInt(attributes[3]);
+                isMember = Integer.parseInt(attributes[3]);
+                menuItemsSize = Integer.parseInt(attributes[4]);
                 orderedMenuItems = new HashMap<>();
                 for (int i=0; i<menuItemsSize; i++) {
-                    int menuItemId = Integer.parseInt(attributes[4 + 2 * i]);
+                    int menuItemId = Integer.parseInt(attributes[5 + 2 * i]);
                     MenuItem menuItem = menu.getMenuItem(menuItemId);
-                    int quantity = Integer.parseInt(attributes[4 + 2 * i + 1]);
+                    int quantity = Integer.parseInt(attributes[5 + 2 * i + 1]);
                     orderedMenuItems.put(menuItem, quantity);
                 }
-                setItemsSize = Integer.parseInt(attributes[4 + 2 * menuItemsSize]);
+                setItemsSize = Integer.parseInt(attributes[5 + 2 * menuItemsSize]);
                 orderedSetItems = new HashMap<>();
                 for (int i=0; i<setItemsSize; i++) {
-                    int setItemId = Integer.parseInt(attributes[4 + 2 * menuItemsSize + 1 + 2 * i]);
+                    int setItemId = Integer.parseInt(attributes[5 + 2 * menuItemsSize + 1 + 2 * i]);
                     SetItem setItem = setMenu.getSetItem(setItemId);
-                    int quantity = Integer.parseInt(attributes[4 + 2 * menuItemsSize + 1 + 2 * i + 1]);
+                    int quantity = Integer.parseInt(attributes[5 + 2 * menuItemsSize + 1 + 2 * i + 1]);
                     orderedSetItems.put(setItem, quantity);
                 }
-                Order order = new Order(orderId, staffName, tableId, orderedMenuItems, orderedSetItems);
-                year = Integer.parseInt(attributes[4 + 2 * menuItemsSize + 2 * setItemsSize + 1]);
-                month = Integer.parseInt(attributes[4 + 2 * menuItemsSize + 2 * setItemsSize + 2]);
-                day = Integer.parseInt(attributes[4 + 2 * menuItemsSize + 2 * setItemsSize + 3]);
-                hour = Integer.parseInt(attributes[4 + 2 * menuItemsSize + 2 * setItemsSize + 4]);
-                minute = Integer.parseInt(attributes[4 + 2 * menuItemsSize + 2 * setItemsSize + 5]);
-                second = Integer.parseInt(attributes[4 + 2 * menuItemsSize + 2 * setItemsSize + 6]);
+                Order order;
+                if (isMember == 1) {
+                    order = new Order(orderId, staffName, tableId, true, orderedMenuItems, orderedSetItems);
+                }
+                else {
+                    order = new Order(orderId, staffName, tableId, false, orderedMenuItems, orderedSetItems);
+                }
+                year = Integer.parseInt(attributes[5 + 2 * menuItemsSize + 2 * setItemsSize + 1]);
+                month = Integer.parseInt(attributes[5 + 2 * menuItemsSize + 2 * setItemsSize + 2]);
+                day = Integer.parseInt(attributes[5 + 2 * menuItemsSize + 2 * setItemsSize + 3]);
+                hour = Integer.parseInt(attributes[5 + 2 * menuItemsSize + 2 * setItemsSize + 4]);
+                minute = Integer.parseInt(attributes[5 + 2 * menuItemsSize + 2 * setItemsSize + 5]);
+                second = Integer.parseInt(attributes[5 + 2 * menuItemsSize + 2 * setItemsSize + 6]);
                 Calendar date = new GregorianCalendar(year, month, day, hour, minute, second);
-                subTotal = Double.parseDouble(attributes[4 + 2 * menuItemsSize + 2 * setItemsSize + 7]);
-                serviceChargeAmount = Double.parseDouble(attributes[4 + 2 * menuItemsSize + 2 * setItemsSize + 8]);
-                GSTAmount = Double.parseDouble(attributes[4 + 2 * menuItemsSize + 2 * setItemsSize + 9]);
-                total = Double.parseDouble(attributes[4 + 2 * menuItemsSize + 2 * setItemsSize + 10]);
+                subTotal = Double.parseDouble(attributes[5 + 2 * menuItemsSize + 2 * setItemsSize + 7]);
+                serviceChargeAmount = Double.parseDouble(attributes[5 + 2 * menuItemsSize + 2 * setItemsSize + 8]);
+                GSTAmount = Double.parseDouble(attributes[5 + 2 * menuItemsSize + 2 * setItemsSize + 9]);
+                total = Double.parseDouble(attributes[5 + 2 * menuItemsSize + 2 * setItemsSize + 10]);
                 addOrderInvoice(order, date, subTotal, serviceChargeAmount, GSTAmount, total);
             }
             Order.setNextOrderId(maxOrderId + 1);

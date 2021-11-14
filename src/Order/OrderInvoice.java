@@ -48,7 +48,7 @@ public class OrderInvoice extends Order{
      * @param order this OrderInvoice's order
      */
     public OrderInvoice(Order order) {
-        super(order.getOrderId(), order.getStaffName(), order.getTableId(), order.getOrderedMenuItems(), order.getOrderedSetItems());
+        super(order.getOrderId(), order.getStaffName(), order.getTableId(), order.isMember(), order.getOrderedMenuItems(), order.getOrderedSetItems());
         date = Calendar.getInstance();
         calculateSubtotal();
         calculateServiceChargeAmount();
@@ -66,7 +66,7 @@ public class OrderInvoice extends Order{
      * @param total this OrderInvoice's total
      */
     public OrderInvoice(Order order, Calendar date, double subTotal, double serviceChargeAmount, double GSTAmount, double total) {
-        super(order.getOrderId(), order.getStaffName(), order.getTableId(), order.getOrderedMenuItems(), order.getOrderedSetItems());
+        super(order.getOrderId(), order.getStaffName(), order.getTableId(), order.isMember, order.getOrderedMenuItems(), order.getOrderedSetItems());
         this.date = date;
         this.subTotal = subTotal;
         this.serviceChargeAmount = serviceChargeAmount;
@@ -113,6 +113,10 @@ public class OrderInvoice extends Order{
         for (SetItem setItem : orderedSetItems.keySet()) {
             subTotal += setItem.getPrice() * orderedSetItems.get(setItem);
         }
+
+        if (isMember) {
+            subTotal *= 0.8;
+        }
     }
 
     /**
@@ -134,6 +138,7 @@ public class OrderInvoice extends Order{
      */
     private void calculateTotal() {
         total = subTotal + serviceChargeAmount + GSTAmount;
+        total = Math.round(total * 1000.0) / 1000.0;
     }
 
     /**
@@ -159,6 +164,9 @@ public class OrderInvoice extends Order{
         }
         System.out.println("Sub Total: $" + df.format(subTotal));
         System.out.println("Service Charge: $" + df.format(serviceChargeAmount));
+        if (isMember) {
+            System.out.println("Discount: $" + df.format((subTotal) * 0.2));
+        }
         System.out.println("GST: $" + df.format(GSTAmount));
         System.out.println("Total: $" + df.format(total));
         int year = date.get(Calendar.YEAR);
