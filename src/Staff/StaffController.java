@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Customer.Customer;
+import Human.Gender;
 
 import java.io.*;
-
-import Restaurant.RestaurantBack.Gender;
 /**
  * Represents a control class to execute the methods on the Staff class
  * @author chris

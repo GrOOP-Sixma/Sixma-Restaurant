@@ -1,6 +1,6 @@
 package Customer;
 
-import Restaurant.Person;
+import Human.Person;
 /**
  * Represents a customer intending to go/at the restaurant
  * @author tengwei

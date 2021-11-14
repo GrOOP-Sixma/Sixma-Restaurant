@@ -1,8 +1,11 @@
+/**
+ * Factory is package that includes the classes for starting up the program
+ */
 package Factory;
 
 import java.util.Scanner;
 
-import Restaurant.RestaurantBack.Gender;
+import Human.Gender;
 /**
  * Represents the UI of the Restaurant Reservation and Point of Sale System
  * @author tengwei

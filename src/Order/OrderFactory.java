@@ -1,3 +1,7 @@
+/**
+ * Order is a package that includes all of the classes under the 
+ * umbrella of the classes that are needed for an order
+ */
 package Order;
 
 import java.time.LocalDate;

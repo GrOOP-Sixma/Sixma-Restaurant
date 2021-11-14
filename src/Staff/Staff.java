@@ -1,7 +1,7 @@
 package Staff;
 
-import Restaurant.Person;
-import Restaurant.RestaurantBack.Gender;
+import Human.Gender;
+import Human.Person;
 /**
  * Represents a Staff that works at a restaurant
  * @author chris

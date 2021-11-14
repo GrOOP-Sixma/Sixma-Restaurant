@@ -12,7 +12,7 @@ import Food.*;
 import Order.*;
 import Reservation.ReservationController;
 import Reservation.ReservationFactory;
-import Restaurant.RestaurantBack.Gender;
+import Restaurant.Gender;
 import Staff.*;
 import Table.*;
 
