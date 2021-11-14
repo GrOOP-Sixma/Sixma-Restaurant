@@ -10,14 +10,36 @@ import java.util.Scanner;
 
 import Customer.*;
 import Table.*;
-
+/*
+ * Represents a boundary class to get the user input
+ * in order for the ReservationController class to perform the
+ * various method executions on the Reservation class
+ */
 public class ReservationFactory {
+    /*
+     * The customerController of this ReservationFactory
+     */
     private CustomerController customerController;
+    /*
+     * The tableController of this ReservationFactory
+     */
     private TableController tableController;
+    /*
+     * The reservationController of this ReservationFactory
+     */
     private ReservationController reservationController;
+    /*
+     * The name of this ReservationFactory
+     */
     private String name;
 
     // constructors
+    /*
+     * Creates a new ReservationFactory with the given name, customerController and tableController
+     * @param name This ReservationFactory's name
+     * @param customerController This ReservationFactory's customerController
+     * @param tableController This ReservationFactory's tableController
+     */
     public ReservationFactory(String name, CustomerController customerController, TableController tableController) {
         this.name = name;
         this.customerController = customerController;
@@ -27,11 +49,24 @@ public class ReservationFactory {
     }
 
     // getters
+    /*
+     * Gets this ReservationFactory's customerController
+     */
     public CustomerController getCustomerController() {return customerController;}
+    /*
+     * Gets this ReservationFactory's tableController
+     */
     public TableController getTableController() {return tableController;}
+    /*
+     * Gets this ReservationFactory's reservationController
+     */
     public ReservationController getReservationController() {return reservationController;}
 
     // methods
+    /*
+     * Gets the input of the user
+     * @return the user's input
+     */
     public int getIntInput() {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -45,6 +80,9 @@ public class ReservationFactory {
         }
     }
 
+    /*
+     * Runs the ReservationFactor to take in user input
+     */
     public void run() {
         int choice = -1;
         Scanner sc = new Scanner(System.in);
@@ -79,6 +117,10 @@ public class ReservationFactory {
         }
     }
 
+    /*
+     * Adds a new Reservation into this ReservationFactory's
+     * reservationController's reservationList
+     */
     public void makeReservation() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter name of customer:");
@@ -165,7 +207,10 @@ public class ReservationFactory {
         Reservation reservation = new Reservation(reservationDate, customer, numPax, table);
         reservationController.addReservation(reservation);
     }
-
+    /*
+     * Removes an existing Reservation from this ReservationFactory's
+     * reservationController's reservationList if the reservation is in the reservation list
+     */
     public void removeReservation() {
         System.out.println("Enter id of reservation to be removed:");
         int id = getIntInput();
@@ -179,15 +224,25 @@ public class ReservationFactory {
         }
     }
 
+
+    /*
+     * View all the Reservations on the reservationList
+     */
     public void viewReservations() {
         reservationController.viewReservations();
     }
 
+    /*
+     * Updates the reservations in the reservationList
+     */
     public void updateReservations() {
         reservationController.updateReservations();
         System.out.println("Reservations updated");
     }
 
+    /*
+     * Saves the Reservations in the reservationController' reserationList into a file
+     */
     public void writeInstances() {
         reservationController.writeInstances();
     }

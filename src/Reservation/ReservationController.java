@@ -8,14 +8,36 @@ import java.io.*;
 
 import Customer.*;
 import Table.*;
+/*
+ * Represents a control class to execute the methods on the Reservation class
+ */
 
 public class ReservationController {
+    /*
+     * The customerConroller of the ReservationController
+     */
     private final CustomerController customerController;
+    /*
+     * The tableController of the ReservationController
+     */
     private final TableController tableController;
+    /*
+     * The list of reservations
+     */
     private final ArrayList<Reservation> reservationList;
+    /*
+     * The name of this ReservationController
+     */
     private String name;
 
     // constructors
+    /*
+     * Creates a new ReservationController witht the given name
+     * @param name This ReservationController's name
+     * @param customerController This ReservationController's customerController
+     * @param tableController This ReservationController's tableController
+     */
+    
     public ReservationController(String name, CustomerController customerController, TableController tableController) {
         this.name = name;
         this.customerController = customerController;
@@ -24,25 +46,54 @@ public class ReservationController {
         readInstances();
     }
 
+    /* 
+     * Gets the current and upcoming Reservations in the reservationList
+     * @return this ReservationController's reservationList
+     */
     public ArrayList<Reservation> getReservationList() {
         return reservationList;
     }
 
     // methods
+    /*
+     * Adds a reservation into this ReservationController's reservationList
+     * @param reservationDate this Reservations reservationDate
+     * @param customer this Reservation's customer
+     * @param numPax this Reservation's numPax
+     * @param table this Reservation's table
+     */
     public void addReservation(Calendar reservationDate, Customer customer, int numPax, Table table) {
         Reservation reservation = new Reservation(reservationDate, customer, numPax, table);
         reservationList.add(reservation);
     }
 
+    /*
+     * Adds a reservation into this ReservationController's reservationList
+     * @param reservationId this ReservationController's
+     * @param reservationDate this Reservation's reservationDate
+     * @param customer this Reservation's customer
+     * @param numPax this Reservation's numPax
+     * @param table this Reservation's table
+     */
     public void addReservation(int reservationId, Calendar reservationDate, Customer customer, int numPax, Table table) {
         Reservation reservation = new Reservation(reservationId, reservationDate, customer, numPax, table);
         reservationList.add(reservation);
     }
 
+    /*
+     * Adds a reservation into this ReservationController's reservationList
+     * @param reservation this new Reservation Object
+     */
     public void addReservation(Reservation reservation) {
         reservationList.add(reservation);
     }
 
+    /*
+     * Removes a Reservation from this ReservationController's reservationList
+     * if the reservationList contains the reservation in the reservationId
+     * @param reservationId
+     * @return whether this Reservation has been removed from the reservationList
+     */
     public int removeReservation(int reservationId) {
         for (Reservation reservation : reservationList) {
             if (reservation.getReservationId() == reservationId) {
@@ -54,6 +105,12 @@ public class ReservationController {
         return 0;
     }
 
+    /*
+     * Removes a reservation from the reservationList
+     * if the table is in the reservationList
+     * @param table the reservation's table
+     * @return whether this Reservation has been removed from the reservationList
+     */
     public void finishReservation(Table table) {
         for (Reservation reservation : reservationList) {
             if (reservation.getTable() == table) {
@@ -63,6 +120,12 @@ public class ReservationController {
         }
     }
 
+    /*
+     * Gets the Reservation from this ReservationController's reservationList
+     * if the reservationList contains the reservationId
+     * @param reservationId
+     * @return whether this reservation is in reservationList
+     */
     public Reservation getReservation(int reservationId) {
         for (Reservation reservation : reservationList) {
             if (reservation.getReservationId() == reservationId) {
@@ -72,6 +135,12 @@ public class ReservationController {
         return null;
     }
 
+    /*
+     * Gets the Reservation from this ReservationController's reservationList
+     * if the reservationList contains the table
+     * @param table
+     * @return whether this reservation is in reservationList
+     */
     public Reservation getReservation(Table table) {
         for (Reservation reservation : reservationList) {
             if (reservation.getTable() == table) {
@@ -81,6 +150,9 @@ public class ReservationController {
         return null;
     }
 
+    /*
+     * Prints the reservations in This ReservtionControllers's reservationList
+     */
     public void viewReservations() {
         System.out.println("\nReservations:");
         for (Reservation reservation : reservationList) {
@@ -88,6 +160,10 @@ public class ReservationController {
         }
     }
 
+    /*
+     * Updates This ReservationController's reservationList 
+     * if the reservation is expired then remove it from the reservationList
+     */
     public void updateReservations() {
         ArrayList<Reservation> toRemove = new ArrayList<>();
         for (Reservation reservation : reservationList) {
@@ -101,6 +177,10 @@ public class ReservationController {
         reservationList.removeAll(toRemove);
     }
 
+    /*
+     * Writes an Instance of Reservation into a txt file
+     * @throws IOException If an input or ouput error has occurred
+     */
     public void writeInstances() {
         int reservationId;
         Calendar reservationDate;
@@ -132,6 +212,11 @@ public class ReservationController {
         }
     }
 
+    /*
+     * Reads an Instance of reservations from a txt file
+     * @throws IOException If an input or ouput error has occurred
+     * @throws ileNotFoundException If file not found
+     */
     public void readInstances() {
         int reservationId;
         int year;
