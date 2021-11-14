@@ -52,10 +52,10 @@ public class Order {
      * Creates a new order with this Order's staffName, tableId, orderedMenuItems and orderedSetItems
      * @param staffName this Order's staff name
      * @param tableId this Order's tableId
+     * @param isMember this Order's customer's membership
      * @param orderedMenuItems this Order's ordered menu items
      * @param orderedSetItems this Order's ordered set items
      */
-    public Order(String staffName, int tableId, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
     public Order(String staffName, int tableId, boolean isMember, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
         orderId = getNextOrderId();
         this.staffName = staffName;
@@ -69,11 +69,10 @@ public class Order {
      * @param orderId this Order's orderId
      * @param staffName this Order's staff name
      * @param tableId this Order's tableId
+     * @param isMember this Order's customer's membership
      * @param orderedMenuItems this Order's ordered menu items
      * @param orderedSetItems this Order's ordered set items
      */
-    public Order(int orderId, String staffName, int tableId, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
-
     public Order(int orderId, String staffName, int tableId, boolean isMember, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
         this.orderId = orderId;
         this.staffName = staffName;
@@ -100,11 +99,16 @@ public class Order {
      * @return this Order's tableId
      */
     public int getTableId() {return tableId;}
+ 
+    /**
+     * Gets the membership of this Order's customer
+     * @return whether this customer is a member
+     */
+    public boolean isMember() {return isMember;}
     /**
      * Gets the ordered menu items of this Order
      * @return this Order's orderedMenuItems
      */
-    public boolean isMember() {return isMember;}
     public HashMap<MenuItem, Integer> getOrderedMenuItems() {return orderedMenuItems;}
     /**
      * Gets the ordered set items of this Order

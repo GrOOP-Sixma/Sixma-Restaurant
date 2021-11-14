@@ -10,6 +10,10 @@ import Factory.RRPSS;
  * @since 2021-11-14
  */
 public class App {
+	/**
+	 * Starts the RRPSS
+	 * @param args
+	 */
     public static void main(String[] args) {
         System.out.println("""
         _______                         __                                                        __            _______                                                               __      __                              

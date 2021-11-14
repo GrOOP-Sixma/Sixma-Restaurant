@@ -70,31 +70,27 @@ public class OrderController {
 
     // methods
     /**
-     * Adds an order to this OrderController's orders 
-     * @param staffName this order's staffName
-     * @param tableId this order's tableId
-     * @param orderedMenuItems this order's orderedMenuItems
-     * @param orderedSetItems this order's orderedSetItems
+      * Adds an order to this OrderController's orders 
+      * @param staffName this order's staffName
+      * @param tableId this order's tableId
+      * @param isMember this order's customer's membership
+      * @param orderedMenuItems this order's orderedMenuItems
+      * @param orderedSetItems this order's orderedSetItems
      */
-    public void addOrder(String staffName, int tableId, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
-        Order order = new Order(staffName, tableId, orderedMenuItems, orderedSetItems);
+    public void addOrder(String staffName, int tableId, boolean isMember, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
+        Order order = new Order(staffName, tableId, isMember, orderedMenuItems, orderedSetItems);
         orders.add(order);
     }
+    
     /**
      * Adds an order to this OrderController's orders 
      * @param orderId this order's orderId
      * @param staffName this order's staffName
      * @param tableId this order's tableId
+     * @param isMember this order's customer's membership
      * @param orderedMenuItems this order's orderedMenuItems
      * @param orderedSetItems this order's orderedSetItems
      */
-    public void addOrder(int orderId, String staffName, int tableId, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
-        Order order = new Order(orderId, staffName, tableId, orderedMenuItems, orderedSetItems);
-    public void addOrder(String staffName, int tableId, boolean isMember, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
-        Order order = new Order(staffName, tableId, isMember, orderedMenuItems, orderedSetItems);
-        orders.add(order);
-    }
-
     public void addOrder(int orderId, String staffName, int tableId, boolean isMember, HashMap<MenuItem, Integer> orderedMenuItems, HashMap<SetItem, Integer> orderedSetItems) {
         Order order = new Order(orderId, staffName, tableId, isMember, orderedMenuItems, orderedSetItems);
         orders.add(order);
@@ -211,8 +207,8 @@ public class OrderController {
      * @param day this orderInvoice's day
      * @param month this orderInvoice's month
      * @param year this orderInvoice's year
+     * @return total revenue for this specific day
      */
-    public void viewDaySalesReport(int day, int month, int year) {
     public double viewDaySalesReport(int day, int month, int year) {
         HashMap<MenuItem, Integer> menuItemQuantity = new HashMap<>();
         HashMap<SetItem, Integer> setItemQuantity = new HashMap<>();
@@ -269,8 +265,8 @@ public class OrderController {
      * View the sales report for a specific month
      * @param month this orderInvoice's month
      * @param year this orderInvoice's year
+     * @return the total revenue for this specific month
      */
-    public void viewMonthSalesReport(int month, int year) {
     public double viewMonthSalesReport(int month, int year) {
         HashMap<MenuItem, Integer> menuItemQuantity = new HashMap<>();
         HashMap<SetItem, Integer> setItemQuantity = new HashMap<>();

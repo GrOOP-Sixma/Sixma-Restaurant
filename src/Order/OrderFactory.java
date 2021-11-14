@@ -57,15 +57,7 @@ public class OrderFactory {
      */
     private String name;
 
-    /**
-     * Creates a new OrderFactory with this OrderFactory's name, staffController, tableController, reservationController, menu and setMenu
-     * @param name this OrderFactory's name
-     * @param staffController this OrderFactory's staffController
-     * @param tableController this OrderFactory's tableController
-     * @param reservationController this OrderFactory's reservationController
-     * @param menu this OrderFactory's menu
-     * @param setMenu this OrderFactory's setMenu
-     */
+
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -75,7 +67,15 @@ public class OrderFactory {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
-
+    /**
+     * Creates a new OrderFactory with this OrderFactory's name, staffController, tableController, reservationController, menu and setMenu
+     * @param name this OrderFactory's name
+     * @param staffController this OrderFactory's staffController
+     * @param tableController this OrderFactory's tableController
+     * @param reservationController this OrderFactory's reservationController
+     * @param menu this OrderFactory's menu
+     * @param setMenu this OrderFactory's setMenu
+     */
     public OrderFactory(String name, StaffController staffController, TableController tableController, ReservationController reservationController, Menu menu, SetMenu setMenu) {
         this.name = name;
         this.staffController = staffController;

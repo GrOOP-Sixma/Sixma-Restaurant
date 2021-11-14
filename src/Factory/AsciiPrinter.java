@@ -1,11 +1,22 @@
 package Factory;
 
 import java.util.concurrent.TimeUnit;
-
+/**
+ * Represents the class to print the UI output in ASCII formatting
+ * @author tengwei
+ * @version 1.0
+ * @since 2021-11-14
+ */
 public class AsciiPrinter {
+	/**
+	 * Creates new defaultAsciiPrinter 
+	 */
     public AsciiPrinter() {
     }
 
+    /**
+     * Prints out Restaurant Reservation Point and Sales System in ASCII
+     */
     public static void print() {
         System.out.println("""
                                                                                                                                      ______________¶¶¶¶___1¶¶¶___1¶¶¶__________________
@@ -39,6 +50,9 @@ public class AsciiPrinter {
         }
     }
 
+    /**
+     * Prints out Goodbye in ASCII
+     */
     public static void printExit() {
         System.out.println("""
         ────────────────────────────────────────────────────────────────────────────────────────────────────────────────

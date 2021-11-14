@@ -1,6 +1,7 @@
 package Food;
 
 import java.util.Scanner;
+import Factory.AsciiPrinter;
 /**
  * Represents a boundary class to get the user input
  * in order for the Menu class to perform the 
@@ -9,8 +10,6 @@ import java.util.Scanner;
  * @version 1.0
  * @since 2021-11-14
  */
-import Factory.AsciiPrinter;
-
 public class MenuFactory {
 	/**
 	 * The menu of this MenuFactory
