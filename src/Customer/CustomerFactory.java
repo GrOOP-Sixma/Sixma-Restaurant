@@ -8,7 +8,7 @@ import java.util.Scanner;
  */
 public class CustomerFactory {
 	/*
-	 * This CustomerFactory's customerController
+	 * The customerController of this CustomerFactory
 	 */
     private CustomerController customerController;
     /*

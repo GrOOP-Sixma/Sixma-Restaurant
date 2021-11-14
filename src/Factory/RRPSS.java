@@ -8,7 +8,7 @@ import Restaurant.RestaurantBack.Gender;
  */
 public class RRPSS implements Runnable{
 	/*
-	 * This RRPSS's restaurant
+	 * The restaurant of this RRPSS
 	 */
     private Restaurant restaurant;
 

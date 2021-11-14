@@ -6,11 +6,11 @@ import Restaurant.Person;
  */
 public class Customer extends Person{
 	/*
-	 * The contact number of this customer
+	 * The contact number of this Customer
 	 */
     private int contactNo;
     /*
-     * The unique customerId for each customer
+     * The unique customerId for each Customer
      */
     private int customerId;
     /*
@@ -18,7 +18,7 @@ public class Customer extends Person{
      */
     private static int nextCustomerId = 1;
     /*
-     * Check whether the customer is a member to be qualified for
+     * Check whether this Customer is a member to be qualified for
      * membership discount
      */
     private boolean isMember;
