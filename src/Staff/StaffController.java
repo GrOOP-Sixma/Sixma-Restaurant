@@ -11,6 +11,8 @@ import Restaurant.RestaurantBack.Gender;
 /**
  * Represents a control class to execute the methods on the Staff class
  * @author chris
+ * @version 1.0
+ * @since 2021-11-14
  *
  */
 public class StaffController {
@@ -197,7 +199,7 @@ public class StaffController {
 
     /**
      * Get all of the Staff in this StaffController staffList
-     * @return
+     * @return this StaffController's staffList
      */
     public ArrayList<Staff> getStaffList() {
         return staffList;

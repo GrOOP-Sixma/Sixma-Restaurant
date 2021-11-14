@@ -4,6 +4,8 @@ import java.util.Random;
 import java.util.Scanner;
 /**
  * Represents a boundary class to get the user input
+ * in order for the TableController class to perform
+ * the various method executions on the Table class
  * @author chris
  * @version 1.0
  * @since 2021-11-14

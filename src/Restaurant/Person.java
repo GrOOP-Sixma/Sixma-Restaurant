@@ -1,7 +1,7 @@
 package Restaurant;
 
 /**
- * Represents a person to initialise a Restaurant
+ * Represents the superclass of Staff and Customer class
  * @author chris
  * @version 1.0
  * @since 2021-11-14

@@ -25,7 +25,7 @@ public class CustomerController {
      * Creates a new CustomerController with the given name
      * @param name This CustomerController's name
      */
-    public CustomerController(String name) throws FileNotFoundException, IOException {
+    public CustomerController(String name) {
         customerList = new ArrayList<>();
         this.name = name;
         readInstances();
@@ -131,7 +131,7 @@ public class CustomerController {
      * Save the customers in this CustomerController's customerList into a file
      * @throws IOException If an input or output exception has occurred 
      */
-    public void writeInstances() throws IOException {
+    public void writeInstances() {
         String name;
         int contactNo;
         int customerId;
@@ -162,7 +162,7 @@ public class CustomerController {
      * @throws FileNotFoundException If the file cannot be found
      * @throws IOException If an input or output exception has occurred
      */
-    public void readInstances() throws FileNotFoundException, IOException {
+    public void readInstances() {
         String name;
         int contactNo;
         int customerId;

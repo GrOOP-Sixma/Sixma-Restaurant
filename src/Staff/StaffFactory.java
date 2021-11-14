@@ -9,7 +9,8 @@ import Restaurant.RestaurantBack.Gender;
  * in order for the StaffController class to perform the
  * various method executions on the Staff class
  * @author chris
- *
+ * @version 1.0
+ * @since 2021-11-14
  */
 public class StaffFactory {
 	/**

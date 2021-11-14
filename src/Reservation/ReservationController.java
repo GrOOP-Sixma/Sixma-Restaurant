@@ -41,7 +41,7 @@ public class ReservationController {
      * @param tableController This ReservationController's tableController
      */
     
-    public ReservationController(String name, CustomerController customerController, TableController tableController) throws FileNotFoundException, IOException{
+    public ReservationController(String name, CustomerController customerController, TableController tableController) {
         this.name = name;
         this.customerController = customerController;
         this.tableController = tableController;
@@ -183,7 +183,7 @@ public class ReservationController {
      * Writes an Instance of Reservation into a txt file
      * @throws IOException If an input or output error has occurred
      */
-    public void writeInstances() throws IOException{
+    public void writeInstances() {
         int reservationId;
         Calendar reservationDate;
         Customer customer;
@@ -219,7 +219,7 @@ public class ReservationController {
      * @throws FileNotFoundException If file cannot be found
      * @throws IOException If an input or ouput error has occurred
      */
-    public void readInstances() throws FileNotFoundException, IOException{
+    public void readInstances() {
         int reservationId;
         int year;
         int month;

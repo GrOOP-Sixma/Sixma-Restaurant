@@ -12,6 +12,8 @@ import java.io.*;
 /**
  * Represents a control class to execute the methods on the Table class
  * @author chris
+ * @version 1.0
+ * @since 2021-11-14
  *
  */
 public class TableController {
@@ -169,6 +171,9 @@ public class TableController {
         }
     }
 
+    /**
+     * View all of the table in this TableController's tableMap's tableList
+     */
     public void viewTable() {
         System.out.println("\nTables:");
         for (ArrayList<Table> tableList : tableMap.values()) {

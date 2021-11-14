@@ -2,6 +2,8 @@ package Table;
 /**
  * Represents a Table at the restaurant
  * @author chris
+ * @version 1.0
+ * @since 2021-11-14
  *
  */
 public class Table {

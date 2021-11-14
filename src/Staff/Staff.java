@@ -4,7 +4,7 @@ import Restaurant.Person;
 import Restaurant.RestaurantBack.Gender;
 /**
  * Represents a Staff that works at a restaurant
- * @author tengwei
+ * @author chris
  * @version 1.0
  * @since 2021-11-14
  */
@@ -80,20 +80,20 @@ public class Staff extends Person {
      */
     public void setGender(Gender gender) {this.gender = gender;}
     
-    /*
+    /**
      * Sets the nextStaffId for this Staff
      * @param nextStaffId
      */
     public static void setNextStaffId(int nextStaffId) {Staff.nextStaffId = nextStaffId;}
     
-    /*
+    /**
      * Sets the role for this Staff
      * @param role
      */
     public void setRole(String role) {this.role = role;}
 
     // methods
-    /*
+    /**
      * Gets the next staffId
      * @return nextStaffId incremented by 1
      */
@@ -101,7 +101,7 @@ public class Staff extends Person {
         return nextStaffId++;
     }
 
-    /*
+    /**
      * Prints the details of this Staff
      */
     public void printStaff() {

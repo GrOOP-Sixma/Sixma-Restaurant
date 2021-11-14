@@ -24,7 +24,7 @@ public class Menu {
      * Creates a new Menu with the given name
      * @param name This Menu's name
      */
-    public Menu(String name) throws FileNotFoundException, IOException{
+    public Menu(String name){
         menu = new ArrayList<>();
         this.name = name;
         readInstances();
@@ -133,7 +133,7 @@ public class Menu {
      * Save all of the menuItem in this Menu's menu into a file
      * @throws IOException If an input or output exception has occurred
      */
-    public void writeInstances() throws IOException {
+    public void writeInstances(){
         String name;
         double price;
         int menuItemId;
@@ -172,7 +172,7 @@ public class Menu {
      * @throws FileNotFoundException If the file cannot be found
      * @throws IOException If any input or output exception occurred
      */
-    public void readInstances() throws FileNotFoundException, IOException{
+    public void readInstances(){
         String name;
         double price;
         int menuItemId;

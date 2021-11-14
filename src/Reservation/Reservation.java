@@ -5,7 +5,7 @@ import java.util.Calendar;
 import Customer.Customer;
 import Table.Table;
 /**
- * Represents a Reservation to be made at the restaurant
+ * Represents a reservation to be made by a customer for the restaurant
  * @author tengwei
  * @version 1.0
  * @since 2021-11-14
